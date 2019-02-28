@@ -1,0 +1,44 @@
+{
+    "querystring": {
+        "p_l": 50,
+        "p_c": true,
+        "o_1": "-timestamp",
+        "o_2": "-id",
+        "s_cliente__exact": "elganso",
+        "s_tipo__startswith": "diag"
+    },
+    "schema": {},
+    "title": "Log Diagnosis",
+    "layout": {
+        "logGrid": {
+            "componente": "YBGrid",
+            "class": "claseGrid",
+            "prefix": "yb_log",
+            "colorRowField": "rowColor",
+            "filter": {
+                "tipo": {
+                    "filterType": "multiseleccion",
+                    "title": "Tipo sincro",
+                    "values": {
+                        "diagcontanalitica": "Cont. Analitica",
+                        "diagsincroventas": "Ventas Tienda",
+                        "diagfacturacionventas": "Fact. Ventas",
+                        "diagverificacioncontable": "Ver. Contable",
+                        "diagsaldovales": "Saldo Vales",
+                        "diaganalyticalways": "Analytic Always",
+                        "diagdevolucionesweb": "Devoluciones Web",
+                        "diagsolrepoweb": "Sol. repo. Web",
+                        "diagbloqueos": "Bloqueos"
+                    }
+                }
+            },
+            "paginacion": true,
+            "columns": [
+                {"tipo": "field", "key": "timestamp", "flex": 1, "listpos": "body"},
+                {"tipo": "field", "key": "texto", "flex": 5, "listpos": "subtitle", "avatar": true},
+                {"tipo": "field", "key": "tipo", "flex": 1, "listpos": "title"}
+            ]
+        }
+    },
+    "acciones": {}
+}

@@ -1,3 +1,43 @@
 {
-    "modifications": []
+    "modifications": [
+        {
+            "type": "insertAfterNode",
+            "path": "/portal/root",
+            "value": {
+                "setToken": {
+                    "url": "token/(?P<param>(.*))",
+                    "func": "setToken"
+                }
+            }
+        },
+        {
+            "type": "insertAfterNode",
+            "path": "/portal",
+            "value": {
+                "diagnosis": {}
+            }
+        },
+        {
+            "type": "insertAfterNode",
+            "path": "/models/root",
+            "value": {
+                "flsisppal": {
+                    "auth_group": null,
+                    "auth_user": null
+                }
+            }
+        },
+        {
+            "type": "insertAfterNode",
+            "path": "/models/flsisppal",
+            "value": {
+                "fldiagppal": {
+                    "yb_regdiagnosis": null,
+                    "yb_subregdiagnosis": null,
+                    "yb_log": null,
+                    "yb_procesos": null
+                }
+            }
+        }
+    ]
 }

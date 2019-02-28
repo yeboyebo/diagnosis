@@ -1,3 +1,13 @@
 {
-    "modifications": []
+    "modifications": [
+        {
+            "type": "insertAfterNode",
+            "path": "/root",
+            "value": {
+                "fldiagppal": {
+                    "yb_procesos": null
+                }
+            }
+        }
+    ]
 }

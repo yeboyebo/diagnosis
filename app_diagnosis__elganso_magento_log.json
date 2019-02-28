@@ -1,0 +1,41 @@
+{
+    "querystring": {
+        "p_l": 50,
+        "p_c": true,
+        "o_1": "-timestamp",
+        "o_2": "-id",
+        "s_cliente__exact": "elganso",
+        "s_tipo__startswith": "mgsync"
+    },
+    "schema": {},
+    "title": "Log Magento",
+    "layout": {
+        "logGrid": {
+            "componente": "YBGrid",
+            "class": "claseGrid",
+            "prefix": "yb_log",
+            "colorRowField": "rowColor",
+            "filter": {
+                "tipo": {
+                    "filterType": "multiseleccion",
+                    "title": "Tipo sincro",
+                    "values": {
+                        "mgsyncorders": "Sincro Pedidos",
+                        "mgsyncstock": "Sincro Stock",
+                        "mgsyncpoints": "Sincro Puntos",
+                        "mgsynccust": "Sincro Clientes",
+                        "mgsyncprices": "Sincro Precios",
+                        "mgsyncdevweb": "Sincro Devoluciones"
+                    }
+                }
+            },
+            "paginacion": true,
+            "columns": [
+                {"tipo": "field", "key": "timestamp", "flex": 1, "listpos": "body"},
+                {"tipo": "field", "key": "texto", "flex": 5, "listpos": "subtitle", "avatar": true},
+                {"tipo": "field", "key": "tipo", "flex": 1, "listpos": "title"}
+            ]
+        }
+    },
+    "acciones": {}
+}

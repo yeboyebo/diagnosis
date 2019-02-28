@@ -1,0 +1,28 @@
+{
+    "initValidation": {},
+    "querystring": {},
+    "schema": {
+        "diagnosismonitor": {
+            "query": {
+                "s_cliente__exact": "elganso",
+                "s_tipo__startswith": "diag"
+            }
+        }
+    },
+    "title": "Diagnosis",
+    "layout": {
+        "queryGrid_diagnosismonitor": {
+            "componente": "YBList",
+            "prefix": "diagnosismonitor",
+            "colorRowField": "rowColor",
+            "type": "query",
+            "columns": [
+                {"tipo": "foreignfield", "key": "descripcionf", "listpos": "title", "label": "Tipo", "width": 100},
+                {"tipo": "foreignfield", "key": "timestampf", "listpos": "subtitle", "label": "F/H", "width": 100},
+                {"tipo": "foreignfield", "key": "yb_log.texto", "listpos": "body", "label": "Texto", "width": 100, "avatar": true}
+            ],
+            "rowclick": ""
+        }
+    },
+    "acciones": {}
+}

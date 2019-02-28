@@ -1,7 +1,108 @@
 {
     "name": "diagnosis",
     "modifications": {
-        "addFile": [],
+        "addFile": [
+            {
+                "name": "model_fldiagppal__yb_subregdiagnosis.py",
+                "path": "models/fldiagppal/"
+            },
+            {
+                "name": "model_fldiagppal__yb_subregdiagnosis_def.py",
+                "path": "models/fldiagppal/"
+            },
+            {
+                "name": "model_fldiagppal__yb_log.py",
+                "path": "models/fldiagppal/"
+            },
+            {
+                "name": "model_fldiagppal__yb_regdiagnosis.py",
+                "path": "models/fldiagppal/"
+            },
+            {
+                "name": "model_fldiagppal__yb_procesos.py",
+                "path": "models/fldiagppal/"
+            },
+            {
+                "name": "model_fldiagppal__yb_regdiagnosis_def.py",
+                "path": "models/fldiagppal/"
+            },
+            {
+                "name": "model_fldiagppal__yb_procesos_def.py",
+                "path": "models/fldiagppal/"
+            },
+            {
+                "name": "model_fldiagppal__models.py",
+                "path": "models/fldiagppal/"
+            },
+            {
+                "name": "model_fldiagppal__yb_log_def.py",
+                "path": "models/fldiagppal/"
+            },
+            {
+                "name": "app_diagnosis____init__.py",
+                "path": "apps/diagnosis/"
+            },
+            {
+                "name": "app_diagnosis__menu_diagnosis.json",
+                "path": "apps/diagnosis/templates/diagnosis/"
+            },
+            {
+                "name": "app_diagnosis__elganso_magento_log.json",
+                "path": "apps/diagnosis/templates/diagnosis/plantillas/"
+            },
+            {
+                "name": "app_diagnosis__guanabana_activity.json",
+                "path": "apps/diagnosis/templates/diagnosis/plantillas/"
+            },
+            {
+                "name": "app_diagnosis__elganso_ventas_log.json",
+                "path": "apps/diagnosis/templates/diagnosis/plantillas/"
+            },
+            {
+                "name": "app_diagnosis__elganso_diagnosis.json",
+                "path": "apps/diagnosis/templates/diagnosis/plantillas/"
+            },
+            {
+                "name": "app_diagnosis__sanhigia_activity.json",
+                "path": "apps/diagnosis/templates/diagnosis/plantillas/"
+            },
+            {
+                "name": "app_diagnosis__elganso_diagnosis_log.json",
+                "path": "apps/diagnosis/templates/diagnosis/plantillas/"
+            },
+            {
+                "name": "app_diagnosis__guanabana_magento_log.json",
+                "path": "apps/diagnosis/templates/diagnosis/plantillas/"
+            },
+            {
+                "name": "app_diagnosis__sanhigia_magento_log.json",
+                "path": "apps/diagnosis/templates/diagnosis/plantillas/"
+            },
+            {
+                "name": "app_diagnosis__sanhigia_magento.json",
+                "path": "apps/diagnosis/templates/diagnosis/plantillas/"
+            },
+            {
+                "name": "app_diagnosis__elganso_magento.json",
+                "path": "apps/diagnosis/templates/diagnosis/plantillas/"
+            },
+            {
+                "name": "app_diagnosis__elganso_ventas.json",
+                "path": "apps/diagnosis/templates/diagnosis/plantillas/"
+            },
+            {
+                "name": "app_diagnosis__guanabana_magento.json",
+                "path": "apps/diagnosis/templates/diagnosis/plantillas/"
+            },
+            {
+                "name": "app_diagnosis__elganso_activity.json",
+                "path": "apps/diagnosis/templates/diagnosis/plantillas/"
+            },
+            {
+                "name": "app_diagnosis__views_diagnosis.py",
+                "path": "apps/diagnosis/viewset/"
+            }
+        ],
         "deleteFile": [],
         "replaceFile": [
             {
@@ -9,7 +110,12 @@
                 "path": "config/"
             }
         ],
-        "patchScript": [],
+        "patchScript": [
+            {
+                "name": "app_portal__views_portal.py",
+                "path": "apps/portal/viewset/"
+            }
+        ],
         "patchJson": [
             {
                 "name": "urls.json",
@@ -18,6 +124,10 @@
             {
                 "name": "registros.json",
                 "path": "config/"
+            },
+            {
+                "name": "app_portal__menu_portal.json",
+                "path": "apps/portal/templates/portal/"
             }
         ]
     }

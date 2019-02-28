@@ -1,0 +1,131 @@
+{
+    "initValidation": {},
+    "querystring": {
+        "p_l": 1,
+        "p_c": true,
+        "o_1": "proceso",
+        "s_cliente__exact": "guanabana"
+    },
+    "schema": {
+        "activemonitor": {
+            "json": "activas"
+        },
+        "scheduledmonitor": {
+            "json": "programadas"
+        },
+        "reservedmonitor": {
+            "json": "reservadas"
+        }
+    },
+    "title": "Actividad",
+    "layout": {
+        "procesosGrid": {
+            "label": "Procesos Activos",
+            "componente": "YBList",
+            "class": "claseGrid",
+            "prefix": "yb_procesos",
+            "filter": "buscador",
+            "paginacion": true,
+            "columns": [
+                {"tipo": "field", "listpos": "subtitle", "key": "proceso", "flex": 1},
+                {"tipo": "field", "listpos": "title", "key": "descripcion", "flex": 5},
+                {"tipo": "field", "listpos": "secondaryitem", "key": "activo", "flex": 1, "avatar": true},
+                {"tipo": "foreignfield", "key": "ultsincro", "flex": 1, "listpos": "body"},
+                {
+                    "tipo": "act",
+                    "key": "start",
+                    "label": "Iniciar",
+                    "success": [{"slot": "refrescar", "custom": "guanabana_activity"}]
+                },
+                {
+                    "tipo": "act",
+                    "key": "stop",
+                    "label": "Parar",
+                    "success": [{"slot": "refrescar", "custom": "guanabana_activity"}]
+                }
+            ]
+        },
+        "jsonGrid_activemonitor": {
+            "componente": "YBList",
+            "label": "Tareas Activas",
+            "prefix": "activemonitor",
+            "type": "json",
+            "columns": [
+                {"tipo": "field", "key": "name", "listpos": "title", "label": "Name", "avatar": true},
+                {"tipo": "field", "key": "id", "listpos": "subtitle", "label": "Id"},
+                {"tipo": "field", "key": "worker", "listpos": "body", "label": "Worker"},
+                {"tipo": "field", "key": "args", "listpos": "body", "label": "Args"},
+                {
+                    "tipo": "act",
+                    "key": "revoke",
+                    "label": "Cancelar",
+                    "success": [{"slot": "refrescar", "custom": "guanabana_activity"}]
+                }
+            ]
+        },
+        "jsonGrid_scheduledmonitor": {
+            "componente": "YBList",
+            "label": "Tareas Programadas",
+            "prefix": "scheduledmonitor",
+            "type": "json",
+            "columns": [
+                {"tipo": "field", "key": "name", "listpos": "title", "label": "Name", "avatar": true},
+                {"tipo": "field", "key": "id", "listpos": "subtitle", "label": "Id"},
+                {"tipo": "field", "key": "worker", "listpos": "body", "label": "Worker"},
+                {"tipo": "field", "key": "eta", "listpos": "body", "label": "ETA"},
+                {
+                    "tipo": "act",
+                    "key": "revoke",
+                    "label": "Cancelar",
+                    "success": [{"slot": "refrescar", "custom": "guanabana_activity"}]
+                }
+            ]
+        },
+        "jsonGrid_reservedmonitor": {
+            "componente": "YBList",
+            "label": "Tareas Reservadas",
+            "prefix": "reservedmonitor",
+            "type": "json",
+            "columns": [
+                {"tipo": "field", "key": "name", "listpos": "title", "label": "Name", "avatar": true},
+                {"tipo": "field", "key": "id", "listpos": "subtitle", "label": "Id"},
+                {"tipo": "field", "key": "worker", "listpos": "body", "label": "Worker"},
+                {"tipo": "field", "key": "args", "listpos": "body", "label": "Args"},
+                {
+                    "tipo": "act",
+                    "key": "revoke",
+                    "label": "Cancelar",
+                    "success": [{"slot": "refrescar", "custom": "guanabana_activity"}]
+                }
+            ]
+        }
+    },
+    "acciones": {
+        "start": {
+            "action": "legacy",
+            "prefix": "yb_procesos",
+            "serverAction": "start",
+            "icon": "play_circle_filled"
+        },
+        "stop": {
+            "action": "legacy",
+            "prefix": "yb_procesos",
+            "serverAction": "stop",
+            "icon": "pause_circle_outline"
+        },
+        "revoke": {
+            "action": "legacy",
+            "prefix": "yb_procesos",
+            "serverAction": "revoke",
+            "icon": "cancel",
+            "params": [
+                {
+                    "tipo": 3,
+                    "verbose_name": "id",
+                    "key": "id",
+                    "validaciones": null
+                }
+            ]
+        }
+    }
+}
