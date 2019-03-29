@@ -6,6 +6,7 @@
             "value": {
                 "NAME": "diagnosis",
                 "TEXT": "DIAGNOSIS",
+                "URL": "diagnosis",
                 "ICON": "local_hospital",
                 "URL": "diagnosis",
                 "COLOR": "rgb(215, 30, 30)"
