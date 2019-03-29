@@ -177,3 +177,63 @@ class mtd_yb_procesos(models.Model, BaseModel):
         verbose_name = FLUtil.translate(u"Procesos automáticos", u"MetaData")
         db_table = u"yb_procesos"
         # app_label = "secondary"
+
+
+class mtd_yb_procesos_erroneos(models.Model, BaseModel):
+
+    id = models.AutoField(
+        db_column="id",
+        verbose_name=FLUtil.translate(u"Identificador", u"MetaData"),
+        primary_key=True
+    )._miextend(
+        visiblegrid=False,
+        OLDTIPO="SERIAL"
+    )
+    cliente = models.CharField(
+        db_column="cliente",
+        verbose_name=FLUtil.translate(u"Cliente", u"MetaData"),
+        max_length=100
+    )._miextend(
+        OLDTIPO="STRING"
+    )
+    proceso = models.CharField(
+        db_column="proceso",
+        verbose_name=FLUtil.translate(u"Proceso", u"MetaData"),
+        max_length=100
+    )._miextend(
+        OLDTIPO="STRING"
+    )
+    error = models.TextField(
+        db_column="error",
+        verbose_name=FLUtil.translate(u"Error", u"MetaData")
+    )._miextend(
+        OLDTIPO="STRING"
+    )
+    codregistro = models.CharField(
+        db_column="codregistro",
+        verbose_name=FLUtil.translate(u"Cod. Registro", u"MetaData"),
+        max_length=100
+    )._miextend(
+        OLDTIPO="STRING"
+    )
+    resuelto = models.BooleanField(
+        db_column="resuelto",
+        verbose_name=FLUtil.translate(u"Resuelto", u"MetaData"),
+        default=False,
+        null=False
+    )._miextend(
+        OLDTIPO="BOOL"
+    )
+    timestamp = models.CharField(
+        db_column="timestamp",
+        verbose_name=FLUtil.translate(u"Ult.Sincro", u"MetaData"),
+        max_length=50
+    )._miextend(
+        OLDTIPO="STRING"
+    )
+
+    class Meta:
+        managed = True
+        verbose_name = FLUtil.translate(u"Procesos erróneos", u"MetaData")
+        db_table = u"yb_procesos_erroneos"
+        # app_label = "secondary"

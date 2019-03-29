@@ -5,7 +5,8 @@
             "path": "/root",
             "value": {
                 "fldiagppal": {
-                    "yb_procesos": null
+                    "yb_procesos": null,
+                    "yb_procesos_erroneos": null
                 }
             }
         }

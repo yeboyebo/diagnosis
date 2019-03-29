@@ -35,7 +35,8 @@
                     "yb_regdiagnosis": null,
                     "yb_subregdiagnosis": null,
                     "yb_log": null,
-                    "yb_procesos": null
+                    "yb_procesos": null,
+                    "yb_procesos_erroneos": null
                 }
             }
         }

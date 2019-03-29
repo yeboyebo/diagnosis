@@ -101,6 +101,18 @@
             {
                 "name": "app_diagnosis__views_diagnosis.py",
                 "path": "apps/diagnosis/viewset/"
+            },
+            {
+                "path": "apps/diagnosis/templates/diagnosis/plantillas/",
+                "name": "app_diagnosis__elganso_magento_error.json"
+            },
+            {
+                "name": "model_fldiagppal__yb_procesos_erroneos.py",
+                "path": "models/fldiagppal/"
+            },
+            {
+                "name": "model_fldiagppal__yb_procesos_erroneos_def.py",
+                "path": "models/fldiagppal/"
             }
         ],
         "deleteFile": [],

@@ -36,6 +36,13 @@
             "COLOR": "rgb(0, 103, 206)"
         },
         {
+            "NAME": "elgansomgerror",
+            "TEXT": "ELGANSO MAGENTO ERRORES",
+            "URL": "diagnosis/yb_procesos_erroneos/custom/elganso_magento_error",
+            "ICON": "error_outline",
+            "COLOR": "rgb(0, 103, 206)"
+        },
+        {
             "NAME": "elgansovtproc",
             "TEXT": "ELGANSO VENTAS",
             "URL": "diagnosis/yb_procesos/custom/elganso_ventas",
