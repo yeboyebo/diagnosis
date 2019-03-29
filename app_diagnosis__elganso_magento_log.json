@@ -32,7 +32,7 @@
             "paginacion": true,
             "columns": [
                 {"tipo": "field", "key": "timestamp", "flex": 1, "listpos": "body"},
-                {"tipo": "field", "key": "texto", "flex": 5, "listpos": "subtitle", "avatar": true},
+                {"tipo": "field", "key": "texto", "flex": 5, "listpos": "subtitle", "avatar": true, "title": true},
                 {"tipo": "field", "key": "tipo", "flex": 1, "listpos": "title"}
             ]
         }

@@ -7,6 +7,7 @@
                 "NAME": "diagnosis",
                 "TEXT": "DIAGNOSIS",
                 "ICON": "local_hospital",
+                "URL": "diagnosis",
                 "COLOR": "rgb(215, 30, 30)"
             }
         }
