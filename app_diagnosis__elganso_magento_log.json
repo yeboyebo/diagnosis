@@ -10,6 +10,22 @@
     "schema": {},
     "title": "Log Magento",
     "layout": {
+        "botonProcesos": {
+            "componente": "YBButton",
+            "label": "Ver procesos",
+            "buttonType": "raised",
+            "action": {
+                "key": "gotoproccess"
+            }
+        },
+        "botonErroneos": {
+            "componente": "YBButton",
+            "label": "Ver erróneos",
+            "buttonType": "raised",
+            "action": {
+                "key": "gotoerror"
+            }
+        },
         "logGrid": {
             "componente": "YBGrid",
             "class": "claseGrid",
@@ -37,5 +53,14 @@
             ]
         }
     },
-    "acciones": {}
+    "acciones": {
+        "gotoproccess": {
+            "action": "url",
+            "url": "diagnosis/yb_procesos/custom/elganso_magento"
+        },
+        "gotoerror": {
+            "action": "url",
+            "url": "diagnosis/yb_procesos_erroneos/custom/elganso_magento_error"
+        }
+    }
 }

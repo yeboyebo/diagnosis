@@ -11,6 +11,14 @@
     "schema": {},
     "title": "Magento Errores",
     "layout": {
+        "botonLog": {
+            "componente": "YBButton",
+            "label": "Ver log",
+            "buttonType": "raised",
+            "action": {
+                "key": "gotolog"
+            }
+        },
         "erroneosGrid": {
             "componente": "YBList",
             "class": "claseGrid",
@@ -37,6 +45,10 @@
             "prefix": "yb_procesos_erroneos",
             "serverAction": "resolve",
             "icon": "check"
+        },
+        "gotolog": {
+            "action": "url",
+            "url": "diagnosis/yb_log/custom/elganso_magento_log"
         }
     }
 }
