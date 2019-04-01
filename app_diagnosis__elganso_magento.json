@@ -11,7 +11,7 @@
     "layout": {
         "botonLog": {
             "componente": "YBButton",
-            "label": "Ver log",
+            "label": "Ir a log",
             "buttonType": "raised",
             "action": {
                 "key": "gotolog"

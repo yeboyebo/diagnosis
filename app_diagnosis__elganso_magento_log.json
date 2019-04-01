@@ -12,7 +12,7 @@
     "layout": {
         "botonProcesos": {
             "componente": "YBButton",
-            "label": "Ver procesos",
+            "label": "Ir a procesos",
             "buttonType": "raised",
             "action": {
                 "key": "gotoproccess"
@@ -20,7 +20,7 @@
         },
         "botonErroneos": {
             "componente": "YBButton",
-            "label": "Ver erróneos",
+            "label": "Ir a erróneos",
             "buttonType": "raised",
             "action": {
                 "key": "gotoerror"
@@ -42,6 +42,17 @@
                         "mgsynccust": "Sincro Clientes",
                         "mgsyncprices": "Sincro Precios",
                         "mgsyncdevweb": "Sincro Devoluciones"
+                    }
+                },
+                "texto": {
+                    "filterType": "multiseleccion",
+                    "title": "Excluir del log",
+                    "criterio": "nin",
+                    "values": {
+                        "Éxito. No hay datos que sincronizar": "No hay datos",
+                        "Éxito. No es momento de sincronizar": "No es momento",
+                        "Info. Proceso detenido": "Detenido",
+                        "Info. Proceso arrancado": "Arrancado"
                     }
                 }
             },
