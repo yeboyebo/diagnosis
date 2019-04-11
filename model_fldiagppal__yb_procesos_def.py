@@ -146,7 +146,8 @@ class diagnosis(interna):
                         "SERVER_PORT": meta["SERVER_PORT"],
                         "VIRTUAL_ENV": virtualEnv
                     }
-                }
+                },
+                "continuous": True
             }
 
             proceso = cursor.valueBuffer("proceso")
