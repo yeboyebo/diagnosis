@@ -19,6 +19,15 @@
         },
         {
             "type": "insertAfterNode",
+            "path": "/diagnosis",
+            "value": {
+                "api": {
+                    "controller": true
+                }
+            }
+        },
+        {
+            "type": "insertAfterNode",
             "path": "/models/root",
             "value": {
                 "fldiagppal": {

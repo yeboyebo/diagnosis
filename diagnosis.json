@@ -113,6 +113,18 @@
             {
                 "name": "model_fldiagppal__yb_procesos_erroneos_def.py",
                 "path": "models/fldiagppal/"
+            },
+            {
+                "name": "controller_api_log__append.py",
+                "path": "controllers/api/diagnosis/log/"
+            },
+            {
+                "name": "model_fldiagppal__fldiagppal_def.py",
+                "path": "models/fldiagppal/"
+            },
+            {
+                "name": "controller_api_process__isactive.py",
+                "path": "controllers/api/diagnosis/process/"
             }
         ],
         "deleteFile": [],
@@ -120,6 +132,10 @@
             {
                 "name": "dependencias.json",
                 "path": "config/"
+            },
+            {
+                "name": "settings.py",
+                "path": "AQNEXT/"
             }
         ],
         "patchScript": [

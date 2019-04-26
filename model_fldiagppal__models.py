@@ -133,6 +133,45 @@ class mtd_yb_subregdiagnosis(models.Model, BaseModel):
         # app_label = "secondary"
 
 
+class mtd_yb_clientessincro(models.Model, BaseModel):
+
+    id = models.AutoField(
+        db_column="id",
+        verbose_name=FLUtil.translate(u"Identificador", u"MetaData"),
+        primary_key=True
+    )._miextend(
+        visiblegrid=False,
+        OLDTIPO="SERIAL"
+    )
+    cliente = models.CharField(
+        db_column="cliente",
+        verbose_name=FLUtil.translate(u"Cliente", u"MetaData"),
+        max_length=100
+    )._miextend(
+        OLDTIPO="STRING"
+    )
+    url = models.TextField(
+        db_column="url",
+        verbose_name=FLUtil.translate(u"URL", u"MetaData"),
+        max_length=250
+    )._miextend(
+        OLDTIPO="STRING"
+    )
+    test_url = models.TextField(
+        db_column="test_url",
+        verbose_name=FLUtil.translate(u"TEST URL", u"MetaData"),
+        max_length=250
+    )._miextend(
+        OLDTIPO="STRING"
+    )
+
+    class Meta:
+        managed = True
+        verbose_name = FLUtil.translate(u"Clientes de sincronización", u"MetaData")
+        db_table = u"yb_clientessincro"
+        # app_label = "secondary"
+
+
 class mtd_yb_procesos(models.Model, BaseModel):
 
     id = models.AutoField(
@@ -170,6 +209,13 @@ class mtd_yb_procesos(models.Model, BaseModel):
         null=False
     )._miextend(
         OLDTIPO="BOOL"
+    )
+    url = models.TextField(
+        db_column="url",
+        verbose_name=FLUtil.translate(u"URL", u"MetaData"),
+        max_length=150
+    )._miextend(
+        OLDTIPO="STRING"
     )
 
     class Meta:

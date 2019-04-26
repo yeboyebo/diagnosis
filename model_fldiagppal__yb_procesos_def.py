@@ -15,6 +15,7 @@ import requests
 from YBLEGACY.constantes import *
 from YBUTILS import notifications
 from YBUTILS.viewREST import cacheController
+from models.fldiagppal import fldiagppal_def as diagppal
 
 
 class diagnosis(interna):
@@ -84,104 +85,141 @@ class diagnosis(interna):
 
         return f + " - " + h
 
-    def diagnosis_getActivity(self, name):
-        try:
-            header = {"Content-Type": "application/json"}
+    def diagnosis_get_server_url(self, cliente, force_notdb=False):
+        q = qsatype.FLSqlQuery()
+        q.setSelect("url, test_url")
+        q.setFrom("yb_clientessincro")
+        q.setWhere("cliente = '{}'".format(cliente))
 
+        if not q.exec_():
+            return False
+
+        if q.first() and not force_notdb:
             url = None
             if qsatype.FLUtil.isInProd():
-                if name.startswith("elganso"):
-                    url = 'https://api.elganso.com/models/REST/tpv_comandas/csr/getactivity'
-                elif name.startswith("guanabana"):
-                    url = 'http://api.guanabana.store:8080/models/REST/tpv_comandas/csr/getactivity'
-                elif name.startswith("sanhigia"):
-                    url = 'http://store.sanhigia.com:9000/models/REST/empresa/csr/getactivity'
+                url = q.value("url")
+            else:
+                url = q.value("test_url")
+
+            return "{}sync".format(url), True
+        else:
+            if qsatype.FLUtil.isInProd():
+                if cliente == "elganso":
+                    url = "https://api.elganso.com"
+                elif cliente == "guanabana":
+                    url = "http://api.guanabana.store:8080"
+                elif cliente == "sanhigia":
+                    url = "http://store.sanhigia.com:9000"
                 else:
                     return False
             else:
-                if name.startswith("sanhigia"):
-                    url = 'http://127.0.0.1:8000/models/REST/empresa/csr/getactivity'
-                else:
-                    url = 'http://127.0.0.1:8000/models/REST/tpv_comandas/csr/getactivity'
+                url = "http://127.0.0.1:8000"
 
-            response = requests.get(url, headers=header)
-            stCode = response.status_code
-            json = None
-            if response and stCode == 200:
-                json = response.json()
+            url = "{}/models/REST".format(url)
+            if cliente in ("elganso", "guanabana"):
+                url = "{}/tpv_comandas/csr".format(url)
             else:
-                raise Exception("Mala respuesta")
+                url = "{}/empresa/csr".format(url)
 
-            return json
+            return url, False
+
+    def diagnosis_get_url(self, cliente, proceso):
+        try:
+            force_notdb = False
+
+            if cliente == "elganso" and (proceso == "mgsyncdevweb" or proceso.startswith("egsync")):
+                force_notdb = True
+
+            server_url, frombd = self.get_server_url(cliente, force_notdb=force_notdb)
+            if not server_url:
+                return False
+
+            if frombd:
+                q = qsatype.FLSqlQuery()
+                q.setSelect("url")
+                q.setFrom("yb_procesos")
+                q.setWhere("cliente = '{}' AND proceso = '{}'".format(cliente, proceso))
+
+                if not q.exec_():
+                    return False
+
+                if not q.first():
+                    return False
+
+                return "{}/{}".format(server_url, q.value("url")), True
+            else:
+                return "{}/{}".format(server_url, proceso), False
 
         except Exception as e:
             print(e)
             qsatype.debug(e)
             return False
 
-        return resul
-
     def diagnosis_start(self, model, cursor):
         try:
             if cursor.valueBuffer("activo"):
                 return True
 
-            request = qsatype.FLUtil.request()
-            meta = getattr(request, "META", None)
-            if not meta:
-                meta = request["META"]
-
-            try:
-                virtualEnv = meta["VIRTUAL_ENV"]
-            except Exception:
-                virtualEnv = getattr(meta, "VIRTUAL_ENV", None)
-
-            header = {"Content-Type": "application/json"}
-            data = {
-                "passwd": "bUqfqBMnoH",
-                "fakeRequest": {
-                    "name": "fake",
-                    "user": qsatype.FLUtil.nameUser(),
-                    "META": {
-                        "SERVER_PORT": meta["SERVER_PORT"],
-                        "VIRTUAL_ENV": virtualEnv
-                    }
-                },
-                "continuous": True
-            }
-
+            cliente = cursor.valueBuffer("cliente")
             proceso = cursor.valueBuffer("proceso")
-            if cursor.valueBuffer("cliente") == "elganso":
-                if proceso.startswith("egsync"):
+
+            url, fromdb = self.get_url(cliente, proceso)
+            if not url:
+                return False
+
+            if fromdb:
+                header = {"Content-Type": "application/json"}
+                data = {
+                    "passwd": "bUqfqBMnoH",
+                    "continuous": True,
+                    "production": qsatype.FLUtil.isInProd()
+                }
+
+                resul = notifications.post_request(url, header, data)
+
+                if not resul:
+                    return False
+            else:
+                request = qsatype.FLUtil.request()
+                meta = getattr(request, "META", None)
+                if not meta:
+                    meta = request["META"]
+
+                try:
+                    virtualEnv = meta["VIRTUAL_ENV"]
+                except Exception:
+                    virtualEnv = getattr(meta, "VIRTUAL_ENV", None)
+
+                header = {"Content-Type": "application/json"}
+                data = {
+                    "passwd": "bUqfqBMnoH",
+                    "fakeRequest": {
+                        "name": "fake",
+                        "user": qsatype.FLUtil.nameUser(),
+                        "META": {
+                            "SERVER_PORT": meta["SERVER_PORT"],
+                            "VIRTUAL_ENV": virtualEnv
+                        }
+                    }
+                }
+
+                proceso = cursor.valueBuffer("proceso")
+                if cursor.valueBuffer("cliente") == "elganso" and proceso.startswith("egsync"):
                     codTienda = proceso[-4:]
                     proceso = proceso[:len(proceso) - 4]
                     data["codtienda"] = codTienda
-                resul = None
-                if qsatype.FLUtil.isInProd():
-                    resul = notifications.post_request('https://api.elganso.com/models/REST/tpv_comandas/csr/' + proceso, header, data)
-                else:
-                    resul = notifications.post_request('http://127.0.0.1:8000/models/REST/tpv_comandas/csr/' + proceso, header, data)
-            elif cursor.valueBuffer("cliente") == "guanabana":
-                if qsatype.FLUtil.isInProd():
-                    resul = notifications.post_request('http://api.guanabana.store:8080/models/REST/tpv_comandas/csr/' + proceso, header, data)
-                else:
-                    resul = notifications.post_request('http://127.0.0.1:8000/models/REST/tpv_comandas/csr/' + proceso, header, data)
-            elif cursor.valueBuffer("cliente") == "sanhigia":
-                if qsatype.FLUtil.isInProd():
-                    resul = notifications.post_request('http://store.sanhigia.com:9000/models/REST/empresa/csr/' + proceso, header, data)
-                else:
-                    resul = notifications.post_request('http://127.0.0.1:8000/models/REST/empresa/csr/' + proceso, header, data)
-            else:
-                return False
 
-            if not resul:
-                return False
+                resul = notifications.post_request(url, header, data)
+
+                if not resul:
+                    return False
 
             if not qsatype.FLUtil.sqlUpdate("yb_procesos", ["activo"], [True], "id = " + str(cursor.valueBuffer("id"))):
                 return False
 
-            tmstmp = qsatype.Date().now()
-            qsatype.FLSqlQuery().execSql("INSERT INTO yb_log (texto, cliente, tipo, timestamp) VALUES ('Info. Proceso arrancado', '" + cursor.valueBuffer("cliente") + "', '" + cursor.valueBuffer("proceso") + "', '" + tmstmp + "')")
+            diagppal.iface.log("Info. Proceso arrancado", proceso, cliente)
+
+            return resul
 
         except Exception as e:
             print(e)
@@ -200,53 +238,60 @@ class diagnosis(interna):
 
         return True
 
+    def diagnosis_getActivity(self, name):
+        try:
+            customer = name.split("_activity")[0]
+
+            url, frombd = self.get_server_url(customer)
+            if not url:
+                return False
+
+            if frombd:
+                url = "{}/celery".format(url)
+
+            url = "{}/getactivity".format(url)
+
+            response = requests.get(url)
+            if response and response.status_code == 200:
+                return response.json()
+            else:
+                raise Exception("Mala respuesta")
+
+        except Exception as e:
+            print(e)
+            qsatype.debug(e)
+            return False
+
     def diagnosis_revoke(self, model, cursor, oParam):
         try:
-            request = qsatype.FLUtil.request()
-            meta = getattr(request, "META", None)
-            if not meta:
-                meta = request["META"]
+            customer = cursor.valueBuffer("cliente")
 
-            try:
-                virtualEnv = meta["VIRTUAL_ENV"]
-            except Exception:
-                virtualEnv = getattr(meta, "VIRTUAL_ENV", None)
+            url, frombd = self.get_server_url(customer)
+            if not url:
+                return False
+
+            if frombd:
+                url = "{}/celery/revoke/{}".format(url, oParam["id"])
+
+                response = requests.get(url)
+                if response and response.status_code == 200:
+                    return response.json()
+                else:
+                    raise Exception("Mala respuesta")
+
+            url = "{}/revoke".format(url)
 
             header = {"Content-Type": "application/json"}
             data = {
                 "passwd": "bUqfqBMnoH",
-                "fakeRequest": {
-                    "name": "fake",
-                    "user": qsatype.FLUtil.nameUser(),
-                    "META": {
-                        "SERVER_PORT": meta["SERVER_PORT"],
-                        "VIRTUAL_ENV": virtualEnv
-                    }
-                },
                 "id": oParam["id"]
             }
 
-            if cursor.valueBuffer("cliente") == "elganso":
-                resul = None
-                if qsatype.FLUtil.isInProd():
-                    resul = notifications.post_request('https://api.elganso.com/models/REST/tpv_comandas/csr/revoke', header, data)
-                else:
-                    resul = notifications.post_request('http://127.0.0.1:8000/models/REST/tpv_comandas/csr/revoke', header, data)
-            elif cursor.valueBuffer("cliente") == "guanabana":
-                if qsatype.FLUtil.isInProd():
-                    resul = notifications.post_request('http://api.guanabana.store:8080/models/REST/tpv_comandas/csr/revoke', header, data)
-                else:
-                    resul = notifications.post_request('http://127.0.0.1:8000/models/REST/tpv_comandas/csr/revoke', header, data)
-            elif cursor.valueBuffer("cliente") == "sanhigia":
-                if qsatype.FLUtil.isInProd():
-                    resul = notifications.post_request('http://store.sanhigia.com:9000/models/REST/empresa/csr/revoke', header, data)
-                else:
-                    resul = notifications.post_request('http://127.0.0.1:8000/models/REST/empresa/csr/revoke', header, data)
+            response = notifications.post_request(url, header, data)
+            if response and response.status_code == 200:
+                return response.json()
             else:
-                return False
-
-            if not resul:
-                return False
+                raise Exception("Mala respuesta")
 
         except Exception as e:
             print(e)
@@ -275,6 +320,12 @@ class diagnosis(interna):
 
     def field_ultsincro(self, model):
         return self.ctx.diagnosis_field_ultsincro(model)
+
+    def get_server_url(self, cliente, force_notdb=False):
+        return self.ctx.diagnosis_get_server_url(cliente, force_notdb)
+
+    def get_url(self, cliente, proceso):
+        return self.ctx.diagnosis_get_url(cliente, proceso)
 
     def getActivity(self, name):
         return self.ctx.diagnosis_getActivity(name)
