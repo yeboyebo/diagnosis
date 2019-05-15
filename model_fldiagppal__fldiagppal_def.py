@@ -17,7 +17,7 @@ class diagnosis(interna):
         tmstmp = qsatype.Date().now()
         tsDel = qsatype.FLUtil.addDays(tmstmp, -5)
 
-        qsatype.FLSqlQuery().execSql("DELETE FROM yb_log WHERE timestamp < '{}'".format(tsDel))
+        qsatype.FLSqlQuery().execSql("DELETE FROM yb_log WHERE cliente = '{}' AND tipo = '{}' AND timestamp < '{}'".format(customer, process, tsDel))
 
         qsatype.FLSqlQuery().execSql("INSERT INTO yb_log (texto, cliente, tipo, timestamp) VALUES ('{}', '{}', '{}', '{}')".format(text, customer, process, tmstmp))
 
@@ -25,7 +25,7 @@ class diagnosis(interna):
         tmstmp = qsatype.Date().now()
         tsDel = qsatype.FLUtil.addDays(tmstmp, -10)
 
-        qsatype.FLSqlQuery().execSql("DELETE FROM yb_procesos_erroneos WHERE resuelto AND timestamp < '{}'".format(tsDel))
+        qsatype.FLSqlQuery().execSql("DELETE FROM yb_procesos_erroneos WHERE resuelto AND cliente = '{}' AND timestamp < '{}'".format(customer, tsDel))
 
         qsatype.FLSqlQuery().execSql("INSERT INTO yb_procesos_erroneos (cliente, proceso, error, codregistro, resuelto, timestamp) VALUES ('{}', '{}', '{}', '{}', {}, '{}')".format(customer, process, error, pk, False, tmstmp))
 
