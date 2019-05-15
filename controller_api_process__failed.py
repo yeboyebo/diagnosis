@@ -17,7 +17,7 @@ class diagnosis_failed(interna_failed):
     def start(pk, data):
         diagppal.iface.failed(data["customer_name"], data["process_name"], data["error"], data["pk"])
 
-        return HttpResponse(json.dumps({}), status=200, content_type="application/json")
+        return HttpResponse(json.dumps({"msg": "Proceso erróneo insertado"}), status=200, content_type="application/json")
 
 
 # @class_declaration failed #
