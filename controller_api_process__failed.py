@@ -2,7 +2,7 @@ import json
 
 from django.http import HttpResponse
 
-from YBLEGACY import qsatype
+from models.fldiagppal import fldiagppal_def as diagppal
 
 
 # @class_declaration interna_failed #
@@ -15,7 +15,7 @@ class diagnosis_failed(interna_failed):
 
     @staticmethod
     def start(pk, data):
-        qsatype.FLSqlQuery().execSql("INSERT INTO yb_procesos_erroneos (cliente, proceso, error, codregistro, resuelto, timestamp) VALUES ('{}', '{}', '{}', '{}', {}, '{}')".format(data["customer_name"], data["process_name"], data["error"], data["pk"], False, str(qsatype.Date())))
+        diagppal.iface.failed(data["customer_name"], data["process_name"], data["error"], data["pk"])
 
         return HttpResponse(json.dumps({}), status=200, content_type="application/json")
 

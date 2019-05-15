@@ -21,11 +21,22 @@ class diagnosis(interna):
 
         qsatype.FLSqlQuery().execSql("INSERT INTO yb_log (texto, cliente, tipo, timestamp) VALUES ('{}', '{}', '{}', '{}')".format(text, customer, process, tmstmp))
 
+    def diagnosis_failed(self, customer, process, error, pk):
+        tmstmp = qsatype.Date().now()
+        tsDel = qsatype.FLUtil.addDays(tmstmp, -10)
+
+        qsatype.FLSqlQuery().execSql("DELETE FROM yb_procesos_erroneos WHERE resuelto AND timestamp < '{}'".format(tsDel))
+
+        qsatype.FLSqlQuery().execSql("INSERT INTO yb_procesos_erroneos (cliente, proceso, error, codregistro, resuelto, timestamp) VALUES ('{}', '{}', '{}', '{}', {}, '{}')".format(customer, process, error, pk, False, tmstmp))
+
     def __init__(self, context=None):
         super().__init__(context)
 
     def log(self, text, process, customer):
         return self.ctx.diagnosis_log(text, process, customer)
+
+    def failed(self, customer, process, error, pk):
+        return self.ctx.diagnosis_failed(customer, process, error, pk)
 
 
 # @class_declaration head #

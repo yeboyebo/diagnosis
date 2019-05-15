@@ -16,14 +16,19 @@ from YBLEGACY.constantes import *
 
 class diagnosis(interna):
 
-    def diagnosis_getDesc(self):
-        return None
+    def diagnosis_resolve(self, model):
+        model.resuelto = True
+        model.save()
+        return True
 
     def __init__(self, context=None):
         super().__init__(context)
 
     def getDesc(self):
         return self.ctx.diagnosis_getDesc()
+
+    def resolve(self, model):
+        return self.ctx.diagnosis_resolve(model)
 
 
 # @class_declaration head #

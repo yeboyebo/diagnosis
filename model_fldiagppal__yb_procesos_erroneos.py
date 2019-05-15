@@ -20,6 +20,10 @@ class diagnosis_yb_procesos_erroneos(interna_yb_procesos_erroneos, helpers.Mixin
     class Meta:
         proxy = True
 
+    @helpers.decoradores.accion()
+    def resolve(self):
+        return form.iface.resolve(self)
+
 
 # @class_declaration yb_procesos_erroneos #
 class yb_procesos_erroneos(diagnosis_yb_procesos_erroneos, helpers.MixinConAcciones):
