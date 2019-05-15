@@ -125,6 +125,10 @@
             {
                 "name": "controller_api_process__isactive.py",
                 "path": "controllers/api/diagnosis/process/"
+            },
+            {
+                "path": "controllers/api/diagnosis/process/",
+                "name": "controller_api_process__failed.py"
             }
         ],
         "deleteFile": [],
