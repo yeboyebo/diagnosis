@@ -133,6 +133,14 @@
             {
                 "path": "apps/diagnosis/templates/diagnosis/plantillas/",
                 "name": "app_diagnosis__globalprot_log.json"
+            },
+            {
+                "path": "apps/diagnosis/templates/diagnosis/plantillas/",
+                "name": "app_diagnosis__elganso_inventarios.json"
+            },
+            {
+                "path": "apps/diagnosis/templates/diagnosis/plantillas/",
+                "name": "app_diagnosis__elganso_inventarios_log.json"
             }
         ],
         "deleteFile": [],
