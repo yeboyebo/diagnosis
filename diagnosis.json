@@ -129,6 +129,14 @@
             {
                 "path": "controllers/api/diagnosis/process/",
                 "name": "controller_api_process__failed.py"
+            },
+            {
+                "path": "apps/diagnosis/templates/diagnosis/plantillas/",
+                "name": "app_diagnosis__elganso_inventarios.json"
+            },
+            {
+                "path": "apps/diagnosis/templates/diagnosis/plantillas/",
+                "name": "app_diagnosis__elganso_inventarios_log.json"
             }
         ],
         "deleteFile": [],

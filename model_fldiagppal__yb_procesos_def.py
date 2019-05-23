@@ -206,8 +206,10 @@ class diagnosis(interna):
                 proceso = cursor.valueBuffer("proceso")
                 if cursor.valueBuffer("cliente") == "elganso" and proceso.startswith("egsync"):
                     codTienda = proceso[-4:]
-                    proceso = proceso[:len(proceso) - 4]
+                    # proceso = proceso[:len(proceso) - 4]
                     data["codtienda"] = codTienda
+
+                    url = url[:-4]
 
                 resul = notifications.post_request(url, header, data)
 

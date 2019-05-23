@@ -57,6 +57,20 @@
             "COLOR": "rgb(6, 180, 0)"
         },
         {
+            "NAME": "elgansoinvproc",
+            "TEXT": "ELGANSO INVENTARIOS",
+            "URL": "diagnosis/yb_procesos/custom/elganso_inventarios",
+            "ICON": "loop",
+            "COLOR": "rgb(6, 180, 0)"
+        },
+        {
+            "NAME": "elgansoinvlog",
+            "TEXT": "ELGANSO INVENTARIOS LOG",
+            "URL": "diagnosis/yb_log/custom/elganso_inventarios_log",
+            "ICON": "list",
+            "COLOR": "rgb(6, 180, 0)"
+        },
+        {
             "NAME": "guanabanaactivity",
             "TEXT": "GUANABANA ACTIVIDAD",
             "URL": "diagnosis/yb_procesos/custom/guanabana_activity",
