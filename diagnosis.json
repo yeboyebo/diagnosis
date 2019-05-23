@@ -129,6 +129,10 @@
             {
                 "path": "controllers/api/diagnosis/process/",
                 "name": "controller_api_process__failed.py"
+            },
+            {
+                "path": "apps/diagnosis/templates/diagnosis/plantillas/",
+                "name": "app_diagnosis__globalprot_log.json"
             }
         ],
         "deleteFile": [],
