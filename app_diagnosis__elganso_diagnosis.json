@@ -11,6 +11,14 @@
     },
     "title": "Diagnosis",
     "layout": {
+        "botonLog": {
+            "componente": "YBButton",
+            "label": "Ir a log",
+            "buttonType": "raised",
+            "action": {
+                "key": "gotolog"
+            }
+        },
         "queryGrid_diagnosismonitor": {
             "componente": "YBList",
             "prefix": "diagnosismonitor",
@@ -24,5 +32,10 @@
             "rowclick": ""
         }
     },
-    "acciones": {}
+    "acciones": {
+        "gotolog": {
+            "action": "url",
+            "url": "diagnosis/yb_log/custom/elganso_diagnosis_log"
+        }
+    }
 }

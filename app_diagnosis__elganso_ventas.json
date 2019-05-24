@@ -9,6 +9,14 @@
     "schema": {},
     "title": "Ventas",
     "layout": {
+        "botonLog": {
+            "componente": "YBButton",
+            "label": "Ir a log",
+            "buttonType": "raised",
+            "action": {
+                "key": "gotolog"
+            }
+        },
         "procesosGrid": {
             "componente": "YBList",
             "class": "claseGrid",
@@ -47,6 +55,10 @@
             "prefix": "yb_procesos",
             "serverAction": "stop",
             "icon": "pause_circle_outline"
+        },
+        "gotolog": {
+            "action": "url",
+            "url": "diagnosis/yb_log/custom/elganso_ventas_log"
         }
     }
 }

@@ -24,17 +24,6 @@
                         "gpsyncusers": "Sincro Clientes",
                         "gpsyncorders": "Sincro Pedidos"
                     }
-                },
-                "texto": {
-                    "filterType": "multiseleccion",
-                    "title": "Excluir del log",
-                    "criterio": "nin",
-                    "values": {
-                        "Éxito. No hay datos que sincronizar": "No hay datos",
-                        "Éxito. No es momento de sincronizar": "No es momento",
-                        "Info. Proceso detenido": "Detenido",
-                        "Info. Proceso arrancado": "Arrancado"
-                    }
                 }
             },
             "paginacion": true,

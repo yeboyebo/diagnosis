@@ -10,6 +10,14 @@
     "schema": {},
     "title": "Log Ventas",
     "layout": {
+        "botonProcesos": {
+            "componente": "YBButton",
+            "label": "Ir a procesos",
+            "buttonType": "raised",
+            "action": {
+                "key": "gotoproccess"
+            }
+        },
         "logGrid": {
             "componente": "YBGrid",
             "class": "claseGrid",
@@ -24,5 +32,10 @@
             ]
         }
     },
-    "acciones": {}
+    "acciones": {
+        "gotoproccess": {
+            "action": "url",
+            "url": "diagnosis/yb_procesos/custom/elganso_ventas"
+        }
+    }
 }

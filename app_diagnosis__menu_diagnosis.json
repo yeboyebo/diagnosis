@@ -11,63 +11,28 @@
             "NAME": "elgansodiagproc",
             "TEXT": "ELGANSO DIAGNOSIS",
             "URL": "diagnosis/yb_log/custom/elganso_diagnosis",
-            "ICON": "loop",
-            "COLOR": "rgb(182, 0, 6)"
-        },
-        {
-            "NAME": "elgansodiaglog",
-            "TEXT": "ELGANSO DIAGNOSIS LOG",
-            "URL": "diagnosis/yb_log/custom/elganso_diagnosis_log",
-            "ICON": "list",
+            "ICON": "local_hospital",
             "COLOR": "rgb(182, 0, 6)"
         },
         {
             "NAME": "elgansomgproc",
             "TEXT": "ELGANSO MAGENTO",
             "URL": "diagnosis/yb_procesos/custom/elganso_magento",
-            "ICON": "loop",
-            "COLOR": "rgb(0, 103, 206)"
-        },
-        {
-            "NAME": "elgansomglog",
-            "TEXT": "ELGANSO MAGENTO LOG",
-            "URL": "diagnosis/yb_log/custom/elganso_magento_log",
-            "ICON": "list",
-            "COLOR": "rgb(0, 103, 206)"
-        },
-        {
-            "NAME": "elgansomgerror",
-            "TEXT": "ELGANSO MAGENTO ERRORES",
-            "URL": "diagnosis/yb_procesos_erroneos/custom/elganso_magento_error",
-            "ICON": "error_outline",
+            "ICON": "language",
             "COLOR": "rgb(0, 103, 206)"
         },
         {
             "NAME": "elgansovtproc",
             "TEXT": "ELGANSO VENTAS",
             "URL": "diagnosis/yb_procesos/custom/elganso_ventas",
-            "ICON": "loop",
-            "COLOR": "rgb(6, 180, 0)"
-        },
-        {
-            "NAME": "elgansovtlog",
-            "TEXT": "ELGANSO VENTAS LOG",
-            "URL": "diagnosis/yb_log/custom/elganso_ventas_log",
-            "ICON": "list",
+            "ICON": "store",
             "COLOR": "rgb(6, 180, 0)"
         },
         {
             "NAME": "elgansoinvproc",
             "TEXT": "ELGANSO INVENTARIOS",
             "URL": "diagnosis/yb_procesos/custom/elganso_inventarios",
-            "ICON": "loop",
-            "COLOR": "rgb(6, 180, 0)"
-        },
-        {
-            "NAME": "elgansoinvlog",
-            "TEXT": "ELGANSO INVENTARIOS LOG",
-            "URL": "diagnosis/yb_log/custom/elganso_inventarios_log",
-            "ICON": "list",
+            "ICON": "storage",
             "COLOR": "rgb(6, 180, 0)"
         },
         {
@@ -81,14 +46,7 @@
             "NAME": "guanabanamgproc",
             "TEXT": "GUANABANA MAGENTO",
             "URL": "diagnosis/yb_procesos/custom/guanabana_magento",
-            "ICON": "loop",
-            "COLOR": "rgb(0, 103, 206)"
-        },
-        {
-            "NAME": "guanabanamglog",
-            "TEXT": "GUANABANA MAGENTO LOG",
-            "URL": "diagnosis/yb_log/custom/guanabana_magento_log",
-            "ICON": "list",
+            "ICON": "language",
             "COLOR": "rgb(0, 103, 206)"
         },
         {
@@ -102,21 +60,14 @@
             "NAME": "sanhigiamgproc",
             "TEXT": "SANHIGIA MAGENTO",
             "URL": "diagnosis/yb_procesos/custom/sanhigia_magento",
-            "ICON": "loop",
-            "COLOR": "rgb(0, 103, 206)"
-        },
-        {
-            "NAME": "sanhigiamglog",
-            "TEXT": "SANHIGIA MAGENTO LOG",
-            "URL": "diagnosis/yb_log/custom/sanhigia_magento_log",
-            "ICON": "list",
+            "ICON": "language",
             "COLOR": "rgb(0, 103, 206)"
         },
         {
             "NAME": "globalprotlog",
-            "TEXT": "GLOBALPROT LOG",
+            "TEXT": "GLOBALPROT DRUPAL",
             "URL": "diagnosis/yb_log/custom/globalprot_log",
-            "ICON": "list",
+            "ICON": "language",
             "COLOR": "rgb(0, 103, 206)"
         }
 
