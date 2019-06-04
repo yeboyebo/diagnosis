@@ -1,0 +1,54 @@
+{
+    "querystring": {
+        "p_l": 50,
+        "p_c": true,
+        "o_1": "timestamp",
+        "o_2": "id",
+        "s_resuelto__exact": false,
+        "s_cliente__exact": "globalprot",
+        "s_proceso__startswith": "gpsync"
+    },
+    "schema": {},
+    "title": "Globalprot Drupal Errores",
+    "layout": {
+        "botonLog": {
+            "componente": "YBButton",
+            "label": "Ir a log",
+            "buttonType": "raised",
+            "action": {
+                "key": "gotolog"
+            }
+        },
+        "erroneosGrid": {
+            "componente": "YBList",
+            "class": "claseGrid",
+            "prefix": "yb_procesos_erroneos",
+            "filter": "buscador",
+            "paginacion": true,
+            "columns": [
+                {"tipo": "field", "listpos": "title", "key": "codregistro"},
+                {"tipo": "field", "listpos": "subtitle", "key": "timestamp"},
+                {"tipo": "field", "listpos": "secondaryitem", "key": "proceso"},
+                {"tipo": "field", "listpos": "body", "key": "error", "avatar": true},
+                {
+                    "tipo": "act",
+                    "key": "resolve",
+                    "label": "Resolver",
+                    "success": [{"slot": "refrescar"}]
+                }
+            ]
+        }
+    },
+    "acciones": {
+        "resolve": {
+            "action": "legacy",
+            "prefix": "yb_procesos_erroneos",
+            "serverAction": "resolve",
+            "icon": "check"
+        },
+        "gotolog": {
+            "action": "url",
+            "url": "diagnosis/yb_log/custom/globalprot_log"
+        }
+    }
+}

@@ -63,13 +63,20 @@
             "ICON": "language",
             "COLOR": "rgb(0, 103, 206)"
         },
+         {
+            "NAME": "globalprotactivity",
+            "TEXT": "GLOBALPROT ACTIVIDAD",
+            "URL": "diagnosis/yb_procesos/custom/globalprot_activity",
+            "ICON": "settings",
+            "COLOR": "rgb(0, 0, 0)"
+        },
         {
-            "NAME": "globalprotlog",
+            "NAME": "globalprotproc",
             "TEXT": "GLOBALPROT DRUPAL",
-            "URL": "diagnosis/yb_log/custom/globalprot_log",
+            "URL": "diagnosis/yb_procesos/custom/globalprot_drupal",
             "ICON": "language",
             "COLOR": "rgb(0, 103, 206)"
-        }
 
+        }               
     ]
 }

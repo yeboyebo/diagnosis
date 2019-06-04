@@ -151,7 +151,6 @@ class diagnosis(interna):
                 return "{}/{}".format(server_url, proceso), False
 
         except Exception as e:
-            print(e)
             qsatype.debug(e)
             return False
 
@@ -224,7 +223,6 @@ class diagnosis(interna):
             return resul
 
         except Exception as e:
-            print(e)
             qsatype.debug(e)
             return False
 
@@ -232,7 +230,6 @@ class diagnosis(interna):
 
     def diagnosis_stop(self, model, cursor):
         if not cursor.valueBuffer("activo"):
-            print("Ya está inactivo")
             return True
 
         if not qsatype.FLUtil.sqlUpdate("yb_procesos", ["activo"], [False], "id = " + str(cursor.valueBuffer("id"))):
@@ -260,7 +257,6 @@ class diagnosis(interna):
                 raise Exception("Mala respuesta")
 
         except Exception as e:
-            print(e)
             qsatype.debug(e)
             return False
 
@@ -296,7 +292,6 @@ class diagnosis(interna):
                 raise Exception("Mala respuesta")
 
         except Exception as e:
-            print(e)
             qsatype.debug(e)
             return False
 

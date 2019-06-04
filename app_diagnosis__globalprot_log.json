@@ -8,8 +8,24 @@
         "s_tipo__startswith": "gpsync"
     },
     "schema": {},
-    "title": "Log Globalprot",
+    "title": "Log Drupal",
     "layout": {
+        "botonProcesos": {
+            "componente": "YBButton",
+            "label": "Ir a procesos",
+            "buttonType": "raised",
+            "action": {
+                "key": "gotoproccess"
+            }
+        },
+        "botonErroneos": {
+            "componente": "YBButton",
+            "label": "Ir a erróneos",
+            "buttonType": "raised",
+            "action": {
+                "key": "gotoerror"
+            }
+        },
         "logGrid": {
             "componente": "YBGrid",
             "class": "claseGrid",
@@ -24,6 +40,17 @@
                         "gpsyncusers": "Sincro Clientes",
                         "gpsyncorders": "Sincro Pedidos"
                     }
+                },
+                "texto": {
+                    "filterType": "multiseleccion",
+                    "title": "Excluir del log",
+                    "criterio": "nin",
+                    "values": {
+                        "Éxito. No hay datos que sincronizar": "No hay datos",
+                        "Éxito. No es momento de sincronizar": "No es momento",
+                        "Info. Proceso detenido": "Detenido",
+                        "Info. Proceso arrancado": "Arrancado"
+                    }
                 }
             },
             "paginacion": true,
@@ -34,5 +61,14 @@
             ]
         }
     },
-    "acciones": {}
+    "acciones": {
+        "gotoproccess": {
+            "action": "url",
+            "url": "diagnosis/yb_procesos/custom/globalprot_drupal"
+        },
+        "gotoerror": {
+            "action": "url",
+            "url": "diagnosis/yb_procesos_erroneos/custom/globalprot_drupal_error"
+        }
+    }
 }
