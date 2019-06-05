@@ -61,6 +61,8 @@ class diagnosis(interna):
             desc = "Verificación Contable"
         elif desc == "diagbloqueos":
             desc = "Bloqueos"
+        elif desc == "diagsincroventasobjeto":
+            desc = "Sincro Ventas Objeto"
 
         return desc
 
