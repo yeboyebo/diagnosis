@@ -10,12 +10,19 @@
     "schema": {},
     "title": "Log Diagnosis",
     "layout": {
-        "botonProcesos": {
-            "componente": "YBButton",
-            "label": "Ir a procesos",
-            "buttonType": "raised",
-            "action": {
-                "key": "gotoproccess"
+        "groupBoxAcciones": {
+            "componente": "YBGroupBox",
+            "className": "actionGB",
+            "layout": {
+                "botonProcesos": {
+                    "componente": "YBButton",
+                    "label": "Ir a procesos",
+                    "buttonType": "raised",
+                    "className": "floatLeft",
+                    "action": {
+                        "key": "gotoproccess"
+                    }
+                }
             }
         },
         "logGrid": {

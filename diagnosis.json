@@ -153,6 +153,14 @@
             {
                 "path": "apps/diagnosis/templates/diagnosis/plantillas/",
                 "name": "app_diagnosis__globalprot_activity.json"
+            },
+            {
+                "name": "app_diagnosis__elganso_inventarios_error.json",
+                "path": "apps/diagnosis/templates/diagnosis/plantillas/"
+            },
+            {
+                "name": "app_diagnosis__elganso_ventas_error.json",
+                "path": "apps/diagnosis/templates/diagnosis/plantillas/"
             }
         ],
         "deleteFile": [],

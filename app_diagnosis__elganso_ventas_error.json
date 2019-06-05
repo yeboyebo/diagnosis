@@ -5,11 +5,11 @@
         "o_1": "timestamp",
         "o_2": "id",
         "s_resuelto__exact": false,
-        "s_cliente__exact": "globalprot",
-        "s_proceso__startswith": "gpsync"
+        "s_cliente__exact": "elganso",
+        "s_proceso__startswith": "egsyncvt"
     },
     "schema": {},
-    "title": "Globalprot Drupal Errores",
+    "title": "Ventas Errores",
     "layout": {
         "groupBoxAcciones": {
             "componente": "YBGroupBox",
@@ -55,7 +55,7 @@
         },
         "gotolog": {
             "action": "url",
-            "url": "diagnosis/yb_log/custom/globalprot_log"
+            "url": "diagnosis/yb_log/custom/elganso_ventas_log"
         }
     }
 }

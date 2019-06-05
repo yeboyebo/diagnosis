@@ -10,20 +10,28 @@
     "schema": {},
     "title": "Log Magento",
     "layout": {
-        "botonProcesos": {
-            "componente": "YBButton",
-            "label": "Ir a procesos",
-            "buttonType": "raised",
-            "action": {
-                "key": "gotoproccess"
-            }
-        },
-        "botonErroneos": {
-            "componente": "YBButton",
-            "label": "Ir a erróneos",
-            "buttonType": "raised",
-            "action": {
-                "key": "gotoerror"
+        "groupBoxAcciones": {
+            "componente": "YBGroupBox",
+            "className": "actionGB",
+            "layout": {
+                "botonProcesos": {
+                    "componente": "YBButton",
+                    "label": "Ir a procesos",
+                    "buttonType": "raised",
+                    "className": "floatLeft",
+                    "action": {
+                        "key": "gotoproccess"
+                    }
+                },
+                "botonErroneos": {
+                    "componente": "YBButton",
+                    "label": "Ir a erróneos",
+                    "buttonType": "raised",
+                    "className": "floatLeft",
+                    "action": {
+                        "key": "gotoerror"
+                    }
+                }
             }
         },
         "logGrid": {

@@ -9,12 +9,19 @@
     "schema": {},
     "title": "Inventarios",
     "layout": {
-        "botonLog": {
-            "componente": "YBButton",
-            "label": "Ir a log",
-            "buttonType": "raised",
-            "action": {
-                "key": "gotolog"
+        "groupBoxAcciones": {
+            "componente": "YBGroupBox",
+            "className": "actionGB",
+            "layout": {
+                "botonLog": {
+                    "componente": "YBButton",
+                    "label": "Ir a log",
+                    "buttonType": "raised",
+                    "className": "floatLeft",
+                    "action": {
+                        "key": "gotolog"
+                    }
+                }
             }
         },
         "procesosGrid": {
