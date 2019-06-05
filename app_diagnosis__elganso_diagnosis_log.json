@@ -43,7 +43,8 @@
                         "diaganalyticalways": "Analytic Always",
                         "diagdevolucionesweb": "Devoluciones Web",
                         "diagsolrepoweb": "Sol. repo. Web",
-                        "diagbloqueos": "Bloqueos"
+                        "diagbloqueos": "Bloqueos",
+                        "diagsincroventasobjeto": "Sincro Ventas Objeto"
                     }
                 }
             },
