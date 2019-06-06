@@ -115,7 +115,7 @@
                 "path": "models/fldiagppal/"
             },
             {
-                "name": "controller_api_log__append.py",
+                "name": "ctrl_api_diagnosis_log__append.py",
                 "path": "controllers/api/diagnosis/log/"
             },
             {
@@ -123,12 +123,12 @@
                 "path": "models/fldiagppal/"
             },
             {
-                "name": "controller_api_process__isactive.py",
+                "name": "ctrl_api_diagnosis_process__isactive.py",
                 "path": "controllers/api/diagnosis/process/"
             },
             {
                 "path": "controllers/api/diagnosis/process/",
-                "name": "controller_api_process__failed.py"
+                "name": "ctrl_api_diagnosis_process__failed.py"
             },
             {
                 "path": "apps/diagnosis/templates/diagnosis/plantillas/",
