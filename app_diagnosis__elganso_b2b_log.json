@@ -5,10 +5,10 @@
         "o_1": "-timestamp",
         "o_2": "-id",
         "s_cliente__exact": "elganso",
-        "s_tipo__startswith": "mgsync"
+        "s_tipo__startswith": "mgb2b"
     },
     "schema": {},
-    "title": "Log Magento",
+    "title": "Elganso B2B Log",
     "layout": {
         "groupBoxAcciones": {
             "componente": "YBGroupBox",
@@ -44,12 +44,7 @@
                     "filterType": "multiseleccion",
                     "title": "Tipo sincro",
                     "values": {
-                        "mgsyncorders": "Sincro Pedidos",
-                        "mgsyncstock": "Sincro Stock",
-                        "mgsyncpoints": "Sincro Puntos",
-                        "mgsynccust": "Sincro Clientes",
-                        "mgsyncprices": "Sincro Precios",
-                        "mgsyncdevweb": "Sincro Devoluciones"
+                        "mgsyncproductsb2b": "Sincro Productos"
                     }
                 },
                 "texto": {
@@ -75,11 +70,11 @@
     "acciones": {
         "gotoproccess": {
             "action": "url",
-            "url": "diagnosis/yb_procesos/custom/elganso_magento"
+            "url": "diagnosis/yb_procesos/custom/elganso_b2b"
         },
         "gotoerror": {
             "action": "url",
-            "url": "diagnosis/yb_procesos_erroneos/custom/elganso_magento_error"
+            "url": "diagnosis/yb_procesos_erroneos/custom/elganso_b2b_error"
         }
     }
 }

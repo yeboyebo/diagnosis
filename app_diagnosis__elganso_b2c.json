@@ -7,7 +7,7 @@
         "s_proceso__startswith": "mgsync"
     },
     "schema": {},
-    "title": "Magento",
+    "title": "Elganso B2C",
     "layout": {
         "groupBoxAcciones": {
             "componente": "YBGroupBox",
@@ -65,7 +65,7 @@
         },
         "gotolog": {
             "action": "url",
-            "url": "diagnosis/yb_log/custom/elganso_magento_log"
+            "url": "diagnosis/yb_log/custom/elganso_b2c_log"
         }
     }
 }

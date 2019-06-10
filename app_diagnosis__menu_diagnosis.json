@@ -16,24 +16,31 @@
         },
         {
             "NAME": "elgansomgproc",
-            "TEXT": "ELGANSO MAGENTO",
-            "URL": "diagnosis/yb_procesos/custom/elganso_magento",
+            "TEXT": "ELGANSO B2C",
+            "URL": "diagnosis/yb_procesos/custom/elganso_b2c",
             "ICON": "language",
-            "COLOR": "rgb(0, 103, 206)"
+            "COLOR": "rgb(0, 103, 186)"
+        },
+        {
+            "NAME": "elgansob2b",
+            "TEXT": "ELGANSO B2B",
+            "URL": "diagnosis/yb_procesos/custom/elganso_b2b",
+            "ICON": "language",
+            "COLOR": "rgb(0, 103, 186)"
         },
         {
             "NAME": "elgansovtproc",
             "TEXT": "ELGANSO VENTAS",
             "URL": "diagnosis/yb_procesos/custom/elganso_ventas",
             "ICON": "store",
-            "COLOR": "rgb(6, 180, 0)"
+            "COLOR": "rgb(6, 160, 0)"
         },
         {
             "NAME": "elgansoinvproc",
             "TEXT": "ELGANSO INVENTARIOS",
             "URL": "diagnosis/yb_procesos/custom/elganso_inventarios",
             "ICON": "storage",
-            "COLOR": "rgb(6, 180, 0)"
+            "COLOR": "rgb(6, 160, 0)"
         },
         {
             "NAME": "guanabanaactivity",
@@ -47,7 +54,7 @@
             "TEXT": "GUANABANA MAGENTO",
             "URL": "diagnosis/yb_procesos/custom/guanabana_magento",
             "ICON": "language",
-            "COLOR": "rgb(0, 103, 206)"
+            "COLOR": "rgb(0, 103, 186)"
         },
         {
             "NAME": "sanhigiaactivity",
@@ -61,7 +68,7 @@
             "TEXT": "SANHIGIA MAGENTO",
             "URL": "diagnosis/yb_procesos/custom/sanhigia_magento",
             "ICON": "language",
-            "COLOR": "rgb(0, 103, 206)"
+            "COLOR": "rgb(0, 103, 186)"
         },
          {
             "NAME": "globalprotactivity",
@@ -75,7 +82,7 @@
             "TEXT": "GLOBALPROT DRUPAL",
             "URL": "diagnosis/yb_procesos/custom/globalprot_drupal",
             "ICON": "language",
-            "COLOR": "rgb(0, 103, 206)"
+            "COLOR": "rgb(0, 103, 186)"
 
         }               
     ]

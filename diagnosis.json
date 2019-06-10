@@ -47,10 +47,6 @@
                 "path": "apps/diagnosis/templates/diagnosis/"
             },
             {
-                "name": "app_diagnosis__elganso_magento_log.json",
-                "path": "apps/diagnosis/templates/diagnosis/plantillas/"
-            },
-            {
                 "name": "app_diagnosis__guanabana_activity.json",
                 "path": "apps/diagnosis/templates/diagnosis/plantillas/"
             },
@@ -83,10 +79,6 @@
                 "path": "apps/diagnosis/templates/diagnosis/plantillas/"
             },
             {
-                "name": "app_diagnosis__elganso_magento.json",
-                "path": "apps/diagnosis/templates/diagnosis/plantillas/"
-            },
-            {
                 "name": "app_diagnosis__elganso_ventas.json",
                 "path": "apps/diagnosis/templates/diagnosis/plantillas/"
             },
@@ -101,10 +93,6 @@
             {
                 "name": "app_diagnosis__views_diagnosis.py",
                 "path": "apps/diagnosis/viewset/"
-            },
-            {
-                "path": "apps/diagnosis/templates/diagnosis/plantillas/",
-                "name": "app_diagnosis__elganso_magento_error.json"
             },
             {
                 "name": "model_fldiagppal__yb_procesos_erroneos.py",
@@ -160,6 +148,30 @@
             },
             {
                 "name": "app_diagnosis__elganso_ventas_error.json",
+                "path": "apps/diagnosis/templates/diagnosis/plantillas/"
+            },
+            {
+                "name": "app_diagnosis__elganso_b2b_log.json",
+                "path": "apps/diagnosis/templates/diagnosis/plantillas/"
+            },
+            {
+                "name": "app_diagnosis__elganso_b2b_error.json",
+                "path": "apps/diagnosis/templates/diagnosis/plantillas/"
+            },
+            {
+                "name": "app_diagnosis__elganso_b2b.json",
+                "path": "apps/diagnosis/templates/diagnosis/plantillas/"
+            },
+            {
+                "name": "app_diagnosis__elganso_b2c_log.json",
+                "path": "apps/diagnosis/templates/diagnosis/plantillas/"
+            },
+            {
+                "name": "app_diagnosis__elganso_b2c.json",
+                "path": "apps/diagnosis/templates/diagnosis/plantillas/"
+            },
+            {
+                "name": "app_diagnosis__elganso_b2c_error.json",
                 "path": "apps/diagnosis/templates/diagnosis/plantillas/"
             }
         ],

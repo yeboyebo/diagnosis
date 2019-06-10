@@ -29,31 +29,31 @@ class diagnosis(interna):
 
     def diagnosis_getForeignFields(self, model, template=None):
         ff = [
-            {'verbose_name': 'ultsincro', 'func': 'field_ultsincro'}
+            {"verbose_name": "ultsincro", "func": "field_ultsincro"}
         ]
 
         if template.endswith("activity"):
-            ff.append({'verbose_name': 'activas', 'func': 'field_activas'})
-            ff.append({'verbose_name': 'programadas', 'func': 'field_programadas'})
-            ff.append({'verbose_name': 'reservadas', 'func': 'field_reservadas'})
+            ff.append({"verbose_name": "activas", "func": "field_activas"})
+            ff.append({"verbose_name": "programadas", "func": "field_programadas"})
+            ff.append({"verbose_name": "reservadas", "func": "field_reservadas"})
 
         return ff
 
     def diagnosis_field_activas(self, model):
         try:
-            return cacheController.getSessionVariable('activity')['active']
+            return cacheController.getSessionVariable("activity")["active"]
         except Exception:
             return None
 
     def diagnosis_field_programadas(self, model):
         try:
-            return cacheController.getSessionVariable('activity')['scheduled']
+            return cacheController.getSessionVariable("activity")["scheduled"]
         except Exception:
             return None
 
     def diagnosis_field_reservadas(self, model):
         try:
-            return cacheController.getSessionVariable('activity')['reserved']
+            return cacheController.getSessionVariable("activity")["reserved"]
         except Exception:
             return None
 
@@ -61,7 +61,7 @@ class diagnosis(interna):
         q = qsatype.FLSqlQuery()
         q.setSelect("timestamp, texto")
         q.setFrom("yb_log")
-        q.setWhere("cliente = '" + model.cliente + "' AND tipo = '" + model.proceso + "' AND texto LIKE 'Éxito%' ORDER BY timestamp DESC LIMIT 1")
+        q.setWhere("cliente = '{}' AND tipo = '{}' AND texto LIKE 'Éxito%' ORDER BY timestamp DESC LIMIT 1".format(model.cliente, model.proceso))
 
         if not q.exec_():
             return "Error. Falló la query."
@@ -75,15 +75,15 @@ class diagnosis(interna):
         h = stm[11:19]
         ahora = qsatype.Date()
         if f == ahora.toString()[:10]:
-            if parseFloat(str(ahora - tm)[2:4]) < 5.0:
-                return "Sincronizado " + h
+            if parseFloat(str(ahora - tm)[2:4]) < 10.0:
+                return "Sincronizado {}".format(h)
             f = "Hoy"
         elif f == qsatype.FLUtil.addDays(qsatype.Date(), -1)[:10]:
             f = "Ayer"
         else:
             f = qsatype.FLUtil.dateAMDtoDMA(f)
 
-        return f + " - " + h
+        return "{} - {}".format(f, h)
 
     def diagnosis_get_server_url(self, cliente, force_notdb=False):
         q = qsatype.FLSqlQuery()
@@ -101,7 +101,7 @@ class diagnosis(interna):
             else:
                 url = q.value("test_url")
 
-            return "{}sync".format(url), True
+            return url, True
         else:
             if qsatype.FLUtil.isInProd():
                 if cliente == "elganso":
@@ -127,7 +127,7 @@ class diagnosis(interna):
         try:
             force_notdb = False
 
-            if cliente == "elganso" and (proceso == "mgsyncdevweb" or proceso.startswith("egsync")):
+            if cliente == "elganso" and proceso == "mgsyncdevweb":
                 force_notdb = True
 
             server_url, frombd = self.get_server_url(cliente, force_notdb=force_notdb)
@@ -154,6 +154,14 @@ class diagnosis(interna):
             qsatype.debug(e)
             return False
 
+    def diagnosis_get_extra_data(self, cliente, proceso):
+        extra_data = {}
+
+        if cliente == "elganso" and proceso.startswith("egsync"):
+            extra_data["codtienda"] = proceso[-4:].upper()
+
+        return extra_data
+
     def diagnosis_start(self, model, cursor):
         try:
             if cursor.valueBuffer("activo"):
@@ -173,6 +181,8 @@ class diagnosis(interna):
                     "continuous": True,
                     "production": qsatype.FLUtil.isInProd()
                 }
+
+                data.update(self.get_extra_data(cliente, proceso))
 
                 resul = notifications.post_request(url, header, data)
 
@@ -205,7 +215,6 @@ class diagnosis(interna):
                 proceso = cursor.valueBuffer("proceso")
                 if cursor.valueBuffer("cliente") == "elganso" and proceso.startswith("egsync"):
                     codTienda = proceso[-4:]
-                    # proceso = proceso[:len(proceso) - 4]
                     data["codtienda"] = codTienda
 
                     url = url[:-4]
@@ -215,7 +224,7 @@ class diagnosis(interna):
                 if not resul:
                     return False
 
-            if not qsatype.FLUtil.sqlUpdate("yb_procesos", ["activo"], [True], "id = " + str(cursor.valueBuffer("id"))):
+            if not qsatype.FLUtil.sqlUpdate("yb_procesos", ["activo"], [True], "id = {}".format(cursor.valueBuffer("id"))):
                 return False
 
             diagppal.iface.log("Info. Proceso arrancado", proceso, cliente)
@@ -232,7 +241,7 @@ class diagnosis(interna):
         if not cursor.valueBuffer("activo"):
             return True
 
-        if not qsatype.FLUtil.sqlUpdate("yb_procesos", ["activo"], [False], "id = " + str(cursor.valueBuffer("id"))):
+        if not qsatype.FLUtil.sqlUpdate("yb_procesos", ["activo"], [False], "id = {}".format(cursor.valueBuffer("id"))):
             return False
 
         return True
@@ -246,9 +255,9 @@ class diagnosis(interna):
                 return False
 
             if frombd:
-                url = "{}/celery".format(url)
-
-            url = "{}/getactivity".format(url)
+                url = "{}/celery/activity/get".format(url)
+            else:
+                url = "{}/getactivity".format(url)
 
             response = requests.get(url)
             if response and response.status_code == 200:
@@ -269,7 +278,7 @@ class diagnosis(interna):
                 return False
 
             if frombd:
-                url = "{}/celery/revoke/{}".format(url, oParam["id"])
+                url = "{}/celery/tasks/revoke/{}".format(url, oParam["id"])
 
                 response = requests.get(url)
                 if response and response.status_code == 200:
@@ -323,6 +332,9 @@ class diagnosis(interna):
 
     def get_url(self, cliente, proceso):
         return self.ctx.diagnosis_get_url(cliente, proceso)
+
+    def get_extra_data(self, cliente, proceso):
+        return self.ctx.diagnosis_get_extra_data(cliente, proceso)
 
     def getActivity(self, name):
         return self.ctx.diagnosis_getActivity(name)

@@ -6,10 +6,10 @@
         "o_2": "id",
         "s_resuelto__exact": false,
         "s_cliente__exact": "elganso",
-        "s_proceso__startswith": "mgsync"
+        "s_proceso__startswith": "mgb2b"
     },
     "schema": {},
-    "title": "Magento Errores",
+    "title": "Elganso B2B Errores",
     "layout": {
         "groupBoxAcciones": {
             "componente": "YBGroupBox",
@@ -55,7 +55,7 @@
         },
         "gotolog": {
             "action": "url",
-            "url": "diagnosis/yb_log/custom/elganso_magento_log"
+            "url": "diagnosis/yb_log/custom/elganso_b2b_log"
         }
     }
 }
