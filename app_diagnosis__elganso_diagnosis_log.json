@@ -44,7 +44,8 @@
                         "diagdevolucionesweb": "Devoluciones Web",
                         "diagsolrepoweb": "Sol. repo. Web",
                         "diagbloqueos": "Bloqueos",
-                        "diagsincroventasobjeto": "Sincro Ventas Objeto"
+                        "diagsincroventasobjeto": "Sincro Ventas Objeto",
+                        "diagmovistockventas": "Movimientos de stock de ventas"
                     }
                 }
             },

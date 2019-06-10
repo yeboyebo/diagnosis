@@ -63,6 +63,8 @@ class diagnosis(interna):
             desc = "Bloqueos"
         elif desc == "diagsincroventasobjeto":
             desc = "Sincro Ventas Objeto"
+        elif desc == "diagmovistockventas":
+            desc = "Movimientos de stock de ventas"
 
         return desc
 

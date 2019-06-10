@@ -38,7 +38,7 @@ class diagnosis(interna):
         proceso = params['proceso']
 
         procContinuos = ["mgsyncstock", "mgsyncpoints", "mgsyncorders", "mgsynccust", "mgsyncprices"]
-        procDiag = ["diagfacturacionventas", "diagventasmagento", "diagsincroventas", "diagverificacioncontable", "diagsaldovales", "diagdevolucionesweb", "diaganalyticalways", "diagcontanalitica", "diagsolrepoweb", "diagegpda", "diagbloqueos", "diagsincroventasobjeto"]
+        procDiag = ["diagfacturacionventas", "diagventasmagento", "diagsincroventas", "diagverificacioncontable", "diagsaldovales", "diagdevolucionesweb", "diaganalyticalways", "diagcontanalitica", "diagsolrepoweb", "diagegpda", "diagbloqueos", "diagsincroventasobjeto", "diagmovistockventas"]
 
         if proceso in procContinuos:
             response = _i.checkContinuos(cliente, proceso)
@@ -183,6 +183,8 @@ class diagnosis(interna):
             return datetime.timedelta(hours=3)
         elif proceso == "diagsincroventasobjeto":
             return datetime.timedelta(hours=6)
+        elif proceso == "diagmovistockventas":
+            return datetime.timedelta(hours=6)
         else:
             return 0
 
@@ -212,6 +214,8 @@ class diagnosis(interna):
         elif proceso == "diagbloqueos":
             return ["javier", "santiago", "jesus", "jose", "ivan"]
         elif proceso == "diagsincroventasobjeto":
+            return ["lorena", "santiago", "jesus"]
+        elif proceso == "diagmovistockventas":
             return ["lorena", "santiago", "jesus"]
         else:
             return ["javier"]
