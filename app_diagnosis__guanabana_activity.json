@@ -3,7 +3,6 @@
     "querystring": {
         "p_l": 1,
         "p_c": true,
-        "o_1": "proceso",
         "s_cliente__exact": "guanabana"
     },
     "schema": {
@@ -19,32 +18,6 @@
     },
     "title": "Actividad",
     "layout": {
-        "procesosGrid": {
-            "label": "Procesos Activos",
-            "componente": "YBList",
-            "class": "claseGrid",
-            "prefix": "yb_procesos",
-            "filter": "buscador",
-            "paginacion": true,
-            "columns": [
-                {"tipo": "field", "listpos": "subtitle", "key": "proceso", "flex": 1},
-                {"tipo": "field", "listpos": "title", "key": "descripcion", "flex": 5},
-                {"tipo": "field", "listpos": "secondaryitem", "key": "activo", "flex": 1, "avatar": true},
-                {"tipo": "foreignfield", "key": "ultsincro", "flex": 1, "listpos": "body"},
-                {
-                    "tipo": "act",
-                    "key": "start",
-                    "label": "Iniciar",
-                    "success": [{"slot": "refrescar", "custom": "guanabana_activity"}]
-                },
-                {
-                    "tipo": "act",
-                    "key": "stop",
-                    "label": "Parar",
-                    "success": [{"slot": "refrescar", "custom": "guanabana_activity"}]
-                }
-            ]
-        },
         "jsonGrid_activemonitor": {
             "componente": "YBList",
             "label": "Tareas Activas",
@@ -101,18 +74,6 @@
         }
     },
     "acciones": {
-        "start": {
-            "action": "legacy",
-            "prefix": "yb_procesos",
-            "serverAction": "start",
-            "icon": "play_circle_filled"
-        },
-        "stop": {
-            "action": "legacy",
-            "prefix": "yb_procesos",
-            "serverAction": "stop",
-            "icon": "pause_circle_outline"
-        },
         "revoke": {
             "action": "legacy",
             "prefix": "yb_procesos",
