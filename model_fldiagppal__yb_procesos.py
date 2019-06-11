@@ -38,6 +38,14 @@ class diagnosis_yb_procesos(interna_yb_procesos, helpers.MixinConAcciones):
     def stop(self, cursor):
         return form.iface.stop(self, cursor)
 
+    @helpers.decoradores.accion(aqparam=["oParam"])
+    def startall(self, oParam):
+        return form.iface.startall(self, oParam)
+
+    @helpers.decoradores.accion(aqparam=["oParam"])
+    def stopall(self, oParam):
+        return form.iface.stopall(self, oParam)
+
     @helpers.decoradores.accion(aqparam=["cursor", "oParam"])
     def revoke(self, cursor, oParam):
         return form.iface.revoke(self, cursor, oParam)

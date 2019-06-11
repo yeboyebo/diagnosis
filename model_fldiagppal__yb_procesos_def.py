@@ -11,6 +11,7 @@ class interna(qsatype.objetoBase):
 
 
 # @class_declaration diagnosis #
+import time
 import requests
 from YBLEGACY.constantes import *
 from YBUTILS import notifications
@@ -170,6 +171,44 @@ class diagnosis(interna):
             cliente = cursor.valueBuffer("cliente")
             proceso = cursor.valueBuffer("proceso")
 
+            return self.single_start(cliente, proceso)
+
+        except Exception as e:
+            qsatype.debug(e)
+            return False
+
+        return True
+
+    def diagnosis_stop(self, model, cursor):
+        if not cursor.valueBuffer("activo"):
+            return True
+
+        if not qsatype.FLUtil.sqlUpdate("yb_procesos", ["activo"], [False], "id = {}".format(cursor.valueBuffer("id"))):
+            return False
+
+        return True
+
+    def diagnosis_startall(self, model, oParam):
+        where = self.get_where_procesos(oParam["mainfilter"])
+
+        cursor = qsatype.FLSqlCursor("yb_procesos")
+        cursor.select("{} AND NOT activo".format(where))
+
+        while cursor.next():
+            self.single_start(cursor.valueBuffer("cliente"), cursor.valueBuffer("proceso"))
+
+        return True
+
+    def diagnosis_stopall(self, model, oParam):
+        where = self.get_where_procesos(oParam["mainfilter"])
+
+        if not qsatype.FLUtil.sqlUpdate("yb_procesos", ["activo"], [False], "{} AND activo".format(where)):
+            return False
+
+        return True
+
+    def diagnosis_single_start(self, cliente, proceso):
+        try:
             url, fromdb = self.get_url(cliente, proceso)
             if not url:
                 return False
@@ -212,19 +251,12 @@ class diagnosis(interna):
                     }
                 }
 
-                proceso = cursor.valueBuffer("proceso")
-                if cursor.valueBuffer("cliente") == "elganso" and proceso.startswith("egsync"):
-                    codTienda = proceso[-4:]
-                    data["codtienda"] = codTienda
-
-                    url = url[:-4]
-
                 resul = notifications.post_request(url, header, data)
 
                 if not resul:
                     return False
 
-            if not qsatype.FLUtil.sqlUpdate("yb_procesos", ["activo"], [True], "id = {}".format(cursor.valueBuffer("id"))):
+            if not qsatype.FLUtil.sqlUpdate("yb_procesos", ["activo"], [True], "cliente = '{}' AND proceso = '{}'".format(cliente, proceso)):
                 return False
 
             diagppal.iface.log("Info. Proceso arrancado", proceso, cliente)
@@ -235,16 +267,28 @@ class diagnosis(interna):
             qsatype.debug(e)
             return False
 
-        return True
+    def diagnosis_get_where_procesos(self, mainfilter):
+        where = ""
 
-    def diagnosis_stop(self, model, cursor):
-        if not cursor.valueBuffer("activo"):
-            return True
+        for mfilter in mainfilter:
+            a_filter = mfilter.split("_")
 
-        if not qsatype.FLUtil.sqlUpdate("yb_procesos", ["activo"], [False], "id = {}".format(cursor.valueBuffer("id"))):
-            return False
+            if a_filter[0] != "s":
+                continue
 
-        return True
+            if where != "":
+                where = "{} AND ".format(where)
+
+            if a_filter[3] == "exact":
+                where = "{}{} = '{}'".format(where, a_filter[1], mainfilter[mfilter])
+
+            elif a_filter[3] == "startswith":
+                where = "{}{} LIKE '{}%%'".format(where, a_filter[1], mainfilter[mfilter])
+
+            elif a_filter[3] == "endswith":
+                where = "{}{} LIKE '%%{}'".format(where, a_filter[1], mainfilter[mfilter])
+
+        return where
 
     def diagnosis_getActivity(self, name):
         try:
@@ -336,14 +380,26 @@ class diagnosis(interna):
     def get_extra_data(self, cliente, proceso):
         return self.ctx.diagnosis_get_extra_data(cliente, proceso)
 
-    def getActivity(self, name):
-        return self.ctx.diagnosis_getActivity(name)
-
     def start(self, model, cursor):
         return self.ctx.diagnosis_start(model, cursor)
 
     def stop(self, model, cursor):
         return self.ctx.diagnosis_stop(model, cursor)
+
+    def startall(self, model, oParam):
+        return self.ctx.diagnosis_startall(model, oParam)
+
+    def stopall(self, model, oParam):
+        return self.ctx.diagnosis_stopall(model, oParam)
+
+    def single_start(self, cliente, proceso):
+        return self.ctx.diagnosis_single_start(cliente, proceso)
+
+    def get_where_procesos(self, mainfilter):
+        return self.ctx.diagnosis_get_where_procesos(mainfilter)
+
+    def getActivity(self, name):
+        return self.ctx.diagnosis_getActivity(name)
 
     def revoke(self, model, cursor, oParam):
         return self.ctx.diagnosis_revoke(model, cursor, oParam)
