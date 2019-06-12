@@ -250,7 +250,14 @@ class diagnosis(interna):
                         }
                     }
                 }
-                data.update(self.get_extra_data(cursor))
+
+                if cursor.valueBuffer("syncstore"):
+                    data["codtienda"] = url[-4:].upper()
+                    url = url[:-4]
+
+                print(url)
+                print(data)
+                return True
 
                 resul = notifications.post_request(url, header, data)
 
