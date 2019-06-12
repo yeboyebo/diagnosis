@@ -86,8 +86,8 @@ class diagnosis(interna):
 
         return "{} - {}".format(f, h)
 
-    def diagnosis_get_server_url(self, cliente, apisync=None):
-        if apisync:
+    def diagnosis_get_server_url(self, cliente, syncapi=None):
+        if syncapi:
             q = qsatype.FLSqlQuery()
             q.setSelect("url, test_url")
             q.setFrom("yb_clientessincro")
@@ -127,13 +127,13 @@ class diagnosis(interna):
 
             return url
 
-    def diagnosis_get_url(self, cliente, proceso, apisync=None):
+    def diagnosis_get_url(self, cliente, proceso, syncapi=None):
         try:
-            server_url = self.get_server_url(cliente, apisync=apisync)
+            server_url = self.get_server_url(cliente, syncapi=syncapi)
             if not server_url:
                 return False
 
-            if apisync:
+            if syncapi:
                 q = qsatype.FLSqlQuery()
                 q.setSelect("url")
                 q.setFrom("yb_procesos")
@@ -153,11 +153,11 @@ class diagnosis(interna):
             qsatype.debug(e)
             return False
 
-    def diagnosis_get_extra_data(self, cliente, proceso):
+    def diagnosis_get_extra_data(self, cursor):
         extra_data = {}
 
-        if cliente == "elganso" and proceso.startswith("egsync"):
-            extra_data["codtienda"] = proceso[-4:].upper()
+        if cursor.valueBuffer("syncstore"):
+            extra_data["codtienda"] = cursor.valueBuffer("proceso")[-4:].upper()
 
         return extra_data
 
@@ -166,11 +166,7 @@ class diagnosis(interna):
             if cursor.valueBuffer("activo"):
                 return True
 
-            cliente = cursor.valueBuffer("cliente")
-            proceso = cursor.valueBuffer("proceso")
-            apisync = cursor.valueBuffer("apisync")
-
-            return self.single_start(cliente, proceso, apisync)
+            return self.single_start(cursor)
 
         except Exception as e:
             qsatype.debug(e)
@@ -194,11 +190,7 @@ class diagnosis(interna):
         cursor.select("{} AND NOT activo".format(where))
 
         while cursor.next():
-            cliente = cursor.valueBuffer("cliente")
-            proceso = cursor.valueBuffer("proceso")
-            apisync = cursor.valueBuffer("apisync")
-
-            self.single_start(cliente, proceso, apisync)
+            self.single_start(cursor)
 
         return True
 
@@ -210,14 +202,18 @@ class diagnosis(interna):
 
         return True
 
-    def diagnosis_single_start(self, cliente, proceso, apisync=None):
+    def diagnosis_single_start(self, cursor):
         try:
-            url = self.get_url(cliente, proceso, apisync)
+            cliente = cursor.valueBuffer("cliente")
+            proceso = cursor.valueBuffer("proceso")
+            syncapi = cursor.valueBuffer("syncapi")
+
+            url = self.get_url(cliente, proceso, syncapi)
 
             if not url:
                 return False
 
-            if apisync:
+            if syncapi:
                 header = {"Content-Type": "application/json"}
                 data = {
                     "passwd": "bUqfqBMnoH",
@@ -225,7 +221,7 @@ class diagnosis(interna):
                     "production": qsatype.FLUtil.isInProd()
                 }
 
-                data.update(self.get_extra_data(cliente, proceso))
+                data.update(self.get_extra_data(cursor))
 
                 resul = notifications.post_request(url, header, data)
 
@@ -254,6 +250,7 @@ class diagnosis(interna):
                         }
                     }
                 }
+                data.update(self.get_extra_data(cursor))
 
                 resul = notifications.post_request(url, header, data)
 
@@ -298,15 +295,15 @@ class diagnosis(interna):
         try:
             customer = name.split("_activity")[0]
 
-            apisync = False
-            if qsatype.FLUtil.sqlSelect("yb_procesos", "id", "cliente = '{}' AND apisync LIMIT 1".format(customer)):
-                apisync = True
+            syncapi = False
+            if qsatype.FLUtil.sqlSelect("yb_procesos", "id", "cliente = '{}' AND syncapi LIMIT 1".format(customer)):
+                syncapi = True
 
-            url = self.get_server_url(customer, apisync)
+            url = self.get_server_url(customer, syncapi)
             if not url:
                 return False
 
-            if apisync:
+            if syncapi:
                 url = "{}/celery/activity/get".format(url)
             else:
                 url = "{}/getactivity".format(url)
@@ -325,19 +322,16 @@ class diagnosis(interna):
         try:
             customer = cursor.valueBuffer("cliente")
 
-            apisync = False
-            if qsatype.FLUtil.sqlSelect("yb_procesos", "id", "cliente = '{}' AND apisync LIMIT 1".format(customer)):
-                apisync = True
+            syncapi = False
+            if qsatype.FLUtil.sqlSelect("yb_procesos", "id", "cliente = '{}' AND syncapi LIMIT 1".format(customer)):
+                syncapi = True
 
-            url = self.get_server_url(customer, apisync)
+            url = self.get_server_url(customer, syncapi)
             if not url:
                 return False
 
-            if apisync:
+            if syncapi:
                 url = "{}/celery/tasks/revoke/{}".format(url, oParam["id"])
-
-                print(url)
-                return True
 
                 response = requests.get(url)
                 if response and response.status_code == 200:
@@ -386,14 +380,14 @@ class diagnosis(interna):
     def field_ultsincro(self, model):
         return self.ctx.diagnosis_field_ultsincro(model)
 
-    def get_server_url(self, cliente, apisync=None):
-        return self.ctx.diagnosis_get_server_url(cliente, apisync)
+    def get_server_url(self, cliente, syncapi=None):
+        return self.ctx.diagnosis_get_server_url(cliente, syncapi)
 
-    def get_url(self, cliente, proceso, apisync=None):
-        return self.ctx.diagnosis_get_url(cliente, proceso, apisync)
+    def get_url(self, cliente, proceso, syncapi=None):
+        return self.ctx.diagnosis_get_url(cliente, proceso, syncapi)
 
-    def get_extra_data(self, cliente, proceso):
-        return self.ctx.diagnosis_get_extra_data(cliente, proceso)
+    def get_extra_data(self, cursor):
+        return self.ctx.diagnosis_get_extra_data(cursor)
 
     def start(self, model, cursor):
         return self.ctx.diagnosis_start(model, cursor)
@@ -407,8 +401,8 @@ class diagnosis(interna):
     def stopall(self, model, oParam):
         return self.ctx.diagnosis_stopall(model, oParam)
 
-    def single_start(self, cliente, proceso, apisync=None):
-        return self.ctx.diagnosis_single_start(cliente, proceso, apisync)
+    def single_start(self, cursor):
+        return self.ctx.diagnosis_single_start(cursor)
 
     def get_where_procesos(self, mainfilter):
         return self.ctx.diagnosis_get_where_procesos(mainfilter)

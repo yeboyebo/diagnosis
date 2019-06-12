@@ -217,9 +217,17 @@ class mtd_yb_procesos(models.Model, BaseModel):
     )._miextend(
         OLDTIPO="STRING"
     )
-    apisync = models.BooleanField(
-        db_column="apisync",
-        verbose_name=FLUtil.translate(u"Api Sync.", u"MetaData"),
+    syncapi = models.BooleanField(
+        db_column="syncapi",
+        verbose_name=FLUtil.translate(u"Sync. API", u"MetaData"),
+        default=False,
+        null=False
+    )._miextend(
+        OLDTIPO="BOOL"
+    )
+    syncstore = models.BooleanField(
+        db_column="syncstore",
+        verbose_name=FLUtil.translate(u"Sync. Tienda", u"MetaData"),
         default=False,
         null=False
     )._miextend(
