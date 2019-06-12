@@ -252,7 +252,7 @@ class diagnosis(interna):
                 }
 
                 if cursor.valueBuffer("syncstore"):
-                    data["codtienda"] = url[-4:].upper()
+                    data["codtienda"] = url[-4:]
                     url = url[:-4]
 
                 resul = notifications.post_request(url, header, data)
