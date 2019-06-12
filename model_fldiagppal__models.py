@@ -219,7 +219,7 @@ class mtd_yb_procesos(models.Model, BaseModel):
     )
     syncapi = models.BooleanField(
         db_column="syncapi",
-        verbose_name=FLUtil.translate(u"Sync. API", u"MetaData"),
+        verbose_name=FLUtil.translate(u"Sincro por API", u"MetaData"),
         default=False,
         null=False
     )._miextend(
@@ -227,7 +227,7 @@ class mtd_yb_procesos(models.Model, BaseModel):
     )
     syncstore = models.BooleanField(
         db_column="syncstore",
-        verbose_name=FLUtil.translate(u"Sync. Tienda", u"MetaData"),
+        verbose_name=FLUtil.translate(u"Sincro de tienda", u"MetaData"),
         default=False,
         null=False
     )._miextend(

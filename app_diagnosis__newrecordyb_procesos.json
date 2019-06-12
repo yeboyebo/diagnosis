@@ -1,0 +1,36 @@
+{
+    "querystring": {},
+    "schema": {},
+    "layout": {
+        "procesosForm": {
+            "prefix": "yb_procesos",
+            "componente": "YBForm",
+            "class": "claseGrid",
+            "submit": "create",
+            "return": true,
+            "success": [{"slot": "return"}],
+            "groupbox": "",
+            "fields": {
+                "gb__generales": {
+                    "title": "Datos generales",
+                    "fields": {
+                        "cliente": {},
+                        "proceso": {},
+                        "descripcion": {}
+                    }
+                },
+                "gb__sync": {
+                    "title": "Datos sincronización",
+                    "fields": {
+                        "url": {},
+                        "syncapi": {},
+                        "syncstore": {}
+                    }
+                }
+            },
+            "exclude": {}
+        }
+    },
+    "acciones": {}
+}
+

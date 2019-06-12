@@ -1,0 +1,16 @@
+{
+    "querystring": {},
+    "schema": {},
+    "layout": {
+        "menu": {
+            "componente": "YBDashBoard"
+        },
+        "newRecordProcesos": {
+            "componente": "YBNewRecordGoTo",
+            "class": "info",
+            "icon": "add",
+            "goto": "yb_procesos/newRecord"
+        }
+    },
+    "acciones": {}
+}

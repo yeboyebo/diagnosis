@@ -173,6 +173,14 @@
             {
                 "name": "app_diagnosis__elganso_b2c_error.json",
                 "path": "apps/diagnosis/templates/diagnosis/plantillas/"
+            },
+            {
+                "name": "app_diagnosis__dashboard.json",
+                "path": "apps/diagnosis/templates/diagnosis/plantillas/"
+            },
+            {
+                "name": "app_diagnosis__newrecordyb_procesos.json",
+                "path": "apps/diagnosis/templates/diagnosis/plantillas/"
             }
         ],
         "deleteFile": [],
