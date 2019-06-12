@@ -255,10 +255,6 @@ class diagnosis(interna):
                     data["codtienda"] = url[-4:].upper()
                     url = url[:-4]
 
-                print(url)
-                print(data)
-                return True
-
                 resul = notifications.post_request(url, header, data)
 
                 if not resul:
