@@ -86,23 +86,26 @@ class diagnosis(interna):
 
         return "{} - {}".format(f, h)
 
-    def diagnosis_get_server_url(self, cliente, force_notdb=False):
-        q = qsatype.FLSqlQuery()
-        q.setSelect("url, test_url")
-        q.setFrom("yb_clientessincro")
-        q.setWhere("cliente = '{}'".format(cliente))
+    def diagnosis_get_server_url(self, cliente, apisync=None):
+        if apisync:
+            q = qsatype.FLSqlQuery()
+            q.setSelect("url, test_url")
+            q.setFrom("yb_clientessincro")
+            q.setWhere("cliente = '{}'".format(cliente))
 
-        if not q.exec_():
-            return False
+            if not q.exec_():
+                return False
 
-        if q.first() and not force_notdb:
-            url = None
-            if qsatype.FLUtil.isInProd():
-                url = q.value("url")
+            if q.first():
+                url = None
+                if qsatype.FLUtil.isInProd():
+                    url = q.value("url")
+                else:
+                    url = q.value("test_url")
+
+                return url
             else:
-                url = q.value("test_url")
-
-            return url, True
+                return False
         else:
             if qsatype.FLUtil.isInProd():
                 if cliente == "elganso":
@@ -122,20 +125,15 @@ class diagnosis(interna):
             else:
                 url = "{}/empresa/csr".format(url)
 
-            return url, False
+            return url
 
-    def diagnosis_get_url(self, cliente, proceso):
+    def diagnosis_get_url(self, cliente, proceso, apisync=None):
         try:
-            force_notdb = False
-
-            if cliente == "elganso" and proceso == "mgsyncdevweb":
-                force_notdb = True
-
-            server_url, frombd = self.get_server_url(cliente, force_notdb=force_notdb)
+            server_url = self.get_server_url(cliente, apisync=apisync)
             if not server_url:
                 return False
 
-            if frombd:
+            if apisync:
                 q = qsatype.FLSqlQuery()
                 q.setSelect("url")
                 q.setFrom("yb_procesos")
@@ -147,9 +145,9 @@ class diagnosis(interna):
                 if not q.first():
                     return False
 
-                return "{}/{}".format(server_url, q.value("url")), True
+                return "{}/{}".format(server_url, q.value("url"))
             else:
-                return "{}/{}".format(server_url, proceso), False
+                return "{}/{}".format(server_url, proceso)
 
         except Exception as e:
             qsatype.debug(e)
@@ -170,8 +168,9 @@ class diagnosis(interna):
 
             cliente = cursor.valueBuffer("cliente")
             proceso = cursor.valueBuffer("proceso")
+            apisync = cursor.valueBuffer("apisync")
 
-            return self.single_start(cliente, proceso)
+            return self.single_start(cliente, proceso, apisync)
 
         except Exception as e:
             qsatype.debug(e)
@@ -195,7 +194,11 @@ class diagnosis(interna):
         cursor.select("{} AND NOT activo".format(where))
 
         while cursor.next():
-            self.single_start(cursor.valueBuffer("cliente"), cursor.valueBuffer("proceso"))
+            cliente = cursor.valueBuffer("cliente")
+            proceso = cursor.valueBuffer("proceso")
+            apisync = cursor.valueBuffer("apisync")
+
+            self.single_start(cliente, proceso, apisync)
 
         return True
 
@@ -207,13 +210,14 @@ class diagnosis(interna):
 
         return True
 
-    def diagnosis_single_start(self, cliente, proceso):
+    def diagnosis_single_start(self, cliente, proceso, apisync=None):
         try:
-            url, fromdb = self.get_url(cliente, proceso)
+            url = self.get_url(cliente, proceso, apisync)
+
             if not url:
                 return False
 
-            if fromdb:
+            if apisync:
                 header = {"Content-Type": "application/json"}
                 data = {
                     "passwd": "bUqfqBMnoH",
@@ -294,11 +298,15 @@ class diagnosis(interna):
         try:
             customer = name.split("_activity")[0]
 
-            url, frombd = self.get_server_url(customer)
+            apisync = False
+            if qsatype.FLUtil.sqlSelect("yb_procesos", "id", "cliente = '{}' AND apisync LIMIT 1".format(customer)):
+                apisync = True
+
+            url = self.get_server_url(customer, apisync)
             if not url:
                 return False
 
-            if frombd:
+            if apisync:
                 url = "{}/celery/activity/get".format(url)
             else:
                 url = "{}/getactivity".format(url)
@@ -317,12 +325,19 @@ class diagnosis(interna):
         try:
             customer = cursor.valueBuffer("cliente")
 
-            url, frombd = self.get_server_url(customer)
+            apisync = False
+            if qsatype.FLUtil.sqlSelect("yb_procesos", "id", "cliente = '{}' AND apisync LIMIT 1".format(customer)):
+                apisync = True
+
+            url = self.get_server_url(customer, apisync)
             if not url:
                 return False
 
-            if frombd:
+            if apisync:
                 url = "{}/celery/tasks/revoke/{}".format(url, oParam["id"])
+
+                print(url)
+                return True
 
                 response = requests.get(url)
                 if response and response.status_code == 200:
@@ -371,11 +386,11 @@ class diagnosis(interna):
     def field_ultsincro(self, model):
         return self.ctx.diagnosis_field_ultsincro(model)
 
-    def get_server_url(self, cliente, force_notdb=False):
-        return self.ctx.diagnosis_get_server_url(cliente, force_notdb)
+    def get_server_url(self, cliente, apisync=None):
+        return self.ctx.diagnosis_get_server_url(cliente, apisync)
 
-    def get_url(self, cliente, proceso):
-        return self.ctx.diagnosis_get_url(cliente, proceso)
+    def get_url(self, cliente, proceso, apisync=None):
+        return self.ctx.diagnosis_get_url(cliente, proceso, apisync)
 
     def get_extra_data(self, cliente, proceso):
         return self.ctx.diagnosis_get_extra_data(cliente, proceso)
@@ -392,8 +407,8 @@ class diagnosis(interna):
     def stopall(self, model, oParam):
         return self.ctx.diagnosis_stopall(model, oParam)
 
-    def single_start(self, cliente, proceso):
-        return self.ctx.diagnosis_single_start(cliente, proceso)
+    def single_start(self, cliente, proceso, apisync=None):
+        return self.ctx.diagnosis_single_start(cliente, proceso, apisync)
 
     def get_where_procesos(self, mainfilter):
         return self.ctx.diagnosis_get_where_procesos(mainfilter)

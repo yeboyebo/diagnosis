@@ -217,6 +217,14 @@ class mtd_yb_procesos(models.Model, BaseModel):
     )._miextend(
         OLDTIPO="STRING"
     )
+    apisync = models.BooleanField(
+        db_column="apisync",
+        verbose_name=FLUtil.translate(u"Api Sync.", u"MetaData"),
+        default=False,
+        null=False
+    )._miextend(
+        OLDTIPO="BOOL"
+    )
 
     class Meta:
         managed = True
