@@ -184,10 +184,10 @@ class diagnosis(interna):
         return True
 
     def diagnosis_startall(self, model, oParam):
-        where = self.get_where_procesos(oParam["mainfilter"])
+        where, order_limit = self.get_where_procesos(oParam, start=True)
 
         cursor = qsatype.FLSqlCursor("yb_procesos")
-        cursor.select("{} AND NOT activo".format(where))
+        cursor.select("{} AND NOT activo {}".format(where, order_limit))
 
         while cursor.next():
             self.single_start(cursor)
@@ -195,9 +195,9 @@ class diagnosis(interna):
         return True
 
     def diagnosis_stopall(self, model, oParam):
-        where = self.get_where_procesos(oParam["mainfilter"])
+        where, order_limit = self.get_where_procesos(oParam)
 
-        if not qsatype.FLUtil.sqlUpdate("yb_procesos", ["activo"], [False], "{} AND activo".format(where)):
+        if not qsatype.FLUtil.sqlUpdate("yb_procesos", ["activo"], [False], "{} AND activo {}".format(where, order_limit)):
             return False
 
         return True
@@ -271,8 +271,11 @@ class diagnosis(interna):
             qsatype.debug(e)
             return False
 
-    def diagnosis_get_where_procesos(self, mainfilter):
+    def diagnosis_get_where_procesos(self, params, start=False):
         where = ""
+
+        mainfilter = params["mainfilter"]
+        pagination = params["pagination"]
 
         for mfilter in mainfilter:
             a_filter = mfilter.split("_")
@@ -292,7 +295,14 @@ class diagnosis(interna):
             elif a_filter[3] == "endswith":
                 where = "{}{} LIKE '%%{}'".format(where, a_filter[1], mainfilter[mfilter])
 
-        return where
+        order_limit = "ORDER BY proceso"
+
+        if start and pagination:
+            if pagination["COUNT"] > mainfilter["p_l"]:
+                order_limit = "{} LIMIT {}".format(order_limit, mainfilter["p_l"])
+                order_limit = "{} OFFSET {}".format(order_limit, pagination["NO"] - mainfilter["p_l"])
+
+        return where, order_limit
 
     def diagnosis_getActivity(self, name):
         try:
@@ -407,8 +417,8 @@ class diagnosis(interna):
     def single_start(self, cursor):
         return self.ctx.diagnosis_single_start(cursor)
 
-    def get_where_procesos(self, mainfilter):
-        return self.ctx.diagnosis_get_where_procesos(mainfilter)
+    def get_where_procesos(self, params, start=False):
+        return self.ctx.diagnosis_get_where_procesos(params, start)
 
     def getActivity(self, name):
         return self.ctx.diagnosis_getActivity(name)
