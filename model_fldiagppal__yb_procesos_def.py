@@ -187,7 +187,7 @@ class diagnosis(interna):
         where, order_limit = self.get_where_procesos(oParam, start=True)
 
         cursor = qsatype.FLSqlCursor("yb_procesos")
-        cursor.select("{} AND NOT activo {}".format(where, order_limit))
+        cursor.select("{} {}".format(where, order_limit))
 
         while cursor.next():
             self.single_start(cursor)
@@ -204,6 +204,9 @@ class diagnosis(interna):
 
     def diagnosis_single_start(self, cursor):
         try:
+            if cursor.valueBuffer("activo"):
+                return True
+
             cliente = cursor.valueBuffer("cliente")
             proceso = cursor.valueBuffer("proceso")
             syncapi = cursor.valueBuffer("syncapi")
@@ -300,7 +303,10 @@ class diagnosis(interna):
         if start and pagination:
             if pagination["COUNT"] > mainfilter["p_l"]:
                 order_limit = "{} LIMIT {}".format(order_limit, mainfilter["p_l"])
-                order_limit = "{} OFFSET {}".format(order_limit, pagination["NO"] - mainfilter["p_l"])
+                if "NO" in pagination and pagination["NO"]:
+                    order_limit = "{} OFFSET {}".format(order_limit, pagination["NO"] - mainfilter["p_l"])
+                elif "PO" in pagination and pagination["PO"]:
+                    order_limit = "{} OFFSET {}".format(order_limit, pagination["PO"] + mainfilter["p_l"])
 
         return where, order_limit
 
