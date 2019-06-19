@@ -21,6 +21,15 @@
                     "action": {
                         "key": "gotolog"
                     }
+                },
+                "botonErroneos": {
+                    "componente": "YBButton",
+                    "label": "Ir a erróneos",
+                    "buttonType": "raised",
+                    "className": "floatLeft",
+                    "action": {
+                        "key": "gotoerror"
+                    }
                 }
             }
         },
@@ -89,7 +98,11 @@
         },
         "gotolog": {
             "action": "url",
-            "url": "diagnosis/yb_log/custom/globalprot_log"
+            "url": "diagnosis/yb_log/custom/globalprot_drupal_log"
+        },
+        "gotoerror": {
+            "action": "url",
+            "url": "diagnosis/yb_procesos_erroneos/custom/globalprot_drupal_error"
         }
     }
 }

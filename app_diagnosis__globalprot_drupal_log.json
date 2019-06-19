@@ -39,6 +39,7 @@
             "class": "claseGrid",
             "prefix": "yb_log",
             "colorRowField": "rowColor",
+            "buscador": true,
             "filter": {
                 "tipo": {
                     "filterType": "multiseleccion",

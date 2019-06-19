@@ -55,7 +55,7 @@
         },
         "gotolog": {
             "action": "url",
-            "url": "diagnosis/yb_log/custom/globalprot_log"
+            "url": "diagnosis/yb_log/custom/globalprot_drupal_log"
         }
     }
 }

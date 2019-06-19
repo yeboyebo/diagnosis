@@ -120,10 +120,6 @@
             },
             {
                 "path": "apps/diagnosis/templates/diagnosis/plantillas/",
-                "name": "app_diagnosis__globalprot_log.json"
-            },
-            {
-                "path": "apps/diagnosis/templates/diagnosis/plantillas/",
                 "name": "app_diagnosis__elganso_inventarios.json"
             },
             {
@@ -181,6 +177,10 @@
             {
                 "name": "app_diagnosis__newrecordyb_procesos.json",
                 "path": "apps/diagnosis/templates/diagnosis/plantillas/"
+            },
+            {
+                "path": "apps/diagnosis/templates/diagnosis/plantillas/",
+                "name": "app_diagnosis__globalprot_drupal_log.json"
             }
         ],
         "deleteFile": [],

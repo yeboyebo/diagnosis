@@ -39,11 +39,24 @@
             "class": "claseGrid",
             "prefix": "yb_log",
             "colorRowField": "rowColor",
-            "filter": "buscador",
+            "buscador": true,
+            "filter": {
+                "texto": {
+                    "filterType": "multiseleccion",
+                    "title": "Excluir del log",
+                    "criterio": "nin",
+                    "values": {
+                        "Éxito. No hay datos que sincronizar": "No hay datos",
+                        "Éxito. No es momento de sincronizar": "No es momento",
+                        "Info. Proceso detenido": "Detenido",
+                        "Info. Proceso arrancado": "Arrancado"
+                    }
+                }
+            },
             "paginacion": true,
             "columns": [
                 {"tipo": "field", "key": "timestamp", "flex": 1, "listpos": "body"},
-                {"tipo": "field", "key": "texto", "flex": 5, "listpos": "subtitle", "avatar": true},
+                {"tipo": "field", "key": "texto", "flex": 5, "listpos": "subtitle", "avatar": true, "title": true},
                 {"tipo": "field", "key": "tipo", "flex": 1, "listpos": "title"}
             ]
         }
