@@ -29,6 +29,13 @@
             "COLOR": "rgb(0, 103, 186)"
         },
         {
+            "NAME": "elgansomirakl",
+            "TEXT": "ELGANSO MIRAKL",
+            "URL": "diagnosis/yb_procesos/custom/elganso_mirakl",
+            "ICON": "language",
+            "COLOR": "rgb(0, 103, 186)"
+        },
+        {
             "NAME": "elgansovtproc",
             "TEXT": "ELGANSO VENTAS",
             "URL": "diagnosis/yb_procesos/custom/elganso_ventas",

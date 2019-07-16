@@ -181,6 +181,18 @@
             {
                 "path": "apps/diagnosis/templates/diagnosis/plantillas/",
                 "name": "app_diagnosis__globalprot_drupal_log.json"
+            },
+            {
+                "name": "app_diagnosis__elganso_mirakl_log.json",
+                "path": "apps/diagnosis/templates/diagnosis/plantillas/"
+            },
+            {
+                "name": "app_diagnosis__elganso_mirakl_error.json",
+                "path": "apps/diagnosis/templates/diagnosis/plantillas/"
+            },
+            {
+                "name": "app_diagnosis__elganso_mirakl.json",
+                "path": "apps/diagnosis/templates/diagnosis/plantillas/"
             }
         ],
         "deleteFile": [],
