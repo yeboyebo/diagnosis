@@ -32,7 +32,7 @@ class diagnosis(interna):
         q = qsatype.FLSqlQuery()
         q.setSelect("timestamp, texto")
         q.setFrom("yb_log")
-        q.setWhere("cliente = '{}' AND tipo = '{}' AND texto LIKE 'Éxito%' ORDER BY timestamp DESC LIMIT 1".format(model.cliente, model.proceso))
+        q.setWhere("cliente = '{}' AND tipo = '{}' AND texto LIKE 'Éxito%' ORDER BY timestamp DESC LIMIT 1".format(model.cliente.cliente, model.proceso))
 
         if not q.exec_():
             return "Error. Falló la query."
