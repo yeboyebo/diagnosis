@@ -6,7 +6,9 @@
             "value": {
                 "fldiagppal": {
                     "yb_procesos": null,
-                    "yb_procesos_erroneos": null
+                    "yb_procesos_erroneos": null,
+                    "yb_clientessincro": null,
+                    "yb_gruposprocesos": null
                 }
             }
         }

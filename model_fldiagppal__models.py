@@ -22,10 +22,23 @@ class mtd_yb_log(models.Model, BaseModel):
         visiblegrid=False,
         OLDTIPO="SERIAL"
     )
-    cliente = models.CharField(
+    cliente = models.ForeignKey(
+        "mtd_yb_clientessincro",
         db_column="cliente",
         verbose_name=FLUtil.translate("MetaData", "Cliente"),
-        max_length=100
+        max_length=100,
+        to_field="cliente",
+        related_name="yb_log_cliente__fk__yb_clientessincro_cliente"
+    )._miextend(
+        OLDTIPO="STRING"
+    )
+    grupoprocesos = models.ForeignKey(
+        "mtd_yb_gruposprocesos",
+        db_column="grupoprocesos",
+        verbose_name=FLUtil.translate("MetaData", "Grupo de procesos"),
+        max_length=100,
+        to_field="codigo",
+        related_name="yb_log_grupoprocesos__fk__yb_gruposprocesos_codigo"
     )._miextend(
         OLDTIPO="STRING"
     )
@@ -146,6 +159,14 @@ class mtd_yb_clientessincro(models.Model, BaseModel):
     cliente = models.CharField(
         db_column="cliente",
         verbose_name=FLUtil.translate("MetaData", "Cliente"),
+        max_length=100,
+        unique=True
+    )._miextend(
+        OLDTIPO="STRING"
+    )
+    descripcion = models.CharField(
+        db_column="descripcion",
+        verbose_name=FLUtil.translate("MetaData", "Descripción"),
         max_length=100
     )._miextend(
         OLDTIPO="STRING"
@@ -172,6 +193,70 @@ class mtd_yb_clientessincro(models.Model, BaseModel):
         # app_label = "secondary"
 
 
+class mtd_yb_gruposprocesos(models.Model, BaseModel):
+
+    id = models.AutoField(
+        db_column="id",
+        verbose_name=FLUtil.translate("MetaData", "Identificador"),
+        primary_key=True
+    )._miextend(
+        visiblegrid=False,
+        OLDTIPO="SERIAL"
+    )
+    codigo = models.TextField(
+        db_column="codigo",
+        verbose_name=FLUtil.translate("MetaData", "codigo"),
+        max_length=200,
+        unique=True
+    )._miextend(
+        OLDTIPO="STRING"
+    )
+    descripcion = models.CharField(
+        db_column="descripcion",
+        verbose_name=FLUtil.translate("MetaData", "Descripción"),
+        max_length=100
+    )._miextend(
+        OLDTIPO="STRING"
+    )
+    cliente = models.ForeignKey(
+        "mtd_yb_clientessincro",
+        db_column="cliente",
+        verbose_name=FLUtil.translate("MetaData", "Cliente"),
+        max_length=100,
+        to_field="cliente",
+        related_name="yb_gruposprocesos_cliente__fk__yb_clientessincro_cliente"
+    )._miextend(
+        OLDTIPO="STRING"
+    )
+    prefijo = models.TextField(
+        db_column="prefijo",
+        verbose_name=FLUtil.translate("MetaData", "Prefijo"),
+        max_length=100
+    )._miextend(
+        OLDTIPO="STRING"
+    )
+    icon = models.TextField(
+        db_column="icon",
+        verbose_name=FLUtil.translate("MetaData", "Icono"),
+        max_length=100
+    )._miextend(
+        OLDTIPO="STRING"
+    )
+    rgb = models.TextField(
+        db_column="rgb",
+        verbose_name=FLUtil.translate("MetaData", "RGB"),
+        max_length=100
+    )._miextend(
+        OLDTIPO="STRING"
+    )
+
+    class Meta:
+        managed = True
+        verbose_name = FLUtil.translate("MetaData", "Grupos de procesos")
+        db_table = u"yb_gruposprocesos"
+        # app_label = "secondary"
+
+
 class mtd_yb_procesos(models.Model, BaseModel):
 
     id = models.AutoField(
@@ -182,10 +267,23 @@ class mtd_yb_procesos(models.Model, BaseModel):
         visiblegrid=False,
         OLDTIPO="SERIAL"
     )
-    cliente = models.CharField(
+    cliente = models.ForeignKey(
+        "mtd_yb_clientessincro",
         db_column="cliente",
         verbose_name=FLUtil.translate("MetaData", "Cliente"),
-        max_length=100
+        max_length=100,
+        to_field="cliente",
+        related_name="yb_procesos_cliente__fk__yb_clientessincro_cliente"
+    )._miextend(
+        OLDTIPO="STRING"
+    )
+    grupoprocesos = models.ForeignKey(
+        "mtd_yb_gruposprocesos",
+        db_column="grupoprocesos",
+        verbose_name=FLUtil.translate("MetaData", "Grupo de procesos"),
+        max_length=100,
+        to_field="codigo",
+        related_name="yb_procesos_grupoprocesos__fk__yb_gruposprocesos_codigo"
     )._miextend(
         OLDTIPO="STRING"
     )
@@ -233,6 +331,14 @@ class mtd_yb_procesos(models.Model, BaseModel):
     )._miextend(
         OLDTIPO="BOOL"
     )
+    syncrecieve = models.BooleanField(
+        db_column="syncrecieve",
+        verbose_name=FLUtil.translate("MetaData", "Sincro de recepción"),
+        default=False,
+        null=False
+    )._miextend(
+        OLDTIPO="BOOL"
+    )
 
     class Meta:
         managed = True
@@ -251,10 +357,23 @@ class mtd_yb_procesos_erroneos(models.Model, BaseModel):
         visiblegrid=False,
         OLDTIPO="SERIAL"
     )
-    cliente = models.CharField(
+    cliente = models.ForeignKey(
+        "mtd_yb_clientessincro",
         db_column="cliente",
         verbose_name=FLUtil.translate("MetaData", "Cliente"),
-        max_length=100
+        max_length=100,
+        to_field="cliente",
+        related_name="yb_procesos_erroneos_cliente__fk__yb_clientessincro_cliente"
+    )._miextend(
+        OLDTIPO="STRING"
+    )
+    grupoprocesos = models.ForeignKey(
+        "mtd_yb_gruposprocesos",
+        db_column="grupoprocesos",
+        verbose_name=FLUtil.translate("MetaData", "Grupo de procesos"),
+        max_length=100,
+        to_field="codigo",
+        related_name="yb_procesos_erroneos_grupoprocesos__fk__yb_gruposprocesos_codigo"
     )._miextend(
         OLDTIPO="STRING"
     )

@@ -19,7 +19,9 @@ class diagnosis(interna):
 
         qsatype.FLSqlQuery().execSql("DELETE FROM yb_log WHERE cliente = '{}' AND tipo = '{}' AND timestamp < '{}'".format(customer, process, tsDel))
 
-        qsatype.FLSqlQuery().execSql("INSERT INTO yb_log (texto, cliente, tipo, timestamp) VALUES ('{}', '{}', '{}', '{}')".format(text, customer, process, tmstmp))
+        grupoprocesos = qsatype.FLUtil.sqlSelect("yb_procesos", "grupoprocesos", "cliente = '{}' AND proceso = '{}'".format(customer, process))
+
+        qsatype.FLSqlQuery().execSql("INSERT INTO yb_log (texto, cliente, tipo, grupoprocesos, timestamp) VALUES ('{}', '{}', '{}', '{}', '{}')".format(text, customer, process, grupoprocesos, tmstmp))
 
     def diagnosis_failed(self, customer, process, error, pk):
         tmstmp = qsatype.Date().now()
@@ -27,7 +29,50 @@ class diagnosis(interna):
 
         qsatype.FLSqlQuery().execSql("DELETE FROM yb_procesos_erroneos WHERE resuelto AND cliente = '{}' AND timestamp < '{}'".format(customer, tsDel))
 
-        qsatype.FLSqlQuery().execSql("INSERT INTO yb_procesos_erroneos (cliente, proceso, error, codregistro, resuelto, timestamp) VALUES ('{}', '{}', '{}', '{}', {}, '{}')".format(customer, process, error, pk, False, tmstmp))
+        grupoprocesos = qsatype.FLUtil.sqlSelect("yb_procesos", "grupoprocesos", "cliente = '{}' AND proceso = '{}'".format(customer, process))
+
+        qsatype.FLSqlQuery().execSql("INSERT INTO yb_procesos_erroneos (cliente, proceso, grupoprocesos, error, codregistro, resuelto, timestamp) VALUES ('{}', '{}', '{}', '{}', '{}', {}, '{}')".format(customer, process, grupoprocesos, error, pk, False, tmstmp))
+
+    def diagnosis_get_server_url(self, cliente, syncapi=None):
+        if syncapi:
+            q = qsatype.FLSqlQuery()
+            q.setSelect("url, test_url")
+            q.setFrom("yb_clientessincro")
+            q.setWhere("cliente = '{}'".format(cliente))
+
+            if not q.exec_():
+                return False
+
+            if q.first():
+                url = None
+                if qsatype.FLUtil.isInProd():
+                    url = q.value("url")
+                else:
+                    url = q.value("test_url")
+
+                return url
+            else:
+                return False
+        else:
+            if qsatype.FLUtil.isInProd():
+                if cliente == "elganso":
+                    url = "https://api.elganso.com"
+                elif cliente == "guanabana":
+                    url = "http://api.guanabana.store:8080"
+                elif cliente == "sanhigia":
+                    url = "http://store.sanhigia.com:9000"
+                else:
+                    return False
+            else:
+                url = "http://127.0.0.1:8000"
+
+            url = "{}/models/REST".format(url)
+            if cliente in ("elganso", "guanabana"):
+                url = "{}/tpv_comandas/csr".format(url)
+            else:
+                url = "{}/empresa/csr".format(url)
+
+            return url
 
     def __init__(self, context=None):
         super().__init__(context)
@@ -37,6 +82,9 @@ class diagnosis(interna):
 
     def failed(self, customer, process, error, pk):
         return self.ctx.diagnosis_failed(customer, process, error, pk)
+
+    def get_server_url(self, cliente, syncapi=None):
+        return self.ctx.diagnosis_get_server_url(cliente, syncapi)
 
 
 # @class_declaration head #

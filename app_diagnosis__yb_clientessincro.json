@@ -1,0 +1,196 @@
+{
+    "querystring": {},
+    "schema": {
+        "yb_gruposprocesos": {
+            "rel": "cliente",
+            "fieldRelation": "cliente",
+            "querystring": {
+                "p_l": 10,
+                "p_c": true,
+                "o_1": "codigo"
+            }
+        },
+        "activemonitor": {
+            "json": "activas"
+        },
+        "scheduledmonitor": {
+            "json": "programadas"
+        },
+        "reservedmonitor": {
+            "json": "reservadas"
+        }
+    },
+    "layout": {
+        "labelDescripcion": {
+            "componente": "YBLabel",
+            "text": "%yb1",
+            "className": "",
+            "style": {
+                "font-weight": "bold",
+                "color": "#2D95C1",
+                "font-size": "17px"
+            },
+            "params": [
+                {
+                    "type": "model",
+                    "key": "descripcion"
+                }
+            ]
+        },
+        "botonera": {
+            "componente": "YBGroupBox",
+            "className": "actionGB",
+            "style": {"zIndex": 3, "position": "relative"},
+            "layout": {
+                "vistaconfig": {
+                    "componente": "YBButton",
+                    "prefix": "yb_clientessincro",
+                    "label": "Config",
+                    "className": "floatRight",
+                    "buttonType": "raised",
+                    "action": {
+                        "key": "vistaconfig",
+                        "success": [{"slot": "recargar"}]
+                    }
+                },
+                "vistaactivity": {
+                    "componente": "YBButton",
+                    "prefix": "yb_clientessincro",
+                    "label": "Actividad",
+                    "className": "floatRight",
+                    "buttonType": "raised",
+                    "action": {
+                        "key": "vistaactivity",
+                        "success": [{"slot": "recargar"}]
+                    }
+                },
+                "vistagrupos": {
+                    "componente": "YBButton",
+                    "prefix": "yb_clientessincro",
+                    "label": "Grupos procesos",
+                    "className": "floatRight",
+                    "buttonType": "raised",
+                    "action": {
+                        "key": "vistagrupos",
+                        "success": [{"slot": "recargar"}]
+                    }
+                }
+            }
+        },
+        "gruposGrid": {
+            "componente": "YBList",
+            "class": "claseGrid",
+            "prefix": "yb_gruposprocesos",
+            "filter": "buscador",
+            "paginacion": true,
+            "columns": [
+                {"tipo": "field", "listpos": "subtitle", "key": "codigo", "flex": 1, "avatar": true},
+                {"tipo": "field", "listpos": "title", "key": "descripcion", "flex": 5},
+                {"tipo": "field", "listpos": "secondaryitem", "key": "prefijo", "flex": 1},
+                {"tipo": "field", "key": "icon", "flex": 1, "listpos": "body"},
+                {"tipo": "field", "key": "rgb", "flex": 1, "listpos": "body"}
+            ],
+            "accionesGrid": [{
+                "key": "nuevogrupo",
+                "label": "Nuevo",
+                "success": [{ "slot": "refrescar"}]
+            }],
+            "rowclick": "link"
+        },
+        "activityBox": {
+            "componente": "YBGroupBox",
+            "className": "actionGB",
+            "style": {"zIndex": 3, "position": "relative"},
+            "layout": {
+                "jsonGrid_activemonitor": {
+                    "componente": "YBList",
+                    "label": "Tareas Activas",
+                    "prefix": "activemonitor",
+                    "type": "json",
+                    "columns": [
+                        {"tipo": "field", "key": "name", "listpos": "title", "label": "Name", "avatar": true},
+                        {"tipo": "field", "key": "id", "listpos": "subtitle", "label": "Id"},
+                        {"tipo": "field", "key": "worker", "listpos": "body", "label": "Worker"},
+                        {"tipo": "field", "key": "args", "listpos": "body", "label": "Args"}
+                    ]
+                },
+                "jsonGrid_scheduledmonitor": {
+                    "componente": "YBList",
+                    "label": "Tareas Programadas",
+                    "prefix": "scheduledmonitor",
+                    "type": "json",
+                    "columns": [
+                        {"tipo": "field", "key": "name", "listpos": "title", "label": "Name", "avatar": true},
+                        {"tipo": "field", "key": "id", "listpos": "subtitle", "label": "Id"},
+                        {"tipo": "field", "key": "worker", "listpos": "body", "label": "Worker"},
+                        {"tipo": "field", "key": "eta", "listpos": "body", "label": "ETA"}
+                    ]
+                },
+                "jsonGrid_reservedmonitor": {
+                    "componente": "YBList",
+                    "label": "Tareas Reservadas",
+                    "prefix": "reservedmonitor",
+                    "type": "json",
+                    "columns": [
+                        {"tipo": "field", "key": "name", "listpos": "title", "label": "Name", "avatar": true},
+                        {"tipo": "field", "key": "id", "listpos": "subtitle", "label": "Id"},
+                        {"tipo": "field", "key": "worker", "listpos": "body", "label": "Worker"},
+                        {"tipo": "field", "key": "args", "listpos": "body", "label": "Args"}
+                    ]
+                }
+            }
+        },
+        "configForm": {
+            "componente": "YBForm",
+            "prefix": "yb_clientessincro",
+            "class": "claseGrid",
+            "submit": "update",
+            "success": [{"receiver": "refrescar"}],
+            "fields": {
+                "gb__": {
+                    "fields": {
+                        "cliente": {"disabled": true},
+                        "descripcion": {},
+                        "url": {},
+                        "test_url": {}
+                    }
+                }
+            },
+            "exclude": {}
+        }
+    },
+    "acciones": {
+        "vistagrupos": {
+            "action": "legacy",
+            "serverAction": "set_estado_grupos",
+            "icon": "icon"
+        },
+        "vistaactivity": {
+            "action": "legacy",
+            "serverAction": "set_estado_activity",
+            "icon": "icon"
+        },
+        "vistaconfig": {
+            "action": "legacy",
+            "serverAction": "set_estado_config",
+            "icon": "icon"
+        },
+        "nuevogrupo": {
+            "label": "Nuevo",
+            "action": "newRow",
+            "icon": "add_circle"
+        }
+    },
+    "drawIf": {
+        "parentGroupBox": {
+            "gruposGrid": "drawif_gruposgrid",
+            "activityBox": "drawif_activitybox",
+            "configForm": "drawif_configform"
+        },
+        "botonera": {
+            "vistagrupos": "drawif_botongrupos",
+            "vistaactivity": "drawif_botonactivity",
+            "vistaconfig": "drawif_botonconfig"
+        }
+    }
+}

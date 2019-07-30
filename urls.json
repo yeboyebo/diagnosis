@@ -19,15 +19,6 @@
         },
         {
             "type": "insertAfterNode",
-            "path": "/diagnosis",
-            "value": {
-                "api": {
-                    "controller": true
-                }
-            }
-        },
-        {
-            "type": "insertAfterNode",
             "path": "/models/root",
             "value": {
                 "fldiagppal": {
@@ -35,7 +26,9 @@
                     "yb_subregdiagnosis": null,
                     "yb_log": null,
                     "yb_procesos": null,
-                    "yb_procesos_erroneos": null
+                    "yb_procesos_erroneos": null,
+                    "yb_clientessincro": null,
+                    "yb_gruposprocesos": null
                 }
             }
         }

@@ -1,0 +1,286 @@
+{
+    "querystring": {},
+    "schema": {
+        "yb_procesos": {
+            "rel": "grupoprocesos",
+            "fieldRelation": "codigo",
+            "querystring": {
+                "p_l": 10,
+                "p_c": true,
+                "o_1": "proceso"
+            },
+            "extrarel": [
+                {"rel": "cliente", "fieldRelation": "cliente"}
+            ]
+        },
+        "yb_procesos_erroneos": {
+            "rel": "grupoprocesos",
+            "fieldRelation": "codigo",
+            "querystring": {
+                "p_l": 10,
+                "p_c": true,
+                "o_1": "timestamp",
+                "o_2": "id",
+                "s_resuelto__exact": false
+            }
+        },
+        "yb_log": {
+            "rel": "grupoprocesos",
+            "fieldRelation": "codigo",
+            "querystring": {
+                "p_l": 50,
+                "p_c": true,
+                "o_1": "-timestamp",
+                "o_2": "-id"
+            }
+        }
+    },
+    "layout": {
+        "labelDescripcion": {
+            "componente": "YBLabel",
+            "text": "%yb1",
+            "className": "",
+            "style": {
+                "font-weight": "bold",
+                "color": "#2D95C1",
+                "font-size": "17px"
+            },
+            "params": [
+                {
+                    "type": "model",
+                    "key": "descripcion"
+                }
+            ]
+        },
+        "botonera": {
+            "componente": "YBGroupBox",
+            "className": "actionGB",
+            "style": {"zIndex": 3, "position": "relative"},
+            "layout": {
+                "vistaconfig": {
+                    "componente": "YBButton",
+                    "prefix": "yb_gruposprocesos",
+                    "label": "Config",
+                    "className": "floatRight",
+                    "buttonType": "raised",
+                    "action": {
+                        "key": "vistaconfig",
+                        "success": [{"slot": "recargar"}]
+                    }
+                },
+                "vistalog": {
+                    "componente": "YBButton",
+                    "prefix": "yb_gruposprocesos",
+                    "label": "Log",
+                    "className": "floatRight",
+                    "buttonType": "raised",
+                    "action": {
+                        "key": "vistalog",
+                        "success": [{"slot": "recargar"}]
+                    }
+                },
+                "vistaerroneos": {
+                    "componente": "YBButton",
+                    "prefix": "yb_gruposprocesos",
+                    "label": "Erróneos",
+                    "className": "floatRight",
+                    "buttonType": "raised",
+                    "action": {
+                        "key": "vistaerroneos",
+                        "success": [{"slot": "recargar"}]
+                    }
+                },
+                "vistaprocesos": {
+                    "componente": "YBButton",
+                    "prefix": "yb_gruposprocesos",
+                    "label": "Procesos",
+                    "className": "floatRight",
+                    "buttonType": "raised",
+                    "action": {
+                        "key": "vistaprocesos",
+                        "success": [{"slot": "recargar"}]
+                    }
+                }
+            }
+        },
+        "procesosGrid": {
+            "componente": "YBList",
+            "class": "claseGrid",
+            "prefix": "yb_procesos",
+            "filter": "buscador",
+            "paginacion": true,
+            "columns": [
+                {"tipo": "field", "listpos": "subtitle", "key": "proceso", "flex": 1},
+                {"tipo": "field", "listpos": "title", "key": "descripcion", "flex": 5},
+                {"tipo": "foreignfield", "listpos": "secondaryitem", "key": "activo_ext", "flex": 1, "avatar": true},
+                {"tipo": "foreignfield", "key": "ultsincro", "flex": 1, "listpos": "body"},
+                {
+                    "tipo": "act",
+                    "key": "start",
+                    "label": "Iniciar",
+                    "success": [{"slot": "refrescar"}]
+                },
+                {
+                    "tipo": "act",
+                    "key": "stop",
+                    "label": "Parar",
+                    "success": [{"slot": "refrescar"}]
+                }
+            ],
+            "accionesGrid": [
+                {
+                    "tipo": "button",
+                    "key": "stopall",
+                    "label": "Parar todos",
+                    "success": [{"slot": "refrescar"}]
+                },
+                {
+                    "tipo": "button",
+                    "key": "startall",
+                    "label": "Iniciar todos",
+                    "success": [{"slot": "refrescar"}]
+                },
+                {
+                    "key": "nuevoproceso",
+                    "label": "Nuevo",
+                    "success": [{ "slot": "refrescar"}]
+                }
+            ],
+            "rowclick": "link"
+        },
+        "erroneosGrid": {
+            "componente": "YBList",
+            "class": "claseGrid",
+            "prefix": "yb_procesos_erroneos",
+            "filter": "buscador",
+            "paginacion": true,
+            "columns": [
+                {"tipo": "field", "listpos": "title", "key": "codregistro"},
+                {"tipo": "field", "listpos": "subtitle", "key": "timestamp"},
+                {"tipo": "field", "listpos": "secondaryitem", "key": "proceso"},
+                {"tipo": "field", "listpos": "body", "key": "error", "avatar": true},
+                {
+                    "tipo": "act",
+                    "key": "resolve",
+                    "label": "Resolver",
+                    "success": [{"slot": "refrescar"}]
+                }
+            ]
+        },
+        "logGrid": {
+            "componente": "YBGrid",
+            "class": "claseGrid",
+            "prefix": "yb_log",
+            "colorRowField": "rowColor",
+            "buscador": true,
+            "paginacion": true,
+            "filter": {
+                "texto": {
+                    "filterType": "multiseleccion",
+                    "title": "Excluir del log",
+                    "criterio": "nin",
+                    "values": {
+                        "Éxito. No hay datos que sincronizar": "No hay datos",
+                        "Éxito. No es momento de sincronizar": "No es momento",
+                        "Info. Proceso detenido": "Detenido",
+                        "Info. Proceso arrancado": "Arrancado"
+                    }
+                }
+            },
+            "columns": [
+                {"tipo": "field", "key": "timestamp", "flex": 1, "listpos": "body"},
+                {"tipo": "field", "key": "texto", "flex": 5, "listpos": "subtitle", "avatar": true, "title": true},
+                {"tipo": "field", "key": "tipo", "flex": 1, "listpos": "title"}
+            ]
+        },
+        "configForm": {
+            "componente": "YBForm",
+            "prefix": "yb_gruposprocesos",
+            "class": "claseGrid",
+            "submit": "update",
+            "success": [{"receiver": "refrescar"}],
+            "fields": {
+                "gb__": {
+                    "fields": {
+                        "codigo": {"disabled": true},
+                        "descripcion": {},
+                        "cliente": {"combolimit": 1},
+                        "prefijo": {},
+                        "icon": {},
+                        "rgb": {}
+                    }
+                }
+            },
+            "exclude": {}
+        }
+    },
+    "acciones": {
+        "start": {
+            "action": "legacy",
+            "prefix": "yb_procesos",
+            "serverAction": "start",
+            "icon": "play_circle_filled"
+        },
+        "stop": {
+            "action": "legacy",
+            "prefix": "yb_procesos",
+            "serverAction": "stop",
+            "icon": "pause_circle_outline"
+        },
+        "resolve": {
+            "action": "legacy",
+            "prefix": "yb_procesos_erroneos",
+            "serverAction": "resolve",
+            "icon": "check"
+        },
+        "vistaprocesos": {
+            "action": "legacy",
+            "serverAction": "set_estado_procesos",
+            "icon": "icon"
+        },
+        "vistaerroneos": {
+            "action": "legacy",
+            "serverAction": "set_estado_erroneos",
+            "icon": "icon"
+        },
+        "vistalog": {
+            "action": "legacy",
+            "serverAction": "set_estado_log",
+            "icon": "icon"
+        },
+        "vistaconfig": {
+            "action": "legacy",
+            "serverAction": "set_estado_config",
+            "icon": "icon"
+        },
+        "nuevoproceso": {
+            "label": "Nuevo",
+            "action": "newRow",
+            "icon": "add_circle"
+        },
+        "startall": {
+            "action": "gridAction",
+            "prefix": "yb_procesos",
+            "serverAction": "startall"
+        },
+        "stopall": {
+            "action": "gridAction",
+            "prefix": "yb_procesos",
+            "serverAction": "stopall"
+        }
+    },
+    "drawIf": {
+        "parentGroupBox": {
+            "procesosGrid": "drawif_procesosgrid",
+            "erroneosGrid": "drawif_erroneosgrid",
+            "logGrid": "drawif_loggrid",
+            "configForm": "drawif_configform"
+        },
+        "botonera": {
+            "vistaprocesos": "drawif_botonprocesos",
+            "vistaerroneos": "drawif_botonerroneos",
+            "vistalog": "drawif_botonlog",
+            "vistaconfig": "drawif_botonconfig"
+        }
+    }
+}

@@ -2,26 +2,21 @@
     "querystring": {},
     "schema": {},
     "layout": {
-        "procesosForm": {
-            "prefix": "yb_procesos",
+        "configForm": {
             "componente": "YBForm",
-            "class": "claseGrid",
-            "submit": "create",
-            "return": true,
-            "success": [{"slot": "return"}],
-            "groupbox": "",
+            "prefix": "yb_procesos",
+            "submit": "update",
+            "success": [{"receiver": "refrescar"}],
             "fields": {
                 "gb__generales": {
-                    "title": "Datos generales",
                     "fields": {
-                        "proceso": {},
+                        "proceso": {"disabled": true},
                         "descripcion": {},
-                        "cliente": {"disabled": true},
-                        "grupoprocesos": {"disabled": true}
+                        "cliente": {"combolimit": 1},
+                        "grupoprocesos": {"combolimit": 1}
                     }
                 },
                 "gb__sync": {
-                    "title": "Datos sincronización",
                     "fields": {
                         "url": {},
                         "syncapi": {},
@@ -33,6 +28,6 @@
             "exclude": {}
         }
     },
-    "acciones": {}
+    "acciones": {},
+    "drawIf": {}
 }
-

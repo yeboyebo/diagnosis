@@ -9,7 +9,7 @@
             "componente": "YBNewRecordGoTo",
             "class": "info",
             "icon": "add",
-            "goto": "yb_procesos/newRecord"
+            "goto": "yb_clientessincro/newRecord"
         }
     },
     "acciones": {}

@@ -12,7 +12,6 @@ class interna(qsatype.objetoBase):
 
 # @class_declaration diagnosis #
 import time
-import requests
 from YBLEGACY.constantes import *
 from YBUTILS import notifications
 from YBUTILS.viewREST import cacheController
@@ -21,42 +20,13 @@ from models.fldiagppal import fldiagppal_def as diagppal
 
 class diagnosis(interna):
 
-    def diagnosis_initValidation(self, name, data=None):
-        response = True
-        if name.endswith("activity"):
-            activity = self.iface.getActivity(name)
-            cacheController.setSessionVariable("activity", activity)
-        return response
-
     def diagnosis_getForeignFields(self, model, template=None):
         ff = [
-            {"verbose_name": "ultsincro", "func": "field_ultsincro"}
+            {"verbose_name": "ultsincro", "func": "field_ultsincro"},
+            {"verbose_name": "activo_ext", "func": "field_activo_ext"}
         ]
 
-        if template.endswith("activity"):
-            ff.append({"verbose_name": "activas", "func": "field_activas"})
-            ff.append({"verbose_name": "programadas", "func": "field_programadas"})
-            ff.append({"verbose_name": "reservadas", "func": "field_reservadas"})
-
         return ff
-
-    def diagnosis_field_activas(self, model):
-        try:
-            return cacheController.getSessionVariable("activity")["active"]
-        except Exception:
-            return None
-
-    def diagnosis_field_programadas(self, model):
-        try:
-            return cacheController.getSessionVariable("activity")["scheduled"]
-        except Exception:
-            return None
-
-    def diagnosis_field_reservadas(self, model):
-        try:
-            return cacheController.getSessionVariable("activity")["reserved"]
-        except Exception:
-            return None
 
     def diagnosis_field_ultsincro(self, model):
         q = qsatype.FLSqlQuery()
@@ -86,50 +56,18 @@ class diagnosis(interna):
 
         return "{} - {}".format(f, h)
 
-    def diagnosis_get_server_url(self, cliente, syncapi=None):
-        if syncapi:
-            q = qsatype.FLSqlQuery()
-            q.setSelect("url, test_url")
-            q.setFrom("yb_clientessincro")
-            q.setWhere("cliente = '{}'".format(cliente))
+    def diagnosis_field_activo_ext(self, model):
+        if model.syncrecieve:
+            return "Recepción"
 
-            if not q.exec_():
-                return False
+        if model.activo:
+            return "Sí"
 
-            if q.first():
-                url = None
-                if qsatype.FLUtil.isInProd():
-                    url = q.value("url")
-                else:
-                    url = q.value("test_url")
-
-                return url
-            else:
-                return False
-        else:
-            if qsatype.FLUtil.isInProd():
-                if cliente == "elganso":
-                    url = "https://api.elganso.com"
-                elif cliente == "guanabana":
-                    url = "http://api.guanabana.store:8080"
-                elif cliente == "sanhigia":
-                    url = "http://store.sanhigia.com:9000"
-                else:
-                    return False
-            else:
-                url = "http://127.0.0.1:8000"
-
-            url = "{}/models/REST".format(url)
-            if cliente in ("elganso", "guanabana"):
-                url = "{}/tpv_comandas/csr".format(url)
-            else:
-                url = "{}/empresa/csr".format(url)
-
-            return url
+        return "No"
 
     def diagnosis_get_url(self, cliente, proceso, syncapi=None):
         try:
-            server_url = self.get_server_url(cliente, syncapi=syncapi)
+            server_url = diagppal.iface.get_server_url(cliente, syncapi=syncapi)
             if not server_url:
                 return False
 
@@ -163,6 +101,11 @@ class diagnosis(interna):
 
     def diagnosis_start(self, model, cursor):
         try:
+            if cursor.valueBuffer("syncrecieve"):
+                return {
+                    "status": 1,
+                    "msg": "Proceso de recepción"
+                }
             if cursor.valueBuffer("activo"):
                 return True
 
@@ -175,6 +118,11 @@ class diagnosis(interna):
         return True
 
     def diagnosis_stop(self, model, cursor):
+        if cursor.valueBuffer("syncrecieve"):
+            return {
+                "status": 1,
+                "msg": "Proceso de recepción"
+            }
         if not cursor.valueBuffer("activo"):
             return True
 
@@ -227,6 +175,7 @@ class diagnosis(interna):
                 data.update(self.get_extra_data(cursor))
 
                 resul = notifications.post_request(url, header, data)
+                print(resul)
 
                 if not resul:
                     return False
@@ -310,97 +259,17 @@ class diagnosis(interna):
 
         return where, order_limit
 
-    def diagnosis_getActivity(self, name):
-        try:
-            customer = name.split("_activity")[0]
-
-            syncapi = False
-            if qsatype.FLUtil.sqlSelect("yb_procesos", "id", "cliente = '{}' AND syncapi LIMIT 1".format(customer)):
-                syncapi = True
-
-            url = self.get_server_url(customer, syncapi)
-            if not url:
-                return False
-
-            if syncapi:
-                url = "{}/celery/activity/get".format(url)
-            else:
-                url = "{}/getactivity".format(url)
-
-            response = requests.get(url)
-            if response and response.status_code == 200:
-                return response.json()
-            else:
-                raise Exception("Mala respuesta")
-
-        except Exception as e:
-            qsatype.debug(e)
-            return False
-
-    def diagnosis_revoke(self, model, cursor, oParam):
-        try:
-            customer = cursor.valueBuffer("cliente")
-
-            syncapi = False
-            if qsatype.FLUtil.sqlSelect("yb_procesos", "id", "cliente = '{}' AND syncapi LIMIT 1".format(customer)):
-                syncapi = True
-
-            url = self.get_server_url(customer, syncapi)
-            if not url:
-                return False
-
-            if syncapi:
-                url = "{}/celery/tasks/revoke/{}".format(url, oParam["id"])
-
-                response = requests.get(url)
-                if response and response.status_code == 200:
-                    return response.json()
-                else:
-                    raise Exception("Mala respuesta")
-
-            url = "{}/revoke".format(url)
-
-            header = {"Content-Type": "application/json"}
-            data = {
-                "passwd": "bUqfqBMnoH",
-                "id": oParam["id"]
-            }
-
-            response = notifications.post_request(url, header, data)
-            if response and response.status_code == 200:
-                return response.json()
-            else:
-                raise Exception("Mala respuesta")
-
-        except Exception as e:
-            qsatype.debug(e)
-            return False
-
-        return True
-
     def __init__(self, context=None):
         super().__init__(context)
-
-    def initValidation(self, name, data=None):
-        return self.ctx.diagnosis_initValidation(name, data=None)
 
     def getForeignFields(self, model, template=None):
         return self.ctx.diagnosis_getForeignFields(model, template)
 
-    def field_activas(self, model):
-        return self.ctx.diagnosis_field_activas(model)
-
-    def field_programadas(self, model):
-        return self.ctx.diagnosis_field_programadas(model)
-
-    def field_reservadas(self, model):
-        return self.ctx.diagnosis_field_reservadas(model)
-
     def field_ultsincro(self, model):
         return self.ctx.diagnosis_field_ultsincro(model)
 
-    def get_server_url(self, cliente, syncapi=None):
-        return self.ctx.diagnosis_get_server_url(cliente, syncapi)
+    def field_activo_ext(self, model):
+        return self.ctx.diagnosis_field_activo_ext(model)
 
     def get_url(self, cliente, proceso, syncapi=None):
         return self.ctx.diagnosis_get_url(cliente, proceso, syncapi)
@@ -425,12 +294,6 @@ class diagnosis(interna):
 
     def get_where_procesos(self, params, start=False):
         return self.ctx.diagnosis_get_where_procesos(params, start)
-
-    def getActivity(self, name):
-        return self.ctx.diagnosis_getActivity(name)
-
-    def revoke(self, model, cursor, oParam):
-        return self.ctx.diagnosis_revoke(model, cursor, oParam)
 
 
 # @class_declaration head #

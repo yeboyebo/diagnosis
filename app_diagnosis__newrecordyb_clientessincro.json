@@ -2,8 +2,8 @@
     "querystring": {},
     "schema": {},
     "layout": {
-        "procesosForm": {
-            "prefix": "yb_procesos",
+        "gruposForm": {
+            "prefix": "yb_clientessincro",
             "componente": "YBForm",
             "class": "claseGrid",
             "submit": "create",
@@ -11,22 +11,13 @@
             "success": [{"slot": "return"}],
             "groupbox": "",
             "fields": {
-                "gb__generales": {
+                "gb__": {
                     "title": "Datos generales",
                     "fields": {
-                        "proceso": {},
+                        "cliente": {},
                         "descripcion": {},
-                        "cliente": {"disabled": true},
-                        "grupoprocesos": {"disabled": true}
-                    }
-                },
-                "gb__sync": {
-                    "title": "Datos sincronización",
-                    "fields": {
                         "url": {},
-                        "syncapi": {},
-                        "syncstore": {},
-                        "syncrecieve": {}
+                        "test_url": {}
                     }
                 }
             },

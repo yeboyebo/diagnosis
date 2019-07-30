@@ -21,14 +21,8 @@ class diagnosis_yb_procesos(interna_yb_procesos, helpers.MixinConAcciones):
     def field_ultsincro(self):
         return form.iface.field_ultsincro(self)
 
-    def field_activas(self):
-        return form.iface.field_activas(self)
-
-    def field_programadas(self):
-        return form.iface.field_programadas(self)
-
-    def field_reservadas(self):
-        return form.iface.field_reservadas(self)
+    def field_activo_ext(self):
+        return form.iface.field_activo_ext(self)
 
     @helpers.decoradores.accion(aqparam=["cursor"])
     def start(self, cursor):

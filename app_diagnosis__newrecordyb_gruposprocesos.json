@@ -2,8 +2,8 @@
     "querystring": {},
     "schema": {},
     "layout": {
-        "procesosForm": {
-            "prefix": "yb_procesos",
+        "gruposForm": {
+            "prefix": "yb_gruposprocesos",
             "componente": "YBForm",
             "class": "claseGrid",
             "submit": "create",
@@ -14,19 +14,17 @@
                 "gb__generales": {
                     "title": "Datos generales",
                     "fields": {
-                        "proceso": {},
+                        "codigo": {},
                         "descripcion": {},
                         "cliente": {"disabled": true},
-                        "grupoprocesos": {"disabled": true}
+                        "prefijo": {}
                     }
                 },
-                "gb__sync": {
-                    "title": "Datos sincronización",
+                "gb__menu": {
+                    "title": "Datos menú diagnosis",
                     "fields": {
-                        "url": {},
-                        "syncapi": {},
-                        "syncstore": {},
-                        "syncrecieve": {}
+                        "icon": {},
+                        "rgb": {}
                     }
                 }
             },

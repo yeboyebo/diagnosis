@@ -47,47 +47,11 @@
                 "path": "apps/diagnosis/templates/diagnosis/"
             },
             {
-                "name": "app_diagnosis__guanabana_activity.json",
-                "path": "apps/diagnosis/templates/diagnosis/plantillas/"
-            },
-            {
-                "name": "app_diagnosis__elganso_ventas_log.json",
-                "path": "apps/diagnosis/templates/diagnosis/plantillas/"
-            },
-            {
                 "name": "app_diagnosis__elganso_diagnosis.json",
                 "path": "apps/diagnosis/templates/diagnosis/plantillas/"
             },
             {
-                "name": "app_diagnosis__sanhigia_activity.json",
-                "path": "apps/diagnosis/templates/diagnosis/plantillas/"
-            },
-            {
                 "name": "app_diagnosis__elganso_diagnosis_log.json",
-                "path": "apps/diagnosis/templates/diagnosis/plantillas/"
-            },
-            {
-                "name": "app_diagnosis__guanabana_magento_log.json",
-                "path": "apps/diagnosis/templates/diagnosis/plantillas/"
-            },
-            {
-                "name": "app_diagnosis__sanhigia_magento_log.json",
-                "path": "apps/diagnosis/templates/diagnosis/plantillas/"
-            },
-            {
-                "name": "app_diagnosis__sanhigia_magento.json",
-                "path": "apps/diagnosis/templates/diagnosis/plantillas/"
-            },
-            {
-                "name": "app_diagnosis__elganso_ventas.json",
-                "path": "apps/diagnosis/templates/diagnosis/plantillas/"
-            },
-            {
-                "name": "app_diagnosis__guanabana_magento.json",
-                "path": "apps/diagnosis/templates/diagnosis/plantillas/"
-            },
-            {
-                "name": "app_diagnosis__elganso_activity.json",
                 "path": "apps/diagnosis/templates/diagnosis/plantillas/"
             },
             {
@@ -119,58 +83,6 @@
                 "name": "ctrl_api_diagnosis_process__failed.py"
             },
             {
-                "path": "apps/diagnosis/templates/diagnosis/plantillas/",
-                "name": "app_diagnosis__elganso_inventarios.json"
-            },
-            {
-                "path": "apps/diagnosis/templates/diagnosis/plantillas/",
-                "name": "app_diagnosis__elganso_inventarios_log.json"
-            },
-            {
-                "name": "app_diagnosis__globalprot_drupal_error.json",
-                "path": "apps/diagnosis/templates/diagnosis/plantillas/"
-            },
-            {
-                "name": "app_diagnosis__globalprot_drupal.json",
-                "path": "apps/diagnosis/templates/diagnosis/plantillas/"
-            },
-            {
-                "path": "apps/diagnosis/templates/diagnosis/plantillas/",
-                "name": "app_diagnosis__globalprot_activity.json"
-            },
-            {
-                "name": "app_diagnosis__elganso_inventarios_error.json",
-                "path": "apps/diagnosis/templates/diagnosis/plantillas/"
-            },
-            {
-                "name": "app_diagnosis__elganso_ventas_error.json",
-                "path": "apps/diagnosis/templates/diagnosis/plantillas/"
-            },
-            {
-                "name": "app_diagnosis__elganso_b2b_log.json",
-                "path": "apps/diagnosis/templates/diagnosis/plantillas/"
-            },
-            {
-                "name": "app_diagnosis__elganso_b2b_error.json",
-                "path": "apps/diagnosis/templates/diagnosis/plantillas/"
-            },
-            {
-                "name": "app_diagnosis__elganso_b2b.json",
-                "path": "apps/diagnosis/templates/diagnosis/plantillas/"
-            },
-            {
-                "name": "app_diagnosis__elganso_b2c_log.json",
-                "path": "apps/diagnosis/templates/diagnosis/plantillas/"
-            },
-            {
-                "name": "app_diagnosis__elganso_b2c.json",
-                "path": "apps/diagnosis/templates/diagnosis/plantillas/"
-            },
-            {
-                "name": "app_diagnosis__elganso_b2c_error.json",
-                "path": "apps/diagnosis/templates/diagnosis/plantillas/"
-            },
-            {
                 "name": "app_diagnosis__dashboard.json",
                 "path": "apps/diagnosis/templates/diagnosis/plantillas/"
             },
@@ -179,20 +91,44 @@
                 "path": "apps/diagnosis/templates/diagnosis/plantillas/"
             },
             {
+                "name": "app_sync__tasks.py",
+                "path": "apps/sync/"
+            },
+            {
+                "name": "model_fldiagppal__yb_clientessincro.py",
+                "path": "models/fldiagppal/"
+            },
+            {
+                "name": "model_fldiagppal__yb_clientessincro_def.py",
+                "path": "models/fldiagppal/"
+            },
+            {
+                "name": "model_fldiagppal__yb_gruposprocesos.py",
+                "path": "models/fldiagppal/"
+            },
+            {
+                "name": "model_fldiagppal__yb_gruposprocesos_def.py",
+                "path": "models/fldiagppal/"
+            },
+            {
+                "name": "app_diagnosis__yb_gruposprocesos.json",
+                "path": "apps/diagnosis/templates/diagnosis/plantillas/"
+            },
+            {
                 "path": "apps/diagnosis/templates/diagnosis/plantillas/",
-                "name": "app_diagnosis__globalprot_drupal_log.json"
+                "name": "app_diagnosis__yb_clientessincro.json"
             },
             {
-                "name": "app_diagnosis__elganso_mirakl_log.json",
-                "path": "apps/diagnosis/templates/diagnosis/plantillas/"
+                "path": "apps/diagnosis/templates/diagnosis/plantillas/",
+                "name": "app_diagnosis__newrecordyb_gruposprocesos.json"
             },
             {
-                "name": "app_diagnosis__elganso_mirakl_error.json",
-                "path": "apps/diagnosis/templates/diagnosis/plantillas/"
+                "path": "apps/diagnosis/templates/diagnosis/plantillas/",
+                "name": "app_diagnosis__newrecordyb_clientessincro.json"
             },
             {
-                "name": "app_diagnosis__elganso_mirakl.json",
-                "path": "apps/diagnosis/templates/diagnosis/plantillas/"
+                "path": "apps/diagnosis/templates/diagnosis/plantillas/",
+                "name": "app_diagnosis__yb_procesos.json"
             }
         ],
         "deleteFile": [],
