@@ -24,6 +24,9 @@ class diagnosis_yb_procesos(interna_yb_procesos, helpers.MixinConAcciones):
     def field_activo_ext(self):
         return form.iface.field_activo_ext(self)
 
+    def field_proceso_auto(self):
+        return form.iface.field_proceso_auto(self)
+
     @helpers.decoradores.accion(aqparam=["cursor"])
     def start(self, cursor):
         return form.iface.start(self, cursor)

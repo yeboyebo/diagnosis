@@ -114,6 +114,7 @@
                 {"tipo": "field", "listpos": "title", "key": "descripcion", "flex": 5},
                 {"tipo": "foreignfield", "listpos": "secondaryitem", "key": "activo_ext", "flex": 1, "avatar": true},
                 {"tipo": "foreignfield", "key": "ultsincro", "flex": 1, "listpos": "body"},
+                {"tipo": "foreignfield", "key": "proceso_auto", "flex": 1, "listpos": "body"},
                 {
                     "tipo": "act",
                     "key": "start",

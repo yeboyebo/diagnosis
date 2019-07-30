@@ -22,7 +22,8 @@ class diagnosis(interna):
     def diagnosis_getForeignFields(self, model, template=None):
         ff = [
             {"verbose_name": "ultsincro", "func": "field_ultsincro"},
-            {"verbose_name": "activo_ext", "func": "field_activo_ext"}
+            {"verbose_name": "activo_ext", "func": "field_activo_ext"},
+            {"verbose_name": "proceso_auto", "func": "field_proceso_auto"}
         ]
 
         return ff
@@ -63,6 +64,12 @@ class diagnosis(interna):
             return "Sí"
 
         return "No"
+
+    def diagnosis_field_proceso_auto(self, model):
+        if model.syncauto:
+            return "Proceso automático"
+
+        return "Proceso manual"
 
     def diagnosis_start(self, model, cursor):
         try:
@@ -110,6 +117,9 @@ class diagnosis(interna):
 
     def field_activo_ext(self, model):
         return self.ctx.diagnosis_field_activo_ext(model)
+
+    def field_proceso_auto(self, model):
+        return self.ctx.diagnosis_field_proceso_auto(model)
 
     def start(self, model, cursor):
         return self.ctx.diagnosis_start(model, cursor)
