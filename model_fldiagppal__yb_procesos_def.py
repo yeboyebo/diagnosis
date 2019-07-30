@@ -81,7 +81,7 @@ class diagnosis(interna):
             if cursor.valueBuffer("activo"):
                 return True
 
-            resul = diagppal.iface.single_start(cursor)
+            resul = diagppal.iface.single_start(cursor, in_production=qsatype.FLUtil.isInProd())
             if resul and "msg" in resul and resul["msg"] == "Tarea encolada correctamente":
                 diagppal.iface.log("Info. Proceso arrancado", cursor.valueBuffer("proceso"), cursor.valueBuffer("cliente"))
             return resul

@@ -145,7 +145,7 @@ class diagnosis(interna):
             if qsatype.FLUtil.sqlSelect("yb_procesos", "id", "cliente = '{}' AND syncapi LIMIT 1".format(customer)):
                 syncapi = True
 
-            url = diagppal.iface.get_server_url(customer, syncapi)
+            url = diagppal.iface.get_server_url(customer, syncapi, in_production=qsatype.FLUtil.isInProd())
             if not url:
                 return {"active": {}, "reserved": {}, "scheduled": {}}
 
@@ -206,7 +206,7 @@ class diagnosis(interna):
         return True
 
     def diagnosis_start(self, model, oParam):
-        tasks.startall.delay(model.cliente)
+        tasks.startall.delay(model.cliente, qsatype.FLUtil.isInProd())
         return True
 
     def diagnosis_stop(self, model, oParam):

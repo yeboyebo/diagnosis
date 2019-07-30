@@ -36,7 +36,7 @@ class diagnosis(interna):
 
         qsatype.FLSqlQuery().execSql("INSERT INTO yb_procesos_erroneos (cliente, proceso, grupoprocesos, error, codregistro, resuelto, timestamp) VALUES ('{}', '{}', '{}', '{}', '{}', {}, '{}')".format(customer, process, grupoprocesos, error, pk, False, tmstmp))
 
-    def diagnosis_get_server_url(self, cliente, syncapi=None):
+    def diagnosis_get_server_url(self, cliente, syncapi=None, in_production=None):
         if syncapi:
             q = qsatype.FLSqlQuery()
             q.setSelect("url, test_url")
@@ -48,7 +48,7 @@ class diagnosis(interna):
 
             if q.first():
                 url = None
-                if qsatype.FLUtil.isInProd():
+                if in_production:
                     url = q.value("url")
                 else:
                     url = q.value("test_url")
@@ -57,7 +57,7 @@ class diagnosis(interna):
             else:
                 return False
         else:
-            if qsatype.FLUtil.isInProd():
+            if in_production:
                 if cliente == "elganso":
                     url = "https://api.elganso.com"
                 elif cliente == "guanabana":
@@ -77,9 +77,9 @@ class diagnosis(interna):
 
             return url
 
-    def diagnosis_get_url(self, cliente, proceso, syncapi=None):
+    def diagnosis_get_url(self, cliente, proceso, syncapi=None, in_production=None):
         try:
-            server_url = self.get_server_url(cliente, syncapi=syncapi)
+            server_url = self.get_server_url(cliente, syncapi=syncapi, in_production=in_production)
             if not server_url:
                 return False
 
@@ -103,7 +103,7 @@ class diagnosis(interna):
             qsatype.debug(e)
             return False
 
-    def diagnosis_single_start(self, cursor):
+    def diagnosis_single_start(self, cursor, in_production=None):
         try:
             if cursor.valueBuffer("activo"):
                 return True
@@ -112,7 +112,7 @@ class diagnosis(interna):
             proceso = cursor.valueBuffer("proceso")
             syncapi = cursor.valueBuffer("syncapi")
 
-            url = self.iface.get_url(cliente, proceso, syncapi)
+            url = self.iface.get_url(cliente, proceso, syncapi, in_production)
 
             if not url:
                 return False
@@ -125,7 +125,7 @@ class diagnosis(interna):
                 data = {
                     "passwd": "bUqfqBMnoH",
                     "continuous": True,
-                    "production": qsatype.FLUtil.isInProd()
+                    "production": in_production
                 }
 
                 data.update(self.get_extra_data(cursor))
@@ -137,25 +137,18 @@ class diagnosis(interna):
                         return False
                     return False
             else:
-                request = qsatype.FLUtil.request()
-                meta = getattr(request, "META", None)
-                if not meta:
-                    meta = request["META"]
-
-                try:
-                    virtualEnv = meta["VIRTUAL_ENV"]
-                except Exception:
-                    virtualEnv = getattr(meta, "VIRTUAL_ENV", None)
+                server_port = "24100" if in_production else "9000"
+                virtual_env = "/var/www/django/docker_diagnosis" if in_production else "/var/www/django/dev"
 
                 header = {"Content-Type": "application/json"}
                 data = {
                     "passwd": "bUqfqBMnoH",
                     "fakeRequest": {
                         "name": "fake",
-                        "user": qsatype.FLUtil.nameUser(),
+                        "user": "sincro_user",
                         "META": {
-                            "SERVER_PORT": meta["SERVER_PORT"],
-                            "VIRTUAL_ENV": virtualEnv
+                            "SERVER_PORT": server_port,
+                            "VIRTUAL_ENV": virtual_env
                         }
                     }
                 }
@@ -194,14 +187,14 @@ class diagnosis(interna):
     def failed(self, customer, process, error, pk):
         return self.ctx.diagnosis_failed(customer, process, error, pk)
 
-    def get_server_url(self, cliente, syncapi=None):
-        return self.ctx.diagnosis_get_server_url(cliente, syncapi)
+    def get_server_url(self, cliente, syncapi=None, in_production=None):
+        return self.ctx.diagnosis_get_server_url(cliente, syncapi, in_production)
 
-    def get_url(self, cliente, proceso, syncapi=None):
-        return self.ctx.diagnosis_get_url(cliente, proceso, syncapi)
+    def get_url(self, cliente, proceso, syncapi=None, in_production=None):
+        return self.ctx.diagnosis_get_url(cliente, proceso, syncapi, in_production)
 
-    def single_start(self, cursor):
-        return self.ctx.diagnosis_single_start(cursor)
+    def single_start(self, cursor, in_production=None):
+        return self.ctx.diagnosis_single_start(cursor, in_production)
 
     def get_extra_data(self, cursor):
         return self.ctx.diagnosis_get_extra_data(cursor)
