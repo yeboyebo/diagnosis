@@ -339,6 +339,14 @@ class mtd_yb_procesos(models.Model, BaseModel):
     )._miextend(
         OLDTIPO="BOOL"
     )
+    syncauto = models.BooleanField(
+        db_column="syncauto",
+        verbose_name=FLUtil.translate("MetaData", "Proceso automático"),
+        default=True,
+        null=False
+    )._miextend(
+        OLDTIPO="BOOL"
+    )
 
     class Meta:
         managed = True

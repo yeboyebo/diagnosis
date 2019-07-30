@@ -4,12 +4,6 @@
     "layout": {
         "menu": {
             "componente": "YBDashBoard"
-        },
-        "newRecordProcesos": {
-            "componente": "YBNewRecordGoTo",
-            "class": "info",
-            "icon": "add",
-            "goto": "yb_clientessincro/newRecord"
         }
     },
     "acciones": {}

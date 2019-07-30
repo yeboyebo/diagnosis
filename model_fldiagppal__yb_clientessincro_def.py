@@ -12,8 +12,11 @@ class interna(qsatype.objetoBase):
 
 # @class_declaration diagnosis #
 import requests
+
 from YBLEGACY.constantes import *
 from YBUTILS.viewREST import cacheController
+
+from sync import tasks
 from models.fldiagppal import fldiagppal_def as diagppal
 
 
@@ -28,6 +31,10 @@ class diagnosis(interna):
         ff.append({"verbose_name": "activas", "func": "field_activas"})
         ff.append({"verbose_name": "programadas", "func": "field_programadas"})
         ff.append({"verbose_name": "reservadas", "func": "field_reservadas"})
+
+        if template == "master":
+            ff.append({"verbose_name": "procesos", "func": "field_procesos"})
+            ff.append({"verbose_name": "procesos_auto", "func": "field_procesos_auto"})
 
         return ff
 
@@ -68,6 +75,35 @@ class diagnosis(interna):
         cacheController.setSessionVariable("estado_clientessincro", estado)
         return True
 
+    def diagnosis_drawif_master_clientesgrid(self, cursor):
+        if self.iface.get_estado_master() != "clientes":
+            return "hidden"
+
+    def diagnosis_drawif_master_botonclientes(self, cursor):
+        if self.iface.get_estado_master() == "clientes":
+            return "disabled"
+
+    def diagnosis_drawif_master_loggrid(self, cursor):
+        if self.iface.get_estado_master() != "log":
+            return "hidden"
+
+    def diagnosis_drawif_master_botonlog(self, cursor):
+        if self.iface.get_estado_master() == "log":
+            return "disabled"
+
+    def diagnosis_get_estado_master(self):
+        estado = cacheController.getSessionVariable("estado_master_clientessincro", None)
+
+        if not estado:
+            self.iface.set_estado_master("clientes")
+            estado = "clientes"
+
+        return estado
+
+    def diagnosis_set_estado_master(self, estado):
+        cacheController.setSessionVariable("estado_master_clientessincro", estado)
+        return True
+
     def diagnosis_field_activas(self, model):
         try:
             if self.get_estado() == "activity":
@@ -92,6 +128,16 @@ class diagnosis(interna):
             return cacheController.getSessionVariable("activity")["reserved"]
         except Exception:
             return {}
+
+    def diagnosis_field_procesos(self, model):
+        totales = qsatype.FLUtil.sqlSelect("yb_procesos", "COUNT(id)", "cliente = '{}' AND (NOT syncrecieve OR syncrecieve IS NULL)".format(model.cliente))
+        activos = qsatype.FLUtil.sqlSelect("yb_procesos", "COUNT(id)", "cliente = '{}' AND activo AND (NOT syncrecieve OR syncrecieve IS NULL)".format(model.cliente))
+        return "Procesos activos: {} de {}".format(activos, totales)
+
+    def diagnosis_field_procesos_auto(self, model):
+        totales = qsatype.FLUtil.sqlSelect("yb_procesos", "COUNT(id)", "cliente = '{}' AND syncauto AND (NOT syncrecieve OR syncrecieve IS NULL)".format(model.cliente))
+        activos = qsatype.FLUtil.sqlSelect("yb_procesos", "COUNT(id)", "cliente = '{}' AND activo AND syncauto AND (NOT syncrecieve OR syncrecieve IS NULL)".format(model.cliente))
+        return "Procesos automáticos: {} de {}".format(activos, totales)
 
     def diagnosis_get_activity(self, customer):
         try:
@@ -159,6 +205,16 @@ class diagnosis(interna):
 
         return True
 
+    def diagnosis_start(self, model, oParam):
+        tasks.startall.delay(model.cliente)
+        return True
+
+    def diagnosis_stop(self, model, oParam):
+        if not qsatype.FLUtil.sqlUpdate("yb_procesos", ["activo"], [False], "cliente = '{}' AND activo".format(model.cliente)):
+            return False
+
+        return True
+
     def __init__(self, context=None):
         super().__init__(context)
 
@@ -192,6 +248,24 @@ class diagnosis(interna):
     def set_estado(self, estado):
         return self.ctx.diagnosis_set_estado(estado)
 
+    def drawif_master_clientesgrid(self, cursor):
+        return self.ctx.diagnosis_drawif_master_clientesgrid(cursor)
+
+    def drawif_master_botonclientes(self, cursor):
+        return self.ctx.diagnosis_drawif_master_botonclientes(cursor)
+
+    def drawif_master_loggrid(self, cursor):
+        return self.ctx.diagnosis_drawif_master_loggrid(cursor)
+
+    def drawif_master_botonlog(self, cursor):
+        return self.ctx.diagnosis_drawif_master_botonlog(cursor)
+
+    def get_estado_master(self):
+        return self.ctx.diagnosis_get_estado_master()
+
+    def set_estado_master(self, estado):
+        return self.ctx.diagnosis_set_estado_master(estado)
+
     def field_activas(self, model):
         return self.ctx.diagnosis_field_activas(model)
 
@@ -201,11 +275,23 @@ class diagnosis(interna):
     def field_reservadas(self, model):
         return self.ctx.diagnosis_field_reservadas(model)
 
+    def field_procesos(self, model):
+        return self.ctx.diagnosis_field_procesos(model)
+
+    def field_procesos_auto(self, model):
+        return self.ctx.diagnosis_field_procesos_auto(model)
+
     def get_activity(self, customer):
         return self.ctx.diagnosis_get_activity(customer)
 
     def revoke(self, model, cursor, oParam):
         return self.ctx.diagnosis_revoke(model, cursor, oParam)
+
+    def start(self, model, oParam):
+        return self.ctx.diagnosis_start(model, oParam)
+
+    def stop(self, model, oParam):
+        return self.ctx.diagnosis_stop(model, oParam)
 
 
 # @class_declaration head #

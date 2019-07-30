@@ -129,6 +129,10 @@
             {
                 "path": "apps/diagnosis/templates/diagnosis/plantillas/",
                 "name": "app_diagnosis__yb_procesos.json"
+            },
+            {
+                "name": "app_diagnosis__masteryb_clientessincro.json",
+                "path": "apps/diagnosis/templates/diagnosis/plantillas/"
             }
         ],
         "deleteFile": [],

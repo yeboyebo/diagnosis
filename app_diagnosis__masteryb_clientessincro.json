@@ -1,0 +1,143 @@
+{
+    "querystring": {
+        "p_l": 50,
+        "p_c": true,
+        "s_cliente__ne": "admin",
+        "o_1": "cliente"
+    },
+    "schema": {
+        "activemonitor": {
+            "json": "activas"
+        },
+        "scheduledmonitor": {
+            "json": "programadas"
+        },
+        "reservedmonitor": {
+            "json": "reservadas"
+        },
+        "yb_log": {
+            "querystring": {
+                "p_l": 50,
+                "p_c": true,
+                "o_1": "-timestamp",
+                "o_2": "-id",
+                "s_cliente__exact": "admin"
+            }
+        }
+    },
+    "title": "Administración",
+    "layout": {
+        "botonera": {
+            "componente": "YBGroupBox",
+            "className": "actionGB",
+            "style": {"zIndex": 3, "position": "relative"},
+            "layout": {
+                "vistalog": {
+                    "componente": "YBButton",
+                    "prefix": "yb_clientessincro",
+                    "label": "Log",
+                    "className": "floatRight",
+                    "buttonType": "raised",
+                    "action": {
+                        "key": "vistalog",
+                        "success": [{"slot": "recargar"}]
+                    }
+                },
+                "vistaclientes": {
+                    "componente": "YBButton",
+                    "prefix": "yb_clientessincro",
+                    "label": "Clientes",
+                    "className": "floatRight",
+                    "buttonType": "raised",
+                    "action": {
+                        "key": "vistaclientes",
+                        "success": [{"slot": "recargar"}]
+                    }
+                }
+            }
+        },
+        "clientesGrid": {
+            "componente": "YBList",
+            "class": "claseGrid",
+            "prefix": "yb_clientessincro",
+            "filter": "buscador",
+            "paginacion": true,
+            "columns": [
+                {"tipo": "field", "listpos": "subtitle", "key": "cliente", "flex": 1, "avatar": true},
+                {"tipo": "field", "listpos": "title", "key": "descripcion", "flex": 5},
+                {"tipo": "foreignfield", "key": "procesos", "flex": 1, "listpos": "body"},
+                {"tipo": "foreignfield", "key": "procesos_auto", "flex": 1, "listpos": "body"},
+                {
+                    "tipo": "act",
+                    "key": "start",
+                    "label": "Iniciar",
+                    "success": [{"slot": "refrescar"}]
+                },
+                {
+                    "tipo": "act",
+                    "key": "stop",
+                    "label": "Parar",
+                    "success": [{"slot": "refrescar"}]
+                }
+            ],
+            "accionesGrid": [{
+                "key": "nuevocliente",
+                "label": "Nuevo",
+                "success": [{"slot": "refrescar"}]
+            }],
+            "rowclick": "link"
+        },
+        "logGrid": {
+            "componente": "YBGrid",
+            "class": "claseGrid",
+            "prefix": "yb_log",
+            "colorRowField": "rowColor",
+            "buscador": true,
+            "paginacion": true,
+            "filter": {},
+            "columns": [
+                {"tipo": "field", "key": "timestamp", "flex": 1, "listpos": "body"},
+                {"tipo": "field", "key": "texto", "flex": 5, "listpos": "subtitle", "avatar": true, "title": true}
+            ]
+        }
+    },
+    "acciones": {
+        "start": {
+            "action": "legacy",
+            "prefix": "yb_clientessincro",
+            "serverAction": "start",
+            "icon": "play_circle_filled"
+        },
+        "stop": {
+            "action": "legacy",
+            "prefix": "yb_clientessincro",
+            "serverAction": "stop",
+            "icon": "pause_circle_outline"
+        },
+        "vistaclientes": {
+            "action": "legacy",
+            "serverAction": "set_estado_master_clientes",
+            "icon": "icon"
+        },
+        "vistalog": {
+            "action": "legacy",
+            "serverAction": "set_estado_master_log",
+            "icon": "icon"
+        },
+        "nuevocliente": {
+            "label": "Nuevo",
+            "action": "newRow",
+            "icon": "add_circle"
+        }
+    },
+    "drawIf": {
+        "parentGroupBox": {
+            "clientesGrid": "drawif_master_clientesgrid",
+            "logGrid": "drawif_master_loggrid"
+        },
+        "botonera": {
+            "vistaclientes": "drawif_master_botonclientes",
+            "vistalog": "drawif_master_botonlog"
+        }
+    }
+}

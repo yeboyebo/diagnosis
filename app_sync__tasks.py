@@ -1,7 +1,10 @@
 from AQNEXT.celery import app
+from YBLEGACY import qsatype
 from YBUTILS import globalValues
 
 from controllers.base.default.managers.task_manager import TaskManager
+
+from models.fldiagppal import fldiagppal_def as diagppal
 
 task_manager = TaskManager()
 
@@ -9,13 +12,24 @@ globalValues.registrarmodulos()
 
 
 @app.task
-def startall():
-    # Buscar todos los procesos con inicio automatico del cliente (recibimos por param)
-    # Vamos llamando uno a uno a inciarse
-    pass
+def startall(customer):
+    cursor = qsatype.FLSqlCursor("yb_procesos")
+    cursor.select("cliente = '{}' AND NOT activo AND syncauto AND (NOT syncrecieve OR syncrecieve IS NULL)".format(customer))
 
+    correctos = 0
+    erroneos = 0
 
-@app.task
-def stopall():
-    # Hacemos un update sobre todos los procesos iniciados del cliente (recibimos por param)
-    pass
+    diagppal.iface.log("Info. Comenzando el arrancado de procesos de {} ({} procesos)".format(customer, cursor.size()), "admin", "admin")
+
+    while cursor.next():
+        resul = diagppal.iface.single_start(cursor)
+        if resul and "msg" in resul and resul["msg"] == "Tarea encolada correctamente":
+            diagppal.iface.log("Éxito. Proceso {} de {} arrancado".format(cursor.valueBuffer("proceso"), customer), "admin", "admin")
+            correctos += 1
+        else:
+            diagppal.iface.log("Error. Proceso {} de {} no arrancado".format(cursor.valueBuffer("proceso"), customer), "admin", "admin")
+            erroneos += 1
+
+    diagppal.iface.log("Info. Terminado el arrancado de procesos de {} ({} correctos, {} erroneos)".format(customer, correctos, erroneos), "admin", "admin")
+
+    return True

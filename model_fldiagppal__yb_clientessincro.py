@@ -20,6 +20,14 @@ class diagnosis_yb_clientessincro(interna_yb_clientessincro, helpers.MixinConAcc
     class Meta:
         proxy = True
 
+    @helpers.decoradores.accion(aqparam=["cursor"])
+    def start(self, cursor):
+        return form.iface.start(self, cursor)
+
+    @helpers.decoradores.accion(aqparam=["cursor"])
+    def stop(self, cursor):
+        return form.iface.stop(self, cursor)
+
     def drawif_gruposgrid(cursor):
         return form.iface.drawif_gruposgrid(cursor)
 
@@ -58,6 +66,32 @@ class diagnosis_yb_clientessincro(interna_yb_clientessincro, helpers.MixinConAcc
 
     def field_reservadas(self):
         return form.iface.field_reservadas(self)
+
+    def field_procesos(self):
+        return form.iface.field_procesos(self)
+
+    def field_procesos_auto(self):
+        return form.iface.field_procesos_auto(self)
+
+    def drawif_master_clientesgrid(cursor):
+        return form.iface.drawif_master_clientesgrid(cursor)
+
+    def drawif_master_botonclientes(cursor):
+        return form.iface.drawif_master_botonclientes(cursor)
+
+    @helpers.decoradores.accion(aqparam=[])
+    def set_estado_master_clientes(self):
+        return form.iface.set_estado_master("clientes")
+
+    def drawif_master_loggrid(cursor):
+        return form.iface.drawif_master_loggrid(cursor)
+
+    def drawif_master_botonlog(cursor):
+        return form.iface.drawif_master_botonlog(cursor)
+
+    @helpers.decoradores.accion(aqparam=[])
+    def set_estado_master_log(self):
+        return form.iface.set_estado_master("log")
 
 
 # @class_declaration yb_clientessincro #

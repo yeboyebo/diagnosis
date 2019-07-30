@@ -16,6 +16,14 @@ class diagnosis(interna):
     def diagnosis_get_menu(self, menu):
         menu["items"] = []
 
+        menu["items"].append({
+            "NAME": "admin",
+            "TEXT": "Admin",
+            "URL": "diagnosis/yb_clientessincro/master",
+            "ICON": "adb",
+            "COLOR": "rgb(225, 140, 0)"
+        })
+
         qclientes = self.iface.get_qclientes()
         while qclientes.next():
             menu["items"].append({
@@ -54,7 +62,7 @@ class diagnosis(interna):
         q = qsatype.FLSqlQuery()
         q.setSelect("id, cliente, descripcion")
         q.setFrom("yb_clientessincro")
-        q.setWhere("1 = 1 ORDER BY id")
+        q.setWhere("cliente <> 'admin' ORDER BY id")
 
         if not q.exec():
             print("Not exec")
