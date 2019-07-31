@@ -28,9 +28,10 @@ class diagnosis(interna):
     def diagnosis_getForeignFields(self, model, template=None):
         ff = []
 
-        ff.append({"verbose_name": "activas", "func": "field_activas"})
-        ff.append({"verbose_name": "programadas", "func": "field_programadas"})
-        ff.append({"verbose_name": "reservadas", "func": "field_reservadas"})
+        if template == "formRecord":
+            ff.append({"verbose_name": "activas", "func": "field_activas"})
+            ff.append({"verbose_name": "programadas", "func": "field_programadas"})
+            ff.append({"verbose_name": "reservadas", "func": "field_reservadas"})
 
         if template == "master":
             ff.append({"verbose_name": "procesos", "func": "field_procesos"})
