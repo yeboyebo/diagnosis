@@ -37,8 +37,8 @@ def startall(customer, in_production):
     while cursor.next():
         resul = diagppal.iface.single_start(cursor, in_production=in_production)
         if resul and "msg" in resul and resul["msg"] == "Tarea encolada correctamente":
-            diagppal.iface.log("Éxito. Proceso {} de {} arrancado".format(cursor.valueBuffer("proceso"), customer), "admin", "admin")
             diagppal.iface.log("Info. Proceso arrancado", cursor.valueBuffer("proceso"), customer)
+            diagppal.iface.log("Éxito. Proceso {} de {} arrancado".format(cursor.valueBuffer("proceso"), customer), "admin", "admin")
             correctos += 1
         else:
             diagppal.iface.log("Error. Proceso {} de {} no arrancado".format(cursor.valueBuffer("proceso"), customer), "admin", "admin")
