@@ -65,6 +65,30 @@ class diagnosis(interna):
         cacheController.setSessionVariable("estado_gruposprocesos", estado)
         return True
 
+    def diagnosis_get_clientfilters(self, model, template=None, data=None):
+        cf = {}
+
+        if template == "formRecord":
+            cf["yb_log"] = {}
+            cf["yb_log"]["tipo"] = {
+                "filterType": "multiseleccion",
+                "title": "Tipo sincro",
+                "values": {}
+            }
+
+            q = qsatype.FLSqlQuery()
+            q.setSelect("proceso, descripcion")
+            q.setFrom("yb_procesos")
+            q.setWhere("cliente = '{}' AND grupoprocesos = '{}' GROUP BY proceso, descripcion ORDER BY proceso".format(data["cliente"], data["codigo"]))
+
+            if not q.exec_():
+                return cf
+
+            while q.next():
+                cf["yb_log"]["tipo"]["values"][q.value(0)] = q.value(1)
+
+        return cf
+
     def __init__(self, context=None):
         super().__init__(context)
 
@@ -101,6 +125,8 @@ class diagnosis(interna):
     def set_estado(self, estado):
         return self.ctx.diagnosis_set_estado(estado)
 
+    def get_clientfilters(self, model, template=None, data=None):
+        return self.ctx.diagnosis_get_clientfilters(model, template, data)
 
 # @class_declaration head #
 class head(diagnosis):
