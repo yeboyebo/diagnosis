@@ -6,15 +6,6 @@
         "o_1": "cliente"
     },
     "schema": {
-        "activemonitor": {
-            "json": "activas"
-        },
-        "scheduledmonitor": {
-            "json": "programadas"
-        },
-        "reservedmonitor": {
-            "json": "reservadas"
-        },
         "yb_log": {
             "querystring": {
                 "p_l": 50,
