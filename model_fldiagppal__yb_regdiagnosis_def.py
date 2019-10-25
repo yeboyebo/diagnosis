@@ -38,7 +38,7 @@ class diagnosis(interna):
         proceso = params['proceso']
 
         procContinuos = ["mgsyncstock", "mgsyncpoints", "mgsyncorders", "mgsynccust", "mgsyncprices"]
-        procDiag = ["diagfacturacionventas", "diagventasmagento", "diagsincroventas", "diagverificacioncontable", "diagsaldovales", "diagdevolucionesweb", "diaganalyticalways", "diagcontanalitica", "diagsolrepoweb", "diagegpda", "diagbloqueos", "diagsincroventasobjeto", "diagmovistockventas"]
+        procDiag = ["diagegpda", "diagsincroventasobjeto", "diagidlerroneos", "diagventastiendaficticia", "diagventassinlineas", "diagventassinpagos", "diagdirectordersnoidl", "diagfacturaseci"]
 
         if proceso in procContinuos:
             response = _i.checkContinuos(cliente, proceso)
@@ -159,63 +159,43 @@ class diagnosis(interna):
     def diagnosis_dameTiempoSincro(self, proceso):
         if proceso == "continuo":
             return datetime.timedelta(minutes=15)
-        elif proceso == "diagfacturacionventas":
-            return datetime.timedelta(hours=2)
-        elif proceso == "diagventasmagento":
-            return datetime.timedelta(hours=2)
-        elif proceso == "diagsincroventas":
-            return datetime.timedelta(hours=2)
-        elif proceso == "diagverificacioncontable":
-            return datetime.timedelta(hours=30)
-        elif proceso == "diagsaldovales":
-            return datetime.timedelta(hours=30)
-        elif proceso == "diaganalyticalways":
-            return datetime.timedelta(hours=20)
-        elif proceso == "diagdevolucionesweb":
-            return datetime.timedelta(hours=20)
-        elif proceso == "diagcontanalitica":
-            return datetime.timedelta(hours=30)
-        elif proceso == "diagsolrepoweb":
-            return datetime.timedelta(hours=30)
         elif proceso == "diagegpda":
             return datetime.timedelta(hours=30)
-        elif proceso == "diagbloqueos":
-            return datetime.timedelta(hours=3)
         elif proceso == "diagsincroventasobjeto":
-            return datetime.timedelta(hours=6)
-        elif proceso == "diagmovistockventas":
-            return datetime.timedelta(hours=6)
+            return datetime.timedelta(hours=24)
+        elif proceso == "diagidlerroneos":
+            return datetime.timedelta(hours=24)
+        elif proceso == "diagventastiendaficticia":
+            return datetime.timedelta(hours=24)
+        elif proceso == "diagventassinlineas":
+            return datetime.timedelta(hours=24)
+        elif proceso == "diagventassinpagos":
+            return datetime.timedelta(hours=24)
+        elif proceso == "diagdirectordersnoidl":
+            return datetime.timedelta(hours=24)
+        elif proceso == "diagfacturaseci":
+            return datetime.timedelta(hours=24)
         else:
             return 0
 
     def diagnosis_dameNotificadosSincro(self, proceso):
         if proceso == "continuo":
             return ["javier", "ivan"]
-        elif proceso == "diagfacturacionventas":
-            return ["javier", "santiago", "jesus"]
-        elif proceso == "diagventasmagento":
-            return ["javier", "santiago", "jesus", "jose", "ivan"]
-        elif proceso == "diagsincroventas":
-            return ["javier", "santiago", "jesus"]
-        elif proceso == "diagverificacioncontable":
-            return ["javier", "santiago", "jesus"]
-        elif proceso == "diagsaldovales":
-            return ["javier", "santiago", "jesus"]
-        elif proceso == "diaganalyticalways":
-            return ["javier", "santiago"]
-        elif proceso == "diagdevolucionesweb":
-            return ["javier", "santiago", "jesus"]
-        elif proceso == "diagcontanalitica":
-            return ["javier", "santiago"]
-        elif proceso == "diagsolrepoweb":
-            return ["javier", "santiago", "jesus"]
         elif proceso == "diagegpda":
             return ["juanma", "santiago", "jesus"]
-        elif proceso == "diagbloqueos":
-            return ["javier", "santiago", "jesus", "jose", "ivan"]
         elif proceso == "diagsincroventasobjeto":
             return ["lorena", "santiago", "jesus"]
-        elif proceso == "diagmovistockventas":
+        elif proceso == "diagidlerroneos":
+            return ["lorena", "santiago", "jesus"]
+        elif proceso == "diagventastiendaficticia":
+            return ["lorena", "santiago", "jesus"]
+        elif proceso == "diagventassinlineas":
+            return ["lorena", "santiago", "jesus"]
+        elif proceso == "diagventassinpagos":
+            return ["lorena", "santiago", "jesus"]
+        elif proceso == "diagdirectordersnoidl":
+            return ["lorena", "santiago", "jesus"]
+        elif proceso == "diagfacturaseci":
             return ["lorena", "santiago", "jesus"]
         else:
             return ["javier"]

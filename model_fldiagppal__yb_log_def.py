@@ -43,29 +43,21 @@ class diagnosis(interna):
         else:
             desc = model.tipo
 
-        if desc == "diagcontanalitica":
-            desc = "Contabilidad Analítica"
-        elif desc == "diagdevolucionesweb":
-            desc = "Devoluciones Web"
-        elif desc == "diagfacturacionventas":
-            desc = "Facturación Ventas"
-        elif desc == "diagsaldovales":
-            desc = "Saldo Vales"
-        elif desc == "diaganalyticalways":
-            desc = "Analytic Always"
-        elif desc == "diagsincroventas":
-            desc = "Ventas Tienda"
-        elif desc == "diagsolrepoweb":
-            desc = "Solicitudes Reposición Web"
-        elif desc == "diagverificacioncontable":
-            desc = "Verificación Contable"
-        elif desc == "diagbloqueos":
-            desc = "Bloqueos"
-        elif desc == "diagsincroventasobjeto":
+        if desc == "diagsincroventasobjeto":
             desc = "Sincro Ventas Objeto"
-        elif desc == "diagmovistockventas":
-            desc = "Movimientos de stock de ventas"
-
+        elif desc == "diagidlerroneos":
+            desc = "Envios a idl"
+        elif desc == "diagventastiendaficticia":
+            desc = "Ventas tiendas ficticias"
+        elif desc == "diagventassinlineas":
+            desc = "Ventas sin líneas"
+        elif desc == "diagventassinpagos":
+            desc = "Ventas sin pagos"
+        elif desc == "diagdirectordersnoidl":
+            desc = "Direct Order no IDL"
+        elif desc == "diagfacturaseci":
+            desc = "Facturación ECI"
+            
         return desc
 
     def diagnosis_field_timestamp(self, model):
@@ -93,7 +85,7 @@ class diagnosis(interna):
         query["tablesList"] = u"yb_log"
         query["select"] = u"yb_log.tipo, yb_log.texto, yb_log.timestamp"
         query["from"] = u"yb_log"
-        query["where"] = u"id IN (SELECT MAX(id) FROM yb_log GROUP BY cliente, tipo ORDER BY cliente, tipo)"
+        query["where"] = u"id IN (SELECT MAX(id) FROM yb_log GROUP BY cliente, tipo ORDER BY cliente, tipo) AND yb_log.texto NOT LIKE 'Éxito.%'"
         query["orderby"] = u"cliente, tipo"
         return query
 

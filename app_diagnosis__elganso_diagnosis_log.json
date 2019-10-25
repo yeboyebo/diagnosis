@@ -36,17 +36,13 @@
                     "filterType": "multiseleccion",
                     "title": "Tipo sincro",
                     "values": {
-                        "diagcontanalitica": "Cont. Analitica",
-                        "diagsincroventas": "Ventas Tienda",
-                        "diagfacturacionventas": "Fact. Ventas",
-                        "diagverificacioncontable": "Ver. Contable",
-                        "diagsaldovales": "Saldo Vales",
-                        "diaganalyticalways": "Analytic Always",
-                        "diagdevolucionesweb": "Devoluciones Web",
-                        "diagsolrepoweb": "Sol. repo. Web",
-                        "diagbloqueos": "Bloqueos",
                         "diagsincroventasobjeto": "Sincro Ventas Objeto",
-                        "diagmovistockventas": "Movimientos de stock de ventas"
+                        "diagidlerroneos": "Envios a idl",
+                        "diagventastiendaficticia": "Ventas tiendas ficticias",
+                        "diagventassinlineas": "Ventas sin líneas",
+                        "diagventassinpagos": "Ventas sin pagos",
+                        "diagdirectordersnoidl": "Direct Order no IDL",
+                        "diagfacturaseci": "Facturación ECI"
                     }
                 }
             },
