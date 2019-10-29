@@ -38,7 +38,7 @@ class diagnosis(interna):
         proceso = params['proceso']
 
         procContinuos = ["mgsyncstock", "mgsyncpoints", "mgsyncorders", "mgsynccust", "mgsyncprices"]
-        procDiag = ["diagegpda", "diagsincroventasobjeto", "diagidlerroneos", "diagventastiendaficticia", "diagventassinlineas", "diagventassinpagos", "diagdirectordersnoidl", "diagfacturaseci"]
+        procDiag = ["diagegpda", "diagsincroventasobjeto", "diagidlerroneos", "diagventastiendaficticia", "diagventassinlineas", "diagventassinpagos", "diagdirectordersnoidl", "diagfacturaseci", "diagcontabilidad","diagventaseci", "diagventassinfacturar", "diagfacturacionsii", "diagfichprocesados"]
 
         if proceso in procContinuos:
             response = _i.checkContinuos(cliente, proceso)
@@ -175,6 +175,16 @@ class diagnosis(interna):
             return datetime.timedelta(hours=24)
         elif proceso == "diagfacturaseci":
             return datetime.timedelta(hours=24)
+        elif proceso == "diagcontabilidad":
+            return datetime.timedelta(hours=24)
+        elif proceso == "diagventaseci":
+            return datetime.timedelta(hours=24)
+        elif proceso == "diagventassinfacturar":
+            return datetime.timedelta(hours=24)
+        elif proceso == "diagfacturacionsii":
+            return datetime.timedelta(hours=24)
+        elif proceso == "diagfichprocesados":
+            return datetime.timedelta(hours=24)
         else:
             return 0
 
@@ -196,6 +206,16 @@ class diagnosis(interna):
         elif proceso == "diagdirectordersnoidl":
             return ["lorena", "santiago", "jesus"]
         elif proceso == "diagfacturaseci":
+            return ["lorena", "santiago", "jesus"]
+        elif proceso == "diagcontabilidad":
+            return ["lorena", "santiago", "jesus"]
+        elif proceso == "diagventaseci":
+            return ["lorena", "santiago", "jesus"]
+        elif proceso == "diagventassinfacturar":
+            return ["lorena", "santiago", "jesus"]
+        elif proceso == "diagfacturacionsii":
+            return ["lorena", "santiago", "jesus"]
+        elif proceso == "diagfichprocesados":
             return ["lorena", "santiago", "jesus"]
         else:
             return ["javier"]

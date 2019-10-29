@@ -57,7 +57,17 @@ class diagnosis(interna):
             desc = "Direct Order no IDL"
         elif desc == "diagfacturaseci":
             desc = "Facturación ECI"
-            
+        elif desc == "diagcontabilidad":
+            desc = "Sincro Arqueos"
+        elif desc == "diagventaseci":
+            desc = "Ventas ECI"
+        elif desc == "diagventassinfacturar":
+            desc = "Ventas sin facturar"
+        elif desc == "diagfacturacionsii":
+            desc = "Facturación SII"
+        elif desc == "diagfichprocesados":
+            desc = "Ficheros procesados"
+
         return desc
 
     def diagnosis_field_timestamp(self, model):
@@ -85,7 +95,7 @@ class diagnosis(interna):
         query["tablesList"] = u"yb_log"
         query["select"] = u"yb_log.tipo, yb_log.texto, yb_log.timestamp"
         query["from"] = u"yb_log"
-        query["where"] = u"id IN (SELECT MAX(id) FROM yb_log GROUP BY cliente, tipo ORDER BY cliente, tipo) AND yb_log.texto NOT LIKE 'Éxito.%'"
+        query["where"] = u"id IN (SELECT MAX(id) FROM yb_log GROUP BY cliente, tipo ORDER BY cliente, tipo) AND yb_log.texto LIKE 'Error.%'"
         query["orderby"] = u"cliente, tipo"
         return query
 

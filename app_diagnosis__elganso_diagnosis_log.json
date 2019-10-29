@@ -42,7 +42,12 @@
                         "diagventassinlineas": "Ventas sin líneas",
                         "diagventassinpagos": "Ventas sin pagos",
                         "diagdirectordersnoidl": "Direct Order no IDL",
-                        "diagfacturaseci": "Facturación ECI"
+                        "diagfacturaseci": "Facturación ECI",
+                        "diagcontabilidad": "Sincro Arqueos",
+                        "diagventaseci": "Ventas ECI",
+                        "diagventassinfacturar": "Ventas sin facturar",
+                        "diagfacturacionsii": "Facturación SII",
+                        "diagfichprocesados": "Ficheros procesados"
                     }
                 }
             },
