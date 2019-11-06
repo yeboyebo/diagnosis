@@ -96,7 +96,7 @@ class diagnosis(interna):
         elif desc == "diagdevecorecibidas":
             desc = "Devoluciones ecommerce recibidas"
         elif desc == "diagdevecomagento":
-            desc = "Devoluciones ecommerce no enviadas a magento"
+            desc = "Devoluciones ecommerce no enviadas"
     
         return desc
 
