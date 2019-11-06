@@ -47,7 +47,22 @@
                         "diagventaseci": "Ventas ECI",
                         "diagventassinfacturar": "Ventas sin facturar",
                         "diagfacturacionsii": "Facturación SII",
-                        "diagfichprocesados": "Ficheros procesados"
+                        "diagfichprocesados": "Ficheros procesados",
+                        "diagmovimientosviajes": "Movimientos de viajes",
+                        "diagpedidosservidoseditables": "Pedidos servidos editables",
+                        "diagarticulosidl": "Artículos IDL",
+                        "diagclientesidl": "Clientes IDL",
+                        "diagproveedoresidl": "Proveedores IDL",
+                        "diagpedidoscliidl": "Pedidos cliente IDL",
+                        "diagpedidoscdidl": "Pedidos Cross Docking IDL",
+                        "diagpedidosprovidl": "Pedidos proveedor IDL",
+                        "diagviajesorigenidl": "Viajes origen IDL",
+                        "diagviajesdestinoidl": "Viajes destino IDL",
+                        "diagviajestransferenciaidl": "Viajes transferencia IDL",
+                        "diagviajescdidl": "Viajes Cross Docking",
+                        "diagpedidosecommerceidl": "Pedidos ecommerce IDL",
+                        "diagdevecorecibidas": "Devoluciones ecommerce recibidas",
+                        "diagdevecomagento": "Devoluciones ecommerce no enviadas a magento"
                     }
                 }
             },

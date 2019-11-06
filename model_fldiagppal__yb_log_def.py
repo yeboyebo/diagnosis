@@ -67,7 +67,37 @@ class diagnosis(interna):
             desc = "Facturación SII"
         elif desc == "diagfichprocesados":
             desc = "Ficheros procesados"
-
+        elif desc == "diagmovimientosviajes":
+            desc = "Movimientos de viajes"
+        elif desc == "diagpedidosservidoseditables":
+            desc = "Movimientos de viajes"
+        elif desc == "diagarticulosidl":
+            desc = "Artículos IDL"
+        elif desc == "diagclientesidl":
+            desc = "Clientes IDL"
+        elif desc == "diagproveedoresidl":
+            desc = "Proveedores IDL"
+        elif desc == "diagpedidoscliidl":
+            desc = "Pedidos cliente IDL"
+        elif desc == "diagpedidoscdidl":
+            desc = "Pedidos Cross Docking IDL"
+        elif desc == "diagpedidosprovidl":
+            desc = "Pedidos proveedor IDL"
+        elif desc == "diagviajesorigenidl":
+            desc = "Viajes orignen IDL"
+        elif desc == "diagviajesdestinoidl":
+            desc = "Viajes destino IDL"
+        elif desc == "diagviajestransferenciaidl":
+            desc = "Viajes transferencia IDL"
+        elif desc == "diagviajescdidl":
+            desc = "Viajes Cross Docking IDL"
+        elif desc == "diagpedidosecommerceidl":
+            desc = "Pedidos ecommerce IDL"
+        elif desc == "diagdevecorecibidas":
+            desc = "Devoluciones ecommerce recibidas"
+        elif desc == "diagdevecomagento":
+            desc = "Devoluciones ecommerce no enviadas a magento"
+    
         return desc
 
     def diagnosis_field_timestamp(self, model):
