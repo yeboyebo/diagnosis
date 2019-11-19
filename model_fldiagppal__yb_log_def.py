@@ -87,8 +87,6 @@ class diagnosis(interna):
             desc = "Viajes orignen IDL"
         elif desc == "diagviajesdestinoidl":
             desc = "Viajes destino IDL"
-        elif desc == "diagviajestransferenciaidl":
-            desc = "Viajes transferencia IDL"
         elif desc == "diagviajescdidl":
             desc = "Viajes Cross Docking IDL"
         elif desc == "diagpedidosecommerceidl":

@@ -38,7 +38,7 @@ class diagnosis(interna):
         proceso = params['proceso']
 
         procContinuos = ["mgsyncstock", "mgsyncpoints", "mgsyncorders", "mgsynccust", "mgsyncprices"]
-        procDiag = ["diagegpda", "diagsincroventasobjeto", "diagidlerroneos", "diagventastiendaficticia", "diagventassinlineas", "diagventassinpagos", "diagdirectordersnoidl", "diagfacturaseci", "diagcontabilidad","diagventaseci", "diagventassinfacturar", "diagfacturacionsii", "diagfichprocesados", "diagmovimientosviajes", "diagpedidosservidoseditables", "diagarticulosidl", "diagclientesidl", "diagproveedoresidl", "diagpedidoscliidl", "diagpedidoscdidl", "diagpedidosprovidl","diagviajesorigenidl", "diagviajesdestinoidl", "diagviajestransferenciaidl", "diagviajescdidl", "diagpedidosecommerceidl", "diagdevecorecibidas", "diagdevecomagento"]
+        procDiag = ["diagegpda", "diagsincroventasobjeto", "diagidlerroneos", "diagventastiendaficticia", "diagventassinlineas", "diagventassinpagos", "diagdirectordersnoidl", "diagfacturaseci", "diagcontabilidad","diagventaseci", "diagventassinfacturar", "diagfacturacionsii", "diagfichprocesados", "diagmovimientosviajes", "diagpedidosservidoseditables", "diagarticulosidl", "diagclientesidl", "diagproveedoresidl", "diagpedidoscliidl", "diagpedidoscdidl", "diagpedidosprovidl","diagviajesorigenidl", "diagviajesdestinoidl", "diagviajescdidl", "diagpedidosecommerceidl", "diagdevecorecibidas", "diagdevecomagento"]
 
         if proceso in procContinuos:
             response = _i.checkContinuos(cliente, proceso)
@@ -205,8 +205,6 @@ class diagnosis(interna):
             return datetime.timedelta(hours=24)
         elif proceso == "diagviajesdestinoidl":
             return datetime.timedelta(hours=24)
-        elif proceso == "diagviajestransferenciaidl":
-            return datetime.timedelta(hours=24)
         elif proceso == "diagviajescdidl":
             return datetime.timedelta(hours=24)
         elif proceso == "diagpedidosecommerceidl":
@@ -266,8 +264,6 @@ class diagnosis(interna):
         elif proceso == "diagviajesorigenidl":
             return ["lorena", "santiago", "jesus"]
         elif proceso == "diagviajesdestinoidl":
-            return ["lorena", "santiago", "jesus"]
-        elif proceso == "diagviajestransferenciaidl":
             return ["lorena", "santiago", "jesus"]
         elif proceso == "diagviajescdidl":
             return ["lorena", "santiago", "jesus"]
