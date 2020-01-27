@@ -38,7 +38,7 @@ class diagnosis(interna):
         proceso = params['proceso']
 
         procContinuos = ["mgsyncstock", "mgsyncpoints", "mgsyncorders", "mgsynccust", "mgsyncprices"]
-        procDiag = ["diagegpda", "diagsincroventasobjeto", "diagidlerroneos", "diagventastiendaficticia", "diagventassinlineas", "diagventassinpagos", "diagdirectordersnoidl", "diagfacturaseci", "diagcontabilidad","diagventaseci", "diagventassinfacturar", "diagfacturacionsii", "diagfichprocesados", "diagmovimientosviajes", "diagpedidosservidoseditables", "diagarticulosidl", "diagclientesidl", "diagproveedoresidl", "diagpedidoscliidl", "diagpedidoscdidl", "diagpedidosprovidl","diagviajesorigenidl", "diagviajesdestinoidl", "diagviajescdidl", "diagpedidosecommerceidl", "diagdevecorecibidas", "diagdevecomagento"]
+        procDiag = ["diagegpda", "diagsincroventasobjeto", "diagidlerroneos", "diagventastiendaficticia", "diagventassinlineas", "diagventassinpagos", "diagdirectordersnoidl", "diagfacturaseci", "diagcontabilidad","diagventaseci", "diagventassinfacturar", "diagfacturacionsii", "diagfichprocesados", "diagmovimientosviajes", "diagpedidosservidoseditables", "diagarticulosidl", "diagclientesidl", "diagproveedoresidl", "diagpedidoscliidl", "diagpedidoscdidl", "diagpedidosprovidl","diagviajesorigenidl", "diagviajesdestinoidl", "diagviajescdidl", "diagpedidosecommerceidl", "diagdevecorecibidas", "diagdevecomagento", "diagarticulosactivosmirakl"]
 
         if proceso in procContinuos:
             response = _i.checkContinuos(cliente, proceso)
@@ -213,6 +213,8 @@ class diagnosis(interna):
             return datetime.timedelta(hours=24)
         elif proceso == "diagdevecomagento":
             return datetime.timedelta(hours=24)
+        elif proceso == "diagarticulosactivosmirakl":
+            return datetime.timedelta(hours=24)
         else:
             return 0
 
@@ -272,6 +274,8 @@ class diagnosis(interna):
         elif proceso == "diagdevecorecibidas":
             return ["lorena", "santiago", "jesus"]
         elif proceso == "diagdevecomagento":
+            return ["lorena", "santiago", "jesus"]
+        elif proceso == "diagarticulosactivosmirakl":
             return ["lorena", "santiago", "jesus"]
         else:
             return ["javier"]

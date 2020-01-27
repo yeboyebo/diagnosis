@@ -61,7 +61,8 @@
                         "diagviajescdidl": "Viajes Cross Docking",
                         "diagpedidosecommerceidl": "Pedidos ecommerce IDL",
                         "diagdevecorecibidas": "Devoluciones ecommerce recibidas",
-                        "diagdevecomagento": "Devoluciones ecommerce no enviadas"
+                        "diagdevecomagento": "Devoluciones ecommerce no enviadas",
+                        "diagarticulosactivosmirakl": "Articulos activos mirakl"
                     }
                 }
             },

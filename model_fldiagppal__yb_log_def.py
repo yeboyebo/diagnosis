@@ -95,6 +95,8 @@ class diagnosis(interna):
             desc = "Devoluciones ecommerce recibidas"
         elif desc == "diagdevecomagento":
             desc = "Devoluciones ecommerce no enviadas"
+        elif desc == "diagarticulosactivosmirakl":
+            desc = "Articulos activos mirakl"
     
         return desc
 
