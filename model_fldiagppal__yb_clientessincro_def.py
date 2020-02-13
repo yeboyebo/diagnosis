@@ -18,6 +18,7 @@ from YBUTILS.viewREST import cacheController
 
 from sync import tasks
 from models.fldiagppal import fldiagppal_def as diagppal
+from models.flsyncppal import flsyncppal_def as syncppal
 
 
 class diagnosis(interna):
@@ -190,7 +191,7 @@ class diagnosis(interna):
 
             header = {"Content-Type": "application/json"}
             data = {
-                "passwd": "bUqfqBMnoH",
+                "passwd": syncppal.iface.get_param_sincro('apipass')['auth'],
                 "id": oParam["id"]
             }
 

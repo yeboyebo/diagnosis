@@ -12,6 +12,7 @@ class interna(qsatype.objetoBase):
 
 # @class_declaration diagnosis #
 from YBUTILS import notifications
+from models.flsyncppal import flsyncppal_def as syncppal
 
 
 class diagnosis(interna):
@@ -123,7 +124,7 @@ class diagnosis(interna):
             if syncapi:
                 header = {"Content-Type": "application/json"}
                 data = {
-                    "passwd": "bUqfqBMnoH",
+                    "passwd": syncppal.iface.get_param_sincro('apipass')['auth'],
                     "continuous": True,
                     "production": in_production
                 }
@@ -142,7 +143,7 @@ class diagnosis(interna):
 
                 header = {"Content-Type": "application/json"}
                 data = {
-                    "passwd": "bUqfqBMnoH",
+                    "passwd": syncppal.iface.get_param_sincro('apipass')['auth'],
                     "fakeRequest": {
                         "name": "fake",
                         "user": "sincro_user",
