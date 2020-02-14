@@ -191,7 +191,7 @@ class diagnosis(interna):
 
             header = {"Content-Type": "application/json"}
             data = {
-                "passwd": syncppal.iface.get_param_sincro('apipass')['auth'],
+                "passwd": qsatype.FLUtil.sqlSelect("yb_procesos", "passwd", "cliente = 'admin' AND proceso = 'admin' LIMIT 1"),
                 "id": oParam["id"]
             }
 

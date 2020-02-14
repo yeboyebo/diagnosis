@@ -124,7 +124,7 @@ class diagnosis(interna):
             if syncapi:
                 header = {"Content-Type": "application/json"}
                 data = {
-                    "passwd": syncppal.iface.get_param_sincro('apipass')['auth'],
+                    "passwd": cursor.valueBuffer("passwd"),
                     "continuous": True,
                     "production": in_production
                 }
@@ -143,7 +143,7 @@ class diagnosis(interna):
 
                 header = {"Content-Type": "application/json"}
                 data = {
-                    "passwd": syncppal.iface.get_param_sincro('apipass')['auth'],
+                    "passwd": cursor.valueBuffer("passwd"),
                     "fakeRequest": {
                         "name": "fake",
                         "user": "sincro_user",
