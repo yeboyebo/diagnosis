@@ -24,6 +24,7 @@
                     "title": "Datos sincronización",
                     "fields": {
                         "url": {},
+                        "passwd": {},
                         "syncapi": {},
                         "syncstore": {},
                         "syncrecieve": {},

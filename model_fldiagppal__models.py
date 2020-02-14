@@ -315,6 +315,13 @@ class mtd_yb_procesos(models.Model, BaseModel):
     )._miextend(
         OLDTIPO="STRING"
     )
+    passwd = models.TextField(
+        db_column="passwd",
+        verbose_name=FLUtil.translate("MetaData", "Contraseña"),
+        max_length=100
+    )._miextend(
+        OLDTIPO="STRING"
+    )
     syncapi = models.BooleanField(
         db_column="syncapi",
         verbose_name=FLUtil.translate("MetaData", "Sincro por API"),

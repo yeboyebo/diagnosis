@@ -19,6 +19,7 @@
                 "gb__sync": {
                     "fields": {
                         "url": {},
+                        "passwd": {},
                         "syncapi": {},
                         "syncstore": {},
                         "syncrecieve": {},
