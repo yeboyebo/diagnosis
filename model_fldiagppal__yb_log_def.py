@@ -97,7 +97,9 @@ class diagnosis(interna):
             desc = "Devoluciones ecommerce no enviadas"
         elif desc == "diagarticulosactivosmirakl":
             desc = "Articulos activos mirakl"
-    
+        elif desc == "diagurlsimagenessinprocesar":
+            desc = "Urls Imágenes sin procesar"
+
         return desc
 
     def diagnosis_field_timestamp(self, model):
