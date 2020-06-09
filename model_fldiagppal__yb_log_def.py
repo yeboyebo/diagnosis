@@ -99,6 +99,9 @@ class diagnosis(interna):
             desc = "Articulos activos mirakl"
         elif desc == "diagurlsimagenessinprocesar":
             desc = "Urls Imágenes sin procesar"
+        elif desc == "diagsincromovistockweb":
+            desc = "Sincro de pedidos magento"
+            
 
         return desc
 

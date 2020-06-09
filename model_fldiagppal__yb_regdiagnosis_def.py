@@ -38,7 +38,7 @@ class diagnosis(interna):
         proceso = params['proceso']
 
         procContinuos = ["mgsyncstock", "mgsyncpoints", "mgsyncorders", "mgsynccust", "mgsyncprices"]
-        procDiag = ["diagegpda", "diagsincroventasobjeto", "diagidlerroneos", "diagventastiendaficticia", "diagventassinlineas", "diagventassinpagos", "diagdirectordersnoidl", "diagfacturaseci", "diagcontabilidad","diagventaseci", "diagventassinfacturar", "diagfacturacionsii", "diagfichprocesados", "diagmovimientosviajes", "diagpedidosservidoseditables", "diagarticulosidl", "diagclientesidl", "diagproveedoresidl", "diagpedidoscliidl", "diagpedidoscdidl", "diagpedidosprovidl","diagviajesorigenidl", "diagviajesdestinoidl", "diagviajescdidl", "diagpedidosecommerceidl", "diagdevecorecibidas", "diagdevecomagento", "diagarticulosactivosmirakl","diagurlsimagenessinprocesar"]
+        procDiag = ["diagegpda", "diagsincroventasobjeto", "diagidlerroneos", "diagventastiendaficticia", "diagventassinlineas", "diagventassinpagos", "diagdirectordersnoidl", "diagfacturaseci", "diagcontabilidad","diagventaseci", "diagventassinfacturar", "diagfacturacionsii", "diagfichprocesados", "diagmovimientosviajes", "diagpedidosservidoseditables", "diagarticulosidl", "diagclientesidl", "diagproveedoresidl", "diagpedidoscliidl", "diagpedidoscdidl", "diagpedidosprovidl","diagviajesorigenidl", "diagviajesdestinoidl", "diagviajescdidl", "diagpedidosecommerceidl", "diagdevecorecibidas", "diagdevecomagento", "diagarticulosactivosmirakl","diagurlsimagenessinprocesar","diagsincromovistockweb"]
 
         if proceso in procContinuos:
             response = _i.checkContinuos(cliente, proceso)
@@ -217,6 +217,8 @@ class diagnosis(interna):
             return datetime.timedelta(hours=24)
         elif proceso == "diagurlsimagenessinprocesar":
             return datetime.timedelta(hours=24)
+        elif proceso == "diagsincromovistockweb":
+            return datetime.timedelta(hours=24)
         else:
             return 0
 
@@ -280,6 +282,8 @@ class diagnosis(interna):
         elif proceso == "diagarticulosactivosmirakl":
             return ["lorena", "santiago", "jesus"]
         elif proceso == "diagurlsimagenessinprocesar":
+            return ["lorena", "santiago", "jesus"]
+        elif proceso == "diagsincromovistockweb":
             return ["lorena", "santiago", "jesus"]
         else:
             return ["javier"]

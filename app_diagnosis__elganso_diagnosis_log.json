@@ -63,7 +63,8 @@
                         "diagdevecorecibidas": "Devoluciones ecommerce recibidas",
                         "diagdevecomagento": "Devoluciones ecommerce no enviadas",
                         "diagarticulosactivosmirakl": "Articulos activos mirakl",
-                        "diagurlsimagenessinprocesar": "Urls Imagenes sin procesar"
+                        "diagurlsimagenessinprocesar": "Urls Imagenes sin procesar",
+                        "diagsincromovistockweb": "Sincro de pedidos magento"
                     }
                 }
             },
