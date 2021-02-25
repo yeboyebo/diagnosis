@@ -64,7 +64,7 @@ class diagnosis(interna):
                 elif cliente == "guanabana":
                     url = "http://api.guanabana.store:8080"
                 elif cliente == "sanhigia":
-                    url = "http://store.sanhigia.com:9000"
+                    url = "http://sincroweb.sanhigia.com:9000"
                 else:
                     return False
             else:
