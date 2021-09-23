@@ -169,8 +169,8 @@
                     "title": "Excluir del log",
                     "criterio": "nin",
                     "values": {
-                        "Éxito. No hay datos que sincronizar": "No hay datos",
-                        "Éxito. No es momento de sincronizar": "No es momento",
+                        "Exito. No hay datos que sincronizar": "No hay datos",
+                        "Exito. No es momento de sincronizar": "No es momento",
                         "Info. Proceso arrancado": "Arrancado",
                         "Info. Proceso detenido": "Detenido"
                     }
